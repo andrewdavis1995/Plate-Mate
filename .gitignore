@@ -50,3 +50,7 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+/.vs/*
+/Andrew_2_0_Libraries/Andrew_2_0_Libraries/obj/*
+/Cookalong/obj
+/Cookalong/bin/

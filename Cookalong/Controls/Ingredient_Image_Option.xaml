@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="Cookalong.Controls.Ingredient_Image_Option"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Cookalong.Controls"
+             mc:Ignorable="d" 
+             Height="50" Width="50" Margin="5" MouseLeftButtonDown="UserControl_MouseLeftButtonDown">
+    <Border x:Name="theBorder" CornerRadius="1000" Background="{StaticResource ButtonColour}" BorderThickness="3" BorderBrush="{x:Null}">
+        <Image Source="/Images/FoodIcons/0.png" Margin="5" RenderOptions.BitmapScalingMode="HighQuality" Name="imgIcon"/>
+    </Border>
+</UserControl>

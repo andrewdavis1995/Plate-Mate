@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="Cookalong.Controls.CustomIcon"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Cookalong.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="50">
+    <Border Name="cmdCheck" Width="20" Height="20" Background="{StaticResource ButtonColour}" IsHitTestVisible="False" CornerRadius="5" Margin="2">
+        <Image x:Name="imgIcon" Source="/Images/tick.png" Visibility="Visible" IsHitTestVisible="False" RenderOptions.BitmapScalingMode="HighQuality"/>
+    </Border>
+</UserControl>

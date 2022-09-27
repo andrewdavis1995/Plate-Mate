@@ -1,0 +1,132 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Controls\SwitchOn.png" />
+    <None Remove="Images\bullet.png" />
+    <None Remove="Images\Calories.png" />
+    <None Remove="Images\Dairy.png" />
+    <None Remove="Images\Exit.png" />
+    <None Remove="Images\FoodIcons\0.png" />
+    <None Remove="Images\FoodIcons\1.png" />
+    <None Remove="Images\FoodIcons\2.png" />
+    <None Remove="Images\FoodIcons\3.png" />
+    <None Remove="Images\FoodIcons\4.png" />
+    <None Remove="Images\FoodIcons\5.png" />
+    <None Remove="Images\FoodIcons\6.png" />
+    <None Remove="Images\Gluten.png" />
+    <None Remove="Images\Ingredients.png" />
+    <None Remove="Images\Logo.png" />
+    <None Remove="Images\recipeImage.png" />
+    <None Remove="Images\RecipeList.png" />
+    <None Remove="Images\Search.png" />
+    <None Remove="Images\Servings.png" />
+    <None Remove="Images\SwitchOff.png" />
+    <None Remove="Images\SwitchOn.png" />
+    <None Remove="Images\tick.png" />
+    <None Remove="Images\Timing.png" />
+    <None Remove="Images\Vegan.png" />
+    <None Remove="Images\Vegetarian.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Images\FoodIcons\0.png" />
+    <EmbeddedResource Include="Images\FoodIcons\1.png" />
+    <EmbeddedResource Include="Images\FoodIcons\2.png" />
+    <EmbeddedResource Include="Images\FoodIcons\3.png" />
+    <EmbeddedResource Include="Images\FoodIcons\4.png" />
+    <EmbeddedResource Include="Images\FoodIcons\5.png" />
+    <EmbeddedResource Include="Images\FoodIcons\6.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Calories.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Dairy.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Exit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Gluten.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Ingredients.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\recipeImage.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Andrew_2_0_Libraries\Andrew_2_0_Libraries\Andrew_2_0_Libraries.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\bullet.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\RecipeList.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Search.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Servings.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\SwitchOff.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\SwitchOn.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\tick.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Timing.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Vegan.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Vegetarian.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Controls\MethodStepItem.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\PopupWindows\Popup_Ingredient.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Controls\MethodStepItem.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\PopupWindows\Popup_Ingredient.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
+</Project>

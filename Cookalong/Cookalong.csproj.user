@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <ApplicationDefinition Update="App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Controls\BulletPoint_Item.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\CustomIcon.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\DraggableObject.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\DragWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\ErrorMessage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\IngredientsDisplay.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\Ingredient_Image_Option.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\Input_Button.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\Input_Checkbox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\Input_Numeric.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\PopupWindows\Popup_Confirmation.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\PopupWindows\Popup_Method.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\PopupWindows\Popup_NewRecipe.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\PopupWindows\Popup_Recipe.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\PopupWindows\Popup_Timing.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\RecipeDisplay.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\CustomIcon.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\ErrorMessage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\IngredientsDisplay.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Ingredient_Image_Option.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\MethodStepItem.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\BulletPoint_Item.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\DraggableObject.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\DragWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Input_Button.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Input_Checkbox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Input_Numeric.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\PopupWindows\Popup_Confirmation.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\PopupWindows\Popup_Ingredient.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\PopupWindows\Popup_Method.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\PopupWindows\Popup_NewRecipe.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\PopupWindows\Popup_Recipe.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\PopupWindows\Popup_Timing.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\RecipeDisplay.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="RecipeMenu.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="Cookalong.Controls.Input_Numeric"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Cookalong.Controls"
+             mc:Ignorable="d"  FontFamily="Segoe UI"
+             Height="50" Width="130" IsEnabledChanged="UserControl_IsEnabledChanged">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="70"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <Border BorderThickness="3" CornerRadius="20" BorderBrush="{StaticResource SearchColour}" Margin="2" HorizontalAlignment="Stretch" Height="40" Background="{StaticResource SearchFill}" Grid.Column="1">
+            <TextBox Name="txtContent" VerticalAlignment="Center" BorderThickness="0" Margin="5" Background="{x:Null}" Text="1" MaxLength="4" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="16" CommandManager.PreviewExecuted="txtContent_PreviewExecuted" PreviewTextInput="txtContent_PreviewTextInput" AllowDrop="False" LostFocus="txtContent_LostFocus" Foreground="White"/>
+        </Border>
+
+        <Border Name="lblDecrease" Grid.Column="0" Margin="5, 8" Height="20" Width="20" Background="Red" MouseLeftButtonDown="lblDecrease_MouseLeftButtonDown" CornerRadius="10">
+            <Label Content="-" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="0" FontSize="10" Foreground="White" FontWeight="Bold"/>
+        </Border>
+        <Border Name="lblIncrease" Grid.Column="2" Margin="5, 8" Height="20" Width="20" Background="Green" MouseLeftButtonDown="lblIncrease_MouseLeftButtonDown" CornerRadius="10">
+            <Label Content="+" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="0" FontSize="10" Foreground="White" FontWeight="Bold"/>
+        </Border>
+    </Grid>
+</UserControl>

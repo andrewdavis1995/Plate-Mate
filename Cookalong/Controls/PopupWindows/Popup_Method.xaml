@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="Cookalong.Controls.PopupWindows.Popup_Method"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Cookalong.Controls" FontFamily="Segoe UI"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800" Background="{StaticResource PopupOverlay}" Grid.ColumnSpan="1000" Grid.RowSpan="1000">
+    <Border CornerRadius="8" Margin="40" MaxWidth="600" MaxHeight="300" Background="{StaticResource WindowBackground}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            
+            <Border CornerRadius="8, 8, 0, 0" Background="{StaticResource ButtonColour}">
+                <Label Name="lblTitle" Margin="10, 0" Content="Edit Method Step" Foreground="{StaticResource TextColour}" FontSize="14" VerticalContentAlignment="Center"/>
+            </Border>
+            
+            <Border BorderThickness="3" CornerRadius="20" BorderBrush="{StaticResource SearchColour}" Background="{StaticResource SearchFill}" Margin="10, 10, 10, 0" HorizontalAlignment="Stretch" Grid.Row="1">
+                <TextBox Name="txtMethodContent" MaxLength="300" VerticalContentAlignment="Top" FontSize="14" CaretBrush="White" BorderThickness="0" Background="{x:Null}" Foreground="White" Margin="15,2,15,2" PreviewKeyDown="txtMethodContent_PreviewKeyDown" PreviewTextInput="txtMethodContent_PreviewTextInput" TextChanged="txtMethodContent_TextChanged"/>
+            </Border>
+
+            <Label Name="lblRemainingChars" Grid.Row="2" Content="Remaining Characters: 300" Foreground="{StaticResource GradientBackground}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10, 0"/>
+
+            <Grid Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <local:Input_Button x:Name="cmdCancel" Grid.Column="0" HorizontalAlignment="Stretch" MouseDown="cmdCancel_MouseDown" Margin="5"/>
+                <local:Input_Button x:Name="cmdConfirm" HorizontalAlignment="Stretch" Grid.Column="1" MouseDown="cmdConfirm_MouseDown" Margin="5"/>
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>
