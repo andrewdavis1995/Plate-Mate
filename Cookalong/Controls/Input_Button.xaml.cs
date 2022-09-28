@@ -30,10 +30,17 @@ namespace Cookalong.Controls
             Highlight.Visibility = System.Windows.Visibility.Collapsed;
         }
 
+        /// <summary>
+        /// Configures the appearance of the button
+        /// </summary>
+        /// <param name="title">Text to show on the button</param>
+        /// <param name="setColour">Whether to set colour</param>
+        /// <param name="colourOverride">Colour to set</param>
         public void Configure(string title, bool setColour = true, string colourOverride = "")
         {
             lblMessage.Content = title;
 
+            // set colour if necessary
             if (setColour)
             {
                 try

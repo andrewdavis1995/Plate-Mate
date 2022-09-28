@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Controls;
+using System.Windows.Interop;
 using System.Windows.Media;
 
 namespace Cookalong.Controls.PopupWindows
@@ -39,29 +40,8 @@ namespace Cookalong.Controls.PopupWindows
         /// </summary>
         private void ConfigureButtons_()
         {
-            SetButtonAppearance_(cmdCancel, "Cancel");
-            SetButtonAppearance_(cmdConfirm, "Confirm");
-        }
-
-        /// <summary>
-        /// Sets the appearance of a button
-        /// </summary>
-        /// <param name="button">The button to update</param>
-        /// <param name="msg">Message to display</param>
-        void SetButtonAppearance_(Input_Button button, string msg)
-        {
-            button.lblMessage.Content = msg;
-
-            try
-            {
-                var res = FindResource("Button" + msg);
-                button.bigBorder.BorderBrush = res as SolidColorBrush;
-            }
-            catch (Exception)
-            {
-                var res = FindResource("ButtonDefault");
-                button.bigBorder.BorderBrush = res as SolidColorBrush;
-            }
+            ControlHelper.SetButtonAppearance_(cmdCancel, "Cancel");
+            ControlHelper.SetButtonAppearance_(cmdConfirm, "Confirm");
         }
 
         /// <summary>
@@ -79,6 +59,5 @@ namespace Cookalong.Controls.PopupWindows
         {
             _confirmCallback?.Invoke();
         }
-
     }
 }

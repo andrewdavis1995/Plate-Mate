@@ -16,16 +16,26 @@ namespace Cookalong.Controls.PopupWindows
         Grid? _parent;
         Recipe? _recipe;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Popup_Recipe()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="parent">Grid which displays this control</param>
+        /// <param name="recipe">Recipe to display</param>
         public Popup_Recipe(Grid parent, Recipe recipe)
         {
             InitializeComponent();
             _parent = parent;
             _recipe = recipe;
+
+            // configure buttons
             cmdClose.Configure("Back", true, "Cancel");
             cmdEdit.Configure("Edit");
 

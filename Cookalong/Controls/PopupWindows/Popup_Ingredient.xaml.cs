@@ -1,12 +1,8 @@
 ﻿using Andrew_2_0_Libraries.Models;
 using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace Cookalong.Controls.PopupWindows
 {
@@ -20,9 +16,17 @@ namespace Cookalong.Controls.PopupWindows
 
         const int MIN_LENGTH = 3;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="existing">The existing ingredient to update</param>
+        /// <param name="cancelCallback">Callback when cancel is clicked</param>
+        /// <param name="confirmCallback">Callback when confirm is clicked</param>
         public Popup_Ingredient(Ingredient existing, Action cancelCallback, Action<Ingredient> confirmCallback)
         {
             InitializeComponent();
+
+            // store callbacks
             _cancelCallback = cancelCallback;
             _confirmCallback = confirmCallback;
 
@@ -31,44 +35,67 @@ namespace Cookalong.Controls.PopupWindows
             // configure button appearance
             ConfigureButtons_();
 
+            // configure numeric inputs
             inpCalories.Initialise(false, 1000, 4);
             inpValue.Initialise(false, 2000, 4);
+            chkCalories.UpdateDisplay(false);
+            inpCalories.IsEnabled = true;
 
             LoadTypes_();
             LoadIcons_();
 
-            if (existing?.GetCalories() > 0)
-                inpCalories.SetInputValue(existing.GetCalories());
-
+            // set existing data
             if (existing != null)
             {
-                inpValue.SetInputValue(existing.GetValue());
-
-                foreach (var item in cmbType.Items)
-                {
-                    if (item != null)
-                    {
-                        var tag = (MeasurementUnit)(item as ComboBoxItem).Tag;
-                        if (tag == existing.GetUnit())
-                            cmbType.SelectedItem = item;
-                    }
-                }
-
-                (stckImages.Children[(int)existing.GetImageIndex()] as Ingredient_Image_Option)?.Select();
+                SetExistingData_(existing);
             }
 
+            // configure checkbox
             chkCalories.AddTitle("Count calories?", true);
             chkCalories.AddCallbacks(UpdateCalorieInput_, UpdateCalorieInput_);
-            chkCalories.UpdateDisplay(existing?.GetCalories() != -1);
-            inpCalories.IsEnabled = existing?.GetCalories() != -1;
         }
 
+        /// <summary>
+        /// Sets the existing data of the ingredient
+        /// </summary>
+        /// <param name="existing">The data to set</param>
+        private void SetExistingData_(Ingredient existing)
+        {
+            // calories
+            if (existing.GetCalories() >= 0)
+                inpCalories.SetInputValue(existing.GetCalories());
+            chkCalories.UpdateDisplay(existing.GetCalories() != -1);
+            inpCalories.IsEnabled = existing.GetCalories() != -1;
+
+            // quantity
+            inpValue.SetInputValue(existing.GetValue());
+
+            // unit
+            foreach (var item in cmbType.Items)
+            {
+                if (item != null)
+                {
+                    var tag = (MeasurementUnit)(item as ComboBoxItem).Tag;
+                    if (tag == existing.GetUnit())
+                        cmbType.SelectedItem = item;
+                }
+            }
+
+            // icon
+            (stckImages.Children[existing.GetImageIndex()] as Ingredient_Image_Option)?.Select();
+        }
+
+        /// <summary>
+        /// Returns the image index that is selected
+        /// </summary>
+        /// <returns>Selecting index</returns>
         int GetSelectedImageIndex()
         {
             int index = 0;
             foreach (Ingredient_Image_Option iio in stckImages.Children)
             {
-                if(iio.Selected())
+                // if it's selected, return the index
+                if (iio.Selected())
                 {
                     return index;
                 }
@@ -78,6 +105,9 @@ namespace Cookalong.Controls.PopupWindows
             return 0;
         }
 
+        /// <summary>
+        /// Loads the icons for the ingredient
+        /// </summary>
         private void LoadIcons_()
         {
             var index = 0;
@@ -88,6 +118,7 @@ namespace Cookalong.Controls.PopupWindows
                 {
                     try
                     {
+                        // create a display
                         var option = new Ingredient_Image_Option(index++, DeselectAllIcons_);
                         stckImages.Children.Add(option);
                     }
@@ -98,17 +129,23 @@ namespace Cookalong.Controls.PopupWindows
                 });
             } while (valid);
 
-                (stckImages.Children[0] as Ingredient_Image_Option)?.Select();
+            (stckImages.Children[0] as Ingredient_Image_Option)?.Select();
         }
 
+        /// <summary>
+        /// Sets all icons as not selected
+        /// </summary>
         void DeselectAllIcons_()
         {
-            foreach(Ingredient_Image_Option iio in stckImages.Children)
+            foreach (Ingredient_Image_Option iio in stckImages.Children)
             {
                 iio.Deselect();
             }
         }
 
+        /// <summary>
+        /// Enables/disables the calories input as appropriate
+        /// </summary>
         private void UpdateCalorieInput_()
         {
             inpCalories.IsEnabled = chkCalories.IsChecked();
@@ -119,30 +156,8 @@ namespace Cookalong.Controls.PopupWindows
         /// </summary>
         private void ConfigureButtons_()
         {
-            SetButtonAppearance_(cmdCancel, "Cancel");
-            SetButtonAppearance_(cmdConfirm, "Confirm");
-        }
-
-        /// TODO: Refactor this to a new file (used multiple places)
-        /// <summary>
-        /// Sets the appearance of a button
-        /// </summary>
-        /// <param name="button">The button to update</param>
-        /// <param name="msg">Message to display</param>
-        void SetButtonAppearance_(Input_Button button, string msg)
-        {
-            button.lblMessage.Content = msg;
-
-            try
-            {
-                var res = FindResource("Button" + msg);
-                button.bigBorder.BorderBrush = res as SolidColorBrush;
-            }
-            catch (Exception)
-            {
-                var res = FindResource("ButtonDefault");
-                button.bigBorder.BorderBrush = res as SolidColorBrush;
-            }
+            ControlHelper.SetButtonAppearance_(cmdCancel, "Cancel");
+            ControlHelper.SetButtonAppearance_(cmdConfirm, "Confirm");
         }
 
         /// <summary>
@@ -168,28 +183,40 @@ namespace Cookalong.Controls.PopupWindows
             }
         }
 
+        /// <summary>
+        /// Event handler for when the confirm button is pressed
+        /// </summary>
         private void cmdConfirm_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            // check length of the name
             if (txtName.Text.Length < MIN_LENGTH)
             {
                 RecipeMenu.Instance.ShowError($"Name is too short. Must be at least {MIN_LENGTH} characters");
             }
             else
             {
+                // get measurement and calories
                 var measurement = (MeasurementUnit)Enum.Parse(typeof(MeasurementUnit), (cmbType.SelectedItem as ComboBoxItem)?.Tag.ToString());
                 int cals = chkCalories.IsChecked() ? (int)inpCalories.GetValue() : -1;
 
+                // return the created ingredient
                 var i = new Ingredient(txtName.Text, measurement, inpValue.GetValue(), cals, GetSelectedImageIndex());
                 _confirmCallback?.Invoke(i);
             }
         }
 
+        /// <summary>
+        /// Event handler for when the mouse wheel is scrolled on the icon list
+        /// </summary>
         private void UserControl_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
+            // move left or right, based on direction
             if (e.Delta > 0)
                 scrllIcons.LineLeft();
             else
                 scrllIcons.LineRight();
+
+            // doesn't need to do anything else
             e.Handled = true;
         }
     }
