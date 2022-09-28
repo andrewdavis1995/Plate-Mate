@@ -70,7 +70,7 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Image Margin="5" Source="/Images/Search.png" RenderOptions.BitmapScalingMode="HighQuality"/>
-                        <TextBox Name="txtFilter" Grid.Column="1" MaxLength="15" FontSize="14" CaretBrush="White" BorderThickness="0" Background="{x:Null}" Foreground="White" VerticalContentAlignment="Center" TextChanged="txtFilter_TextChanged"/>
+                        <TextBox Name="txtFilter" Grid.Column="1" MaxLength="15" FontSize="14" CaretBrush="White" BorderThickness="0" Background="{x:Null}" Foreground="White" VerticalContentAlignment="Center" TextChanged="txtFilter_TextChanged" KeyboardNavigation.TabNavigation="None"/>
                     </Grid>
                 </Border>
                 <local:Input_Checkbox x:Name="chkVegetarian" Grid.Column="2" VerticalAlignment="Center"/>

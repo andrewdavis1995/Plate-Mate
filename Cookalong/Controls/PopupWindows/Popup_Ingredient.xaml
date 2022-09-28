@@ -20,7 +20,7 @@
                 <StackPanel>
                     <Label Name="lblNameTitle" Content="Name:" Foreground="{StaticResource GradientBackground}" FontSize="14" VerticalContentAlignment="Center" Margin="10, 2, 10, 0"/>
                     <Border BorderThickness="3" CornerRadius="20" BorderBrush="{StaticResource SearchColour}" Margin="10, 2, 10, 0" HorizontalAlignment="Stretch" Height="40" Background="{StaticResource SearchFill}">
-                        <TextBox Name="txtName" MaxLength="30" VerticalContentAlignment="Center" MaxLines="1" AcceptsReturn="False" AcceptsTab="False" FontSize="14" CaretBrush="White" BorderThickness="0" Background="{x:Null}" Foreground="White" Margin="10,2,10,2"/>
+                        <TextBox Name="txtName" MaxLength="30" VerticalContentAlignment="Center" MaxLines="1" AcceptsReturn="False" AcceptsTab="False" FontSize="14" CaretBrush="White" BorderThickness="0" Background="{x:Null}" Foreground="White" Margin="10,2,10,2" KeyboardNavigation.TabNavigation="None"/>
                     </Border>
 
                     <Grid>

@@ -125,46 +125,8 @@
             <Label Grid.Row="1" Background="#44FFFFFF" Margin="10, 0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="400"/>
             <local:Input_Button x:Name="cmdDelete" Width="130" Height="50" BorderThickness="0" VerticalAlignment="Top" HorizontalAlignment="Right" MouseLeftButtonDown="CmdDelete_MouseLeftButtonDown" Grid.Row="2" Margin="10"/>
             <Border Width="400" BorderThickness="3" CornerRadius="20" BorderBrush="{StaticResource SearchColour}" Background="{StaticResource SearchFill}" Margin="10" HorizontalAlignment="Left" Grid.Row="2">
-                <TextBox Name="txtRecipeName" MaxLength="35" FontSize="14" CaretBrush="White" BorderThickness="0" Background="{x:Null}" Foreground="White" VerticalContentAlignment="Center" Margin="10, 2"/>
+                <TextBox Name="txtRecipeName" MaxLength="35" FontSize="14" CaretBrush="White" BorderThickness="0" Background="{x:Null}" Foreground="White" VerticalContentAlignment="Center" Margin="10, 2" KeyboardNavigation.TabNavigation="None"/>
             </Border>
-            
-            <!--
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="140"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <local:Input_Button x:Name="cmdSelectImage" MouseLeftButtonDown="cmdSelectImage_MouseLeftButtonDown" Margin="5"/>
-                <Label Name="lblImageFile" Grid.Column="1" Margin="5" HorizontalAlignment="Left" Content="No image" Foreground="White" VerticalAlignment="Center"/>
-            </Grid>
-
-            <Grid Name="grdContent" Grid.Row="4">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" MinWidth="750"/>
-                    <ColumnDefinition Width="3*"/>
-                </Grid.ColumnDefinitions>
-                <Grid Name="grdIngredients">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Text="Ingredients:" Foreground="{StaticResource TextColour}" Margin="5, 0"/>
-                    <local:Input_Button x:Name="cmdNewIngredient" HorizontalAlignment="Right" MouseLeftButtonDown="CmdNewIngredient_MouseLeftButtonDown" Width="50" Height="50"/>
-                    
-                </Grid>
-                <Grid Name="grdMethod" Grid.Column="1" Margin="10">
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition Height="50"/>
-                    </Grid.RowDefinitions>
-                    <local:DragWindow x:Name="MethodSteps" VerticalAlignment="Stretch" />
-                    <Border Grid.Row="1" BorderThickness="3" CornerRadius="20" BorderBrush="White" Margin="5" HorizontalAlignment="Stretch">
-                        <TextBox Name="txtNewMethodStep" FontSize="14" MaxLines="20" MaxLength="150" TextWrapping="Wrap" CaretBrush="White" VerticalContentAlignment="Center" BorderThickness="0" Background="{x:Null}" Foreground="White" Margin="10, 2" AcceptsReturn="False" KeyDown="TextBox_KeyDown"/>
-                    </Border>
-
-
-                </Grid>
-            </Grid>-->
 
             <Grid Grid.Row="1000" Margin="0, 0, 0, 10">
                 <Grid.ColumnDefinitions>

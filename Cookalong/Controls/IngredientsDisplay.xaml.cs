@@ -25,7 +25,7 @@ namespace Cookalong.Controls
             _ingredient = ingredient;
             txtContent.Text = ingredient.GetName();
             txtQuantity.Text = ingredient.GetValue() + " " + Enum.GetName(typeof(MeasurementUnit), ingredient.GetUnit()).ToLower() + "(s)";
-            ingredientIcon.Source = new BitmapImage(new Uri(Popup_Ingredient.GetImagePath(ingredient.GetImageIndex())));
+            ingredientIcon.Source = new BitmapImage(new Uri(Ingredient_Image_Option.GetImagePath(ingredient.GetImageIndex())));
         }
 
         internal Ingredient GetIngredient()

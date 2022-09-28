@@ -7,7 +7,6 @@ using System.Linq;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace Cookalong
 {
@@ -16,12 +15,10 @@ namespace Cookalong
     /// </summary>
     public partial class RecipeMenu : Window
     {
-        float _columnCount = 1;
-
+        public static RecipeMenu Instance;
         public RecipeController Controller = new RecipeController();
 
-        public static RecipeMenu Instance;
-
+        float _columnCount = 1;
         Timer _filterTimer = new Timer();
 
         /// <summary>
@@ -34,28 +31,40 @@ namespace Cookalong
             SetupButtons_();
         }
 
+        /// <summary>
+        /// Sets up the buttons with the correct data
+        /// </summary>
         private void SetupButtons_()
         {
+            // configure data
             _filterTimer.Elapsed += _filterTimer_Elapsed;
             _filterTimer.Interval = 1000;
 
-            chkVegetarian.UpdateDisplay(false);
-            chkVegan.UpdateDisplay(false);
-            chkDairy.UpdateDisplay(false);
-            chkGluten.UpdateDisplay(false);
+            // configure filter checkboxes
+            SetupFilterCheckbox_(chkGluten, "Gluten-Free Only");
+            SetupFilterCheckbox_(chkVegetarian, "Vegetarian Only");
+            SetupFilterCheckbox_(chkVegan, "Vegan Only");
+            SetupFilterCheckbox_(chkDairy, "Dairy-Free Only");
 
-            chkVegetarian.AddTitle("Vegetarian Only", true);
-            chkVegetarian.AddCallbacks(UpdateDisplay, UpdateDisplay);
-            chkVegan.AddTitle("Vegan Only", true);
-            chkVegan.AddCallbacks(UpdateDisplay, UpdateDisplay);
-            chkDairy.AddTitle("Dairy-Free Only", true);
-            chkDairy.AddCallbacks(UpdateDisplay, UpdateDisplay);
-            chkGluten.AddTitle("Gluten-Free Only", true);
-            chkGluten.AddCallbacks(UpdateDisplay, UpdateDisplay);
-
+            // configure buttons
             cmdNewRecipe.Configure("New Recipe", false);
         }
 
+        /// <summary>
+        /// Sets up a checkbox with correct data and callbacks
+        /// </summary>
+        /// <param name="chk">Checkbox to set</param>
+        /// <param name="msg">Message to display</param>
+        void SetupFilterCheckbox_(Input_Checkbox chk, string msg)
+        {
+            chk.UpdateDisplay(false);
+            chk.AddTitle(msg, true);
+            chk.AddCallbacks(UpdateDisplay, UpdateDisplay);
+        }
+
+        /// <summary>
+        /// Called once the user stops typing for X seconds
+        /// </summary>
         private void _filterTimer_Elapsed(object? sender, ElapsedEventArgs e)
         {
             UpdateDisplay();
@@ -64,8 +73,6 @@ namespace Cookalong
         /// <summary>
         /// Callback when the page is fully loaded
         /// </summary>
-        /// <param name="sender">The object that triggered this event</param>
-        /// <param name="e">Event arguments</param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             DisplayRecipes_("");
@@ -135,11 +142,13 @@ namespace Cookalong
 
             byte dietary = 0;
 
+            // work out which filter checkboxes are set
             if (chkVegetarian.IsChecked()) dietary += Recipe.FLAG_VEGGIE;
             if (chkVegan.IsChecked()) dietary += Recipe.FLAG_VEGAN;
             if (chkDairy.IsChecked()) dietary += Recipe.FLAG_DAIRY;
             if (chkGluten.IsChecked()) dietary += Recipe.FLAG_GLUTEN;
 
+            // find recipes that match the filters
             var matchingRecipes = Controller.GetRecipes(filter, dietary);
 
             // set up the grid
@@ -152,8 +161,7 @@ namespace Cookalong
             foreach (var recipe in matchingRecipes)
             {
                 // create display
-                var display = new RecipeDisplay(recipe);
-                AddRecipeDisplay(display, col, row, recipe);
+                AddRecipeDisplay(col, row, recipe);
 
                 // move to next column
                 col++;
@@ -172,15 +180,15 @@ namespace Cookalong
         /// <summary>
         /// Adds a display to the grid
         /// </summary>
-        /// <param name="display">The display to show</param>
-        /// <param name="col"></param>
-        /// <param name="row"></param>
-        void AddRecipeDisplay(RecipeDisplay display, int col, int row, Recipe? recipe)
+        /// <param name="col">Column to add it in</param>
+        /// <param name="row">Row to add it in</param>
+        /// <param name="recipe">Recipe this represents</param>
+        void AddRecipeDisplay(int col, int row, Recipe recipe)
         {
+            var display = new RecipeDisplay(recipe);
             Grid.SetColumn(display, col);
             Grid.SetRow(display, row);
-            if (recipe != null)
-                display.MouseLeftButtonDown += (sender, e) => ShowRecipe_(recipe);
+            display.MouseLeftButtonDown += (sender, e) => ShowRecipe_(recipe);
 
             grdRecipes.Children.Add(display);
         }
@@ -206,27 +214,44 @@ namespace Cookalong
             popupHolder.Children.Insert(0, popup);
         }
 
+        /// <summary>
+        /// Updates the recipe list with latest data
+        /// </summary>
         public void UpdateDisplay()
         {
             Dispatcher.Invoke(() => DisplayRecipes_(txtFilter.Text));
         }
 
+        /// <summary>
+        /// Event hsndler for the exit button
+        /// </summary>
         private void cmdExit_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Environment.Exit(0);
         }
 
+        /// <summary>
+        /// Event handler for when the content of the filter search bar changes
+        /// </summary>
         private void txtFilter_TextChanged(object sender, TextChangedEventArgs e)
         {
+            // restart timer - waiting for the user to stop typing
             _filterTimer.Stop();
             _filterTimer.Start();
         }
 
+        /// <summary>
+        /// Event handler for the "new recipe" button
+        /// </summary>
         private void cmdNewRecipe_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             NewRecipe_();
         }
 
+        /// <summary>
+        /// Displays an error message popup
+        /// </summary>
+        /// <param name="msg">The message to display</param>
         public void ShowError(string msg)
         {
             ErrorPopup.MoveOn(msg);

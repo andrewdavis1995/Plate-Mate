@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,10 +21,16 @@ namespace Cookalong.Controls
         Action _deselectCallback;
         bool _selected = false;
 
-        public Ingredient_Image_Option(string path, Action callback)
+        public static string GetImagePath(int index)
+        {
+            return "pack://application:,,,/" + Assembly.GetExecutingAssembly().FullName + ";component/Images/FoodIcons/" + index + ".png";
+        }
+
+        public Ingredient_Image_Option(int index, Action callback)
         {
             InitializeComponent();
-            imgIcon.Source = new BitmapImage(new Uri((path)));
+            Uri uri = new Uri(GetImagePath(index), UriKind.RelativeOrAbsolute);
+            imgIcon.Source = BitmapFrame.Create(uri);
             _deselectCallback = callback;
         }
 

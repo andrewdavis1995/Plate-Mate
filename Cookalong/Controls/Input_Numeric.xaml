@@ -14,7 +14,7 @@
         </Grid.ColumnDefinitions>
         
         <Border BorderThickness="3" CornerRadius="20" BorderBrush="{StaticResource SearchColour}" Margin="2" HorizontalAlignment="Stretch" Height="40" Background="{StaticResource SearchFill}" Grid.Column="1">
-            <TextBox Name="txtContent" VerticalAlignment="Center" BorderThickness="0" Margin="5" Background="{x:Null}" Text="1" MaxLength="4" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="16" CommandManager.PreviewExecuted="txtContent_PreviewExecuted" PreviewTextInput="txtContent_PreviewTextInput" AllowDrop="False" LostFocus="txtContent_LostFocus" Foreground="White"/>
+            <TextBox Name="txtContent" VerticalAlignment="Center" BorderThickness="0" Margin="5" Background="{x:Null}" Text="1" MaxLength="4" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="16" CommandManager.PreviewExecuted="txtContent_PreviewExecuted" PreviewTextInput="txtContent_PreviewTextInput" AllowDrop="False" LostFocus="txtContent_LostFocus" Foreground="White" KeyboardNavigation.TabNavigation="None"/>
         </Border>
 
         <Border Name="lblDecrease" Grid.Column="0" Margin="5, 8" Height="20" Width="20" Background="Red" MouseLeftButtonDown="lblDecrease_MouseLeftButtonDown" CornerRadius="10">

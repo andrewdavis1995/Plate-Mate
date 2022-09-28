@@ -2,9 +2,11 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Cookalong.Controls.PopupWindows
 {
@@ -78,32 +80,25 @@ namespace Cookalong.Controls.PopupWindows
 
         private void LoadIcons_()
         {
-            // TODO: proper path
-            var path = "C:\\Users\\asuth\\source\\repos\\Cook-a-long\\Cookalong\\Images\\FoodIcons";
-            if (Directory.Exists(path))
+            var index = 0;
+            var valid = true;
+            do
             {
-                var files = Directory.GetFiles(path, "*.png").OrderBy(f => int.Parse(Path.GetFileName(f).Replace(".png", "")));
-                foreach (var f in files)
+                Dispatcher.Invoke(() =>
                 {
-                    var p = Path.GetFileName(f);
-                    var option = new Ingredient_Image_Option(f, DeselectAllIcons_);
-                    stckImages.Children.Add(option);
-                }
+                    try
+                    {
+                        var option = new Ingredient_Image_Option(index++, DeselectAllIcons_);
+                        stckImages.Children.Add(option);
+                    }
+                    catch (Exception)
+                    {
+                        valid = false;
+                    }
+                });
+            } while (valid);
 
                 (stckImages.Children[0] as Ingredient_Image_Option)?.Select();
-            }
-        }
-
-        public static string GetImagePath(int index)
-        {
-            // TODO: proper path
-            var path = "C:\\Users\\asuth\\source\\repos\\Cook-a-long\\Cookalong\\Images\\FoodIcons\\";
-            if (Directory.Exists(path))
-            {
-                return path + index + ".png";
-            }
-
-            return path + "0.png";
         }
 
         void DeselectAllIcons_()

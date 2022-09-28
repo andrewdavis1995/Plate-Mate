@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace Cookalong
 {
     internal class PopupController
     {
+        /// <summary>
+        /// Moves the specified control to the front
+        /// </summary>
+        /// <param name="control">The control to display</param>
         public static void AboveAll(UserControl control)
         {
             Panel.SetZIndex(control, 1000);
