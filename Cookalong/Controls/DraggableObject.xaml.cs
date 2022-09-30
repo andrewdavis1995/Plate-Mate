@@ -12,7 +12,7 @@ namespace Cookalong.Controls
     public partial class DraggableObject : UserControl
     {
         DragWindow? _parent;
-        Timer _clickDragTimer;
+        Timer _clickDragTimer = new Timer();
         bool _mouseDown;
         bool _timerRunning = false;
 
@@ -27,6 +27,7 @@ namespace Cookalong.Controls
             txtData.Text = content;
             _parent = parent;
 
+            // configure timer
             _clickDragTimer = new Timer();
             _clickDragTimer.Interval = 500;
             _clickDragTimer.Elapsed += _clickDragTimer_Elapsed;
@@ -40,10 +41,15 @@ namespace Cookalong.Controls
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Event handler for each "tick" of the timer which checks for click or drag
+        /// </summary>
         private void _clickDragTimer_Elapsed(object? sender, ElapsedEventArgs e)
         {
+            // stop timer
             _clickDragTimer.Stop();
 
+            // if the mouse is still down, begin a drag
             if (_mouseDown)
                 Dispatcher.Invoke(() => _parent?.StartDrag(this));
 
@@ -59,24 +65,33 @@ namespace Cookalong.Controls
             ClickStart_();
         }
 
+        /// <summary>
+        /// When the mouse button gets pressed on the control
+        /// </summary>
         private void ClickStart_()
         {
+            // record the click
             _mouseDown = true;
             _clickDragTimer.Start();
             _timerRunning = true;
         }
 
+        /// <summary>
+        /// When the mouse button gets released on the control
+        /// </summary>
         private void ClickEnd_()
         {
+            // if the timer is still running (checking for click or drag), this is a click
             if (_timerRunning)
             {
+                // stop timer, and do an edit
                 _timerRunning = false;
                 _clickDragTimer.Stop();
-
                 _parent?.EditStep(this);
             }
             else
             {
+                // stop dragging
                 _parent?.MouseReleased();
             }
 
@@ -91,11 +106,17 @@ namespace Cookalong.Controls
             ClickEnd_();
         }
 
+        /// <summary>
+        /// Event handler for the touch pad press
+        /// </summary>
         private void UserControl_TouchDown(object sender, TouchEventArgs e)
         {
             ClickStart_();
         }
 
+        /// <summary>
+        /// Event handler for the touch pad release
+        /// </summary>
         private void UserControl_TouchUp(object sender, TouchEventArgs e)
         {
             ClickEnd_();

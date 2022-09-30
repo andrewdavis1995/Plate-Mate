@@ -1,5 +1,6 @@
 ﻿using Andrew_2_0_Libraries.Models;
 using System;
+using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -22,7 +23,7 @@ namespace Cookalong.Controls.PopupWindows
         /// <param name="existing">The existing ingredient to update</param>
         /// <param name="cancelCallback">Callback when cancel is clicked</param>
         /// <param name="confirmCallback">Callback when confirm is clicked</param>
-        public Popup_Ingredient(Ingredient existing, Action cancelCallback, Action<Ingredient> confirmCallback)
+        public Popup_Ingredient(Ingredient ? existing, Action cancelCallback, Action<Ingredient> confirmCallback)
         {
             InitializeComponent();
 
@@ -218,6 +219,27 @@ namespace Cookalong.Controls.PopupWindows
 
             // doesn't need to do anything else
             e.Handled = true;
+        }
+
+        private void txtName_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                // don't allow space if nothing else
+                if (txtName.Text.Length == 0)
+                    e.Handled = true;
+                // don't allow double space
+                else if (txtName.Text.Last() == ' ')
+                    e.Handled = true;
+            }
+        }
+
+        private void txtName_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // don't allow these characters
+            char[] forbidden = { '@', '~', '\"', '#' };
+            if (forbidden.Any(c => e.Text.Contains(c)))
+                e.Handled = true;
         }
     }
 }

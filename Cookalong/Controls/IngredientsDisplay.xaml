@@ -15,12 +15,19 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="40"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="30"/>
         </Grid.ColumnDefinitions>
+
+        <Grid Name="clickable" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
 
         <Border Grid.RowSpan="2" Background="{StaticResource SearchColour}" CornerRadius="100" Height="30" Width="30">
             <Image Name="ingredientIcon" Source="/Images/FoodIcons/0.png" Margin="2" RenderOptions.BitmapScalingMode="HighQuality"/>
         </Border>
         <TextBlock Name="txtContent" Grid.Column="1" FontSize="14" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground ="White" Text="Text goes here"/>
         <TextBlock Name="txtQuantity" Grid.Row="1" Grid.Column="1" FontSize="12" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground ="#adadad" FontStyle="Italic" Text="Text goes here"/>
+
+        <Border Name="cmdDelete" Grid.RowSpan="2" Grid.Column="10" Background="{StaticResource ButtonCancel}" CornerRadius="100" Height="20" Width="20" MouseLeftButtonDown="cmdDelete_MouseLeftButtonDown">
+            <Image Name="cross" Source="/Images/cross.png" Margin="2" RenderOptions.BitmapScalingMode="HighQuality"/>
+        </Border>
     </Grid>
 </UserControl>

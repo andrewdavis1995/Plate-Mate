@@ -13,7 +13,7 @@ namespace Cookalong.Controls
 
         ErrorState _state = ErrorState.Inactive;
         Timer _movementTimer;
-        Task _waitTask;
+        Task ? _waitTask;
         uint _errorIndex = 0;
 
         const int MOVEMENT_SPEED = 10;

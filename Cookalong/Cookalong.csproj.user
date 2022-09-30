@@ -7,9 +7,6 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Controls\BulletPoint_Item.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Controls\CustomIcon.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -70,9 +67,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\MethodStepItem.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Controls\BulletPoint_Item.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\DraggableObject.xaml">

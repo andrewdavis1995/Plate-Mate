@@ -1,6 +1,4 @@
 ﻿using Cookalong.Controls.PopupWindows;
-using System;
-using System.Collections.Generic;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
@@ -42,6 +40,10 @@ namespace Cookalong.Controls
             stckData.Children.Add(_spacer);
         }
 
+        /// <summary>
+        /// Adds an item to the stack panel
+        /// </summary>
+        /// <param name="content">The content to add</param>
         public void AddItem(string content)
         {
             var newObject = new DraggableObject(this, content);
@@ -163,6 +165,10 @@ namespace Cookalong.Controls
             );
         }
 
+        /// <summary>
+        /// Returns the number of items in the data stack
+        /// </summary>
+        /// <returns></returns>
         internal int NumElements()
         {
             return stckData.Children.Count;
@@ -176,6 +182,9 @@ namespace Cookalong.Controls
             MouseReleased();
         }
 
+        /// <summary>
+        /// When the mouse button is released
+        /// </summary>
         public void MouseReleased()
         {
             // only do this if something is being dragged
@@ -214,6 +223,10 @@ namespace Cookalong.Controls
             MouseReleased();
         }
 
+        /// <summary>
+        /// When a step is clicked and needs to be edited
+        /// </summary>
+        /// <param name="draggableObject">The control to edit</param>
         internal void EditStep(DraggableObject draggableObject)
         {
             Popup_NewRecipe.Instance?.EditStep(draggableObject);

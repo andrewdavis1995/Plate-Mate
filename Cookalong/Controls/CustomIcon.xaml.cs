@@ -25,7 +25,7 @@ namespace Cookalong.Controls
         public void SetImage(string img)
         {
             imgIcon.Source = new BitmapImage(new Uri(
-                "pack://application:,,,/" + Assembly.GetExecutingAssembly().FullName + ";component/Images/" + img + ".png", UriKind.Relative));
+                "pack://application:,,,/" + Assembly.GetExecutingAssembly().FullName + ";component/Images/" + img + ".png", UriKind.RelativeOrAbsolute));
         }
     }
 }

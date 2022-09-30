@@ -42,88 +42,91 @@ namespace Cookalong.Controls.PopupWindows
             DisplayRecipe_();
         }
 
+        /// <summary>
+        /// Displays the recipe
+        /// </summary>
         private void DisplayRecipe_()
         {
             if (_recipe == null) return;
 
+            // reset UI
+            stckIngredients.Children.Clear();
+            stckMethod.Children.Clear();
+
+            // set icon images
+            iconCalories.SetImage("Calories");
+            iconServings.SetImage("Servings");
+            iconTiming.SetImage("Timing");
+
+            // display name
             txtRecipeName.Text = _recipe.GetRecipeName();
 
-            stckIngredients.Children.Clear();
+            // display ingredients
             foreach(var i in _recipe.GetIngredients())
             {
-                var output = new IngredientsDisplay(i);
+                var output = new IngredientsDisplay(i, stckIngredients, grdOverall);
+                
+                // can't delete on this page
+                output.DisableDelete();
                 stckIngredients.Children.Add(output);
             }
 
-            stckMethod.Children.Clear();
             int index = 1;
+            // display method
             foreach(var s in _recipe.GetMethodSteps())
             {
                 stckMethod.Children.Add(new MethodStepItem(index++, s));
             }
 
+            // check the image exists
             if (File.Exists(_recipe.GetImagePath()))
             {
+                // display the recipe image
                 imgRecipe.Source = new BitmapImage(new Uri(_recipe.GetImagePath(), UriKind.Absolute));
                 imgBackground.Source = new BitmapImage(new Uri(_recipe.GetImagePath(), UriKind.Absolute));
                 imgBackground.Visibility = Visibility.Visible;
             }
             else
             {
+                // no image to display
                 imgBackground.Visibility = Visibility.Collapsed;
             }
 
+            // display data
             txtServings.Text = _recipe.GetServingSize().ToString();
             txtCalories.Text = _recipe.GetTotalCalories() > 0 ? _recipe.GetTotalCalories().ToString() : "";
 
-            SetTime_(_recipe.GetSetTime());
-
+            // show dietary icons
             imgVegetarian.Visibility = _recipe.IsVegetarian() ? Visibility.Visible : Visibility.Collapsed;
             imgVegan.Visibility = _recipe.IsVegan() ? Visibility.Visible : Visibility.Collapsed;
             imgGluten.Visibility = _recipe.IsGlutenFree() ? Visibility.Visible : Visibility.Collapsed;
             imgDairy.Visibility = _recipe.IsDairyFree() ? Visibility.Visible : Visibility.Collapsed;
 
+            // show calories
             iconCalories.Visibility = _recipe.GetTotalCalories() > -1 ? Visibility.Visible : Visibility.Collapsed;
-            iconCalories.SetImage("Calories");
-            iconServings.SetImage("Servings");
-            iconTiming.SetImage("Timing");
 
-            SetTime_(_recipe.GetSetTime());
+            // show time/duration
+            txtTiming.Text = StringHelper.GetTimeString(_recipe.GetSetTime());
         }
 
-        private void SetTime_(uint v)
-        {
-            if(v == 0)
-            {
-                txtTiming.Text = "No time specified";
-            }
-            else
-            {
-                var hours = v / 60;
-                var minutes = v - (hours * 60);
-
-                string str = "";
-                if (hours > 0) str += hours + " hours";
-                if (minutes > 0)
-                {
-                    if (hours > 0) str += hours + ", ";
-                    str += minutes + " minutes";
-                }
-
-                txtTiming.Text = str;
-            }
-        }
-
+        /// <summary>
+        /// Event handler for the close button
+        /// </summary>
         private void cmdClose_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             _parent?.Children.Remove(this);
         }
 
+        /// <summary>
+        /// Event handler for the Edit button
+        /// </summary>
         private void cmdEdit_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            // show popup
             var editWindow = new Popup_NewRecipe(_parent, _recipe, RecipeMenu.Instance?.Controller,
                 (r) =>
                 {
+                    // display recipe callback
                     RecipeMenu.Instance?.UpdateDisplay();
                     _recipe = r;
 
@@ -134,6 +137,7 @@ namespace Cookalong.Controls.PopupWindows
                 }
             );
 
+            // ensure it is top most control
             PopupController.AboveAll(editWindow);
             _parent.Children.Add(editWindow);
         }

@@ -9,6 +9,9 @@ namespace Cookalong.Controls
     /// </summary>
     public partial class Input_Button : UserControl
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Input_Button()
         {
             InitializeComponent();

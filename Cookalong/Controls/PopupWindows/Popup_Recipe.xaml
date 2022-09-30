@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Cookalong.Controls"
              mc:Ignorable="d" FontFamily="Segoe UI"
              d:DesignHeight="600" d:DesignWidth="1000" Background="{StaticResource PopupOverlay}">
-    <Grid Background="{StaticResource GradientBackgroundSimple}" Opacity="0.985">
+    <Grid Name="grdOverall" Background="{StaticResource GradientBackgroundSimple}" Opacity="0.985">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="4*"/>
