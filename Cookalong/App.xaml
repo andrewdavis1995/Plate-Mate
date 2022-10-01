@@ -128,6 +128,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
+        <FontFamily x:Key="Roboto Thin">pack://application:,,,/Fonts/#Roboto Light</FontFamily>
 
 
     </Application.Resources>

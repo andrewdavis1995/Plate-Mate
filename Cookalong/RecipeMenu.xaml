@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Cookalong.Controls"
+        xmlns:local="clr-namespace:Cookalong.Controls" FontFamily="{StaticResource Roboto Thin}"
         mc:Ignorable="d"
         Title="Recipe Menu" Height="750" Width="1100" Background="{StaticResource WindowBackground}" ResizeMode="NoResize" Loaded="Window_Loaded" WindowStyle="None" WindowState="Maximized">
     <Grid Name="MainGrid">
@@ -18,12 +18,13 @@
 
         <Grid Background="{StaticResource GradientBackground}" Grid.RowSpan="10">
             <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
                 <RowDefinition/>
                 <RowDefinition Height="50" />
             </Grid.RowDefinitions>
-            <Image Source="/Images/Logo.png" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10" Width="200" RenderOptions.BitmapScalingMode="HighQuality" />
+            <Image Source="/Images/Logo.png" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15" Width="200" RenderOptions.BitmapScalingMode="HighQuality" />
 
-            <Grid Height="35" Grid.Row="1" MouseLeftButtonDown="cmdExit_MouseLeftButtonDown">
+            <Grid Height="35" Grid.Row="100" MouseLeftButtonDown="cmdExit_MouseLeftButtonDown">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -33,14 +34,22 @@
             </Grid>
         </Grid>
 
-        <StackPanel Grid.Row="1" Margin="0, 20" Height="Auto" VerticalAlignment="Top">
-            <Grid Height="40">
+        <StackPanel Grid.Row="1" Margin="0, 5" Height="Auto" VerticalAlignment="Top">
+            <Grid Height="40" Background="Transparent" MouseLeftButtonDown="RecipeButton_Click">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="30"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Image Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Source="/Images/RecipeList.png" Margin="5" RenderOptions.BitmapScalingMode="HighQuality"/>
                 <Label Grid.Column="1" Content="My Recipes" Foreground="White" FontSize="14" VerticalAlignment="Center"/>
+            </Grid>
+            <Grid Height="40" Background="Transparent" MouseLeftButtonDown="BackupsButton_Click">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="30"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Source="/Images/Timing.png" Margin="5" RenderOptions.BitmapScalingMode="HighQuality"/>
+                <Label Grid.Column="1" Content="Data Management" Foreground="White" FontSize="14" VerticalAlignment="Center"/>
             </Grid>
         </StackPanel>
 
@@ -94,6 +103,18 @@
                     </Grid.RowDefinitions>
                 </Grid>
             </ScrollViewer>
+
+            <Grid Name="grdBackups" Grid.ColumnSpan="100" Grid.RowSpan="100" Visibility="Collapsed" Margin="-5" Background="{StaticResource GradientBackground}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Content="Restore previous data" Foreground="White" FontSize="20" FontWeight="Bold"/>
+                    <StackPanel Name="stckBackups" Grid.Row="1" Background="#11000000"/>
+                </Grid>
+            </Grid>
+
         </Grid>
 
         <local:ErrorMessage x:Name="ErrorPopup" Grid.ColumnSpan="1000" Grid.RowSpan="1000" Panel.ZIndex="1001" Visibility="Collapsed"/>

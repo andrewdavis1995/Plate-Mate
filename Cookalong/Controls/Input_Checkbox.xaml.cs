@@ -11,7 +11,7 @@ namespace Cookalong.Controls
     /// </summary>
     public partial class Input_Checkbox : UserControl
     {
-        private bool _switchState = true;
+        private bool _switchState = false;
         Action ? CheckedCallback;
         Action ? UncheckedCallback;
 

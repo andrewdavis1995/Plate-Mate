@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Cookalong.Controls"
-             mc:Ignorable="d"  FontFamily="Segoe UI"
+             mc:Ignorable="d"
+             FontFamily="{StaticResource Roboto Thin}"
              Height="50" Width="130" IsEnabledChanged="UserControl_IsEnabledChanged">
     <Grid>
         <Grid.ColumnDefinitions>

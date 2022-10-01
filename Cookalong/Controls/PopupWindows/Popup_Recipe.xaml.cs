@@ -1,5 +1,6 @@
 ﻿using Andrew_2_0_Libraries.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -38,6 +39,7 @@ namespace Cookalong.Controls.PopupWindows
             // configure buttons
             cmdClose.Configure("Back", true, "Cancel");
             cmdEdit.Configure("Edit");
+            cmdWalkthrough.Configure("Begin");
 
             DisplayRecipe_();
         }
@@ -140,6 +142,23 @@ namespace Cookalong.Controls.PopupWindows
             // ensure it is top most control
             PopupController.AboveAll(editWindow);
             _parent.Children.Add(editWindow);
+        }
+
+        /// <summary>
+        /// Event handler for the walkthrough button
+        /// </summary>
+        private void cmdWalkthrough_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            // TODO: replace this once timings have been specified/stored
+            var steps = new List<MethodStep>();
+            foreach(var v in _recipe.GetMethodSteps())
+            {
+                steps.Add(new MethodStep(v, 0, 0));
+            }
+
+            // show the walkthrough dialog
+            var wt = new Walkthrough(_recipe.GetRecipeName(), steps, PlaybackMode.ClickThrough);
+            wt.ShowDialog();
         }
     }
 }

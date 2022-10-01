@@ -1,0 +1,81 @@
+﻿<Window x:Class="Cookalong.Controls.Walkthrough"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Cookalong.Controls" Closed="Window_Closed"
+        FontFamily="{StaticResource Roboto Thin}"
+        mc:Ignorable="d"
+        Title="DisplayWindow" Height="450" Width="800" KeyDown="Window_KeyDown" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize">
+    <Window.Resources>
+        <Storyboard x:Key="storyFire">
+            <ColorAnimation From="#AEDA6913" To="#55DA6913" Duration="0:0:2.5" AutoReverse="True" Storyboard.TargetName="FireGrid" Storyboard.TargetProperty="Background.GradientStops[1].Color" BeginTime="0:0:0" RepeatBehavior="Forever"  />
+        </Storyboard>
+    </Window.Resources>
+
+    <Grid Name="GradBorder">
+        <Grid.Background>
+            <RadialGradientBrush RadiusX="1" RadiusY="1">
+                <GradientStop Color="#FF0A0E3D" Offset="1"/>
+                <GradientStop Color="#FF249EA3" Offset="0"/>
+                <GradientStop Color="#FF27166D" Offset="0.34"/>
+                <GradientStop Color="#FF25648C"/>
+            </RadialGradientBrush>
+        </Grid.Background>
+
+        <Grid.Triggers>
+            <EventTrigger RoutedEvent="Grid.Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation From="1" To="5" Duration="0:0:10" AutoReverse="True" Storyboard.TargetName="GradBorder" Storyboard.TargetProperty="Background.RadiusX" BeginTime="0:0:0" RepeatBehavior="Forever"  />
+                        <DoubleAnimation From="1" To="5" Duration="0:0:10" AutoReverse="True" Storyboard.TargetName="GradBorder" Storyboard.TargetProperty="Background.RadiusY" BeginTime="0:0:0" RepeatBehavior="Forever"  />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Grid.Triggers>
+
+        <Grid Name="FireGrid" Height="100" VerticalAlignment="Bottom" Visibility="Hidden">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#00000000"/>
+                    <GradientStop Color="#AEE57100" Offset="1"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+        </Grid>
+        <Label Name="lblTime" Content="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Collapsed"/>
+        <StackPanel Name="stckUpdates" Width="100" HorizontalAlignment="Left"/>
+        <Grid Width="200" HorizontalAlignment="Right" Background="#11000000">
+            <StackPanel Name="stckPrevious" VerticalAlignment="Top" Margin="0, -100, 0, 0"/>
+        </Grid>
+
+        <Grid Name="grdMessage" Height="250" Width="500" Margin="-500, 100, 0, 0" HorizontalAlignment="Left" VerticalAlignment="Top">
+
+            <Grid.RenderTransform>
+                <ScaleTransform x:Name="newInstructionScale" ScaleX="1" ScaleY="1"/>
+            </Grid.RenderTransform>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Image Source="/Images/Logo.png" Margin="5"/>
+
+            <TextBlock Name="lblMsg" FontSize="20" Foreground="White" Grid.Row="1" Text="HELLO!" VerticalAlignment="Center" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" Margin="5, 15"/>
+        </Grid>
+
+        <Grid Name="grdInstructions" Height="40" VerticalAlignment="Bottom" Margin="20" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Name="lblContinue" Foreground="White" Text="Press SPACE to continue" VerticalAlignment="Bottom" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" FontSize="16" />
+            <TextBlock Name="lblBack" Grid.Row="1" Foreground="#aeaeae" Text="Press BACKSPACE to go back a step" VerticalAlignment="Top" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" FontSize="10"/>
+        </Grid>
+        
+        <TextBlock Name="txtTitle" FontSize="20" Foreground="White" Grid.Row="1" Text="HELLO!" VerticalAlignment="Top" HorizontalAlignment="Left" TextWrapping="Wrap" TextAlignment="Center" Margin="15"/>
+
+        <Image Source="/Images/Logo.png" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top" Width="60" RenderOptions.BitmapScalingMode="HighQuality"/>
+        
+    </Grid>
+</Window>

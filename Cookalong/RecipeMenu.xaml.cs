@@ -17,6 +17,7 @@ namespace Cookalong
     {
         public static RecipeMenu Instance;
         public RecipeController Controller = new RecipeController();
+        Popup_Confirmation? _confirmationPopup;
 
         float _columnCount = 1;
         Timer _filterTimer = new Timer();
@@ -29,6 +30,7 @@ namespace Cookalong
             InitializeComponent();
             Instance = this;
             SetupButtons_();
+            LoadBackups_();
         }
 
         /// <summary>
@@ -227,6 +229,10 @@ namespace Cookalong
         /// </summary>
         private void cmdExit_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            // take a backup of the data
+            BackupHandler.SaveBackup();
+
+            // exit
             Environment.Exit(0);
         }
 
@@ -255,6 +261,78 @@ namespace Cookalong
         public void ShowError(string msg)
         {
             ErrorPopup.MoveOn(msg);
+        }
+
+        /// <summary>
+        /// Load the backup data
+        /// </summary>
+        void LoadBackups_()
+        {
+            var backups = BackupHandler.GetBackups();
+
+            foreach(var b in backups)
+            {
+                // create control
+                var bo = new BackupOption(b);
+
+                // assign callback
+                bo.cmdRestore.MouseLeftButtonDown += (o, s) => 
+                {
+                    _confirmationPopup = new Popup_Confirmation("Confirm restore", "Are you sure you wish to restore this data? Current data will be overwritten.", () =>
+                    {
+                        // cancel callback
+                        popupHolder?.Children.Remove(_confirmationPopup);
+                    },
+                    () =>
+                    {
+                        // confirm callback
+                        popupHolder?.Children.Remove(_confirmationPopup);
+
+                        // restore data
+                        var success = BackupHandler.RestoreBackup_(b);
+
+                        // show error if failed
+                        if (success)
+                        {
+                            // hide popup
+                            grdBackups.Visibility = Visibility.Collapsed;
+
+                            // refresh data, and display
+                            Controller.Refresh();
+                            DisplayRecipes_(txtFilter.Text);
+                        }
+                        else
+                        {
+                            var err = new ErrorMessage();
+                            popupHolder.Children.Add(err);
+                            err.MoveOn("Could not restore data");
+                        }
+                    });
+
+                    // ensure popup is always on top
+                    PopupController.AboveAll(_confirmationPopup);
+                    popupHolder.Children.Add(_confirmationPopup);
+                };
+
+                // add to display
+                stckBackups.Children.Add(bo);
+            }
+        }
+
+        /// <summary>
+        /// Event handler for the recipe button
+        /// </summary>
+        private void RecipeButton_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            grdBackups.Visibility = Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// Event handler for the backups button
+        /// </summary>
+        private void BackupsButton_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            grdBackups.Visibility = Visibility.Visible;
         }
     }
 }

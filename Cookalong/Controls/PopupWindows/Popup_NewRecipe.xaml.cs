@@ -115,7 +115,7 @@ namespace Cookalong.Controls.PopupWindows
             // method steps
             foreach (var step in recipe.GetMethodSteps())
             {
-                methodList.AddItem(step);
+                methodList.AddItem(step, grdOverall);
             }
 
             // ingredients
@@ -128,10 +128,9 @@ namespace Cookalong.Controls.PopupWindows
         /// <summary>
         /// Event handler for clicking an ingredient display
         /// </summary>
-        private void IngDisp_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void IngDisp_MouseLeftButtonDown(IngredientsDisplay ing)
         {
-            if (sender is IngredientsDisplay control)
-                EditIngredient(control);
+            EditIngredient(ing);
         }
 
         /// <summary>
@@ -359,7 +358,7 @@ namespace Cookalong.Controls.PopupWindows
                 if (draggableObject != null)
                     draggableObject.txtData.Text = a;
                 else
-                    methodList.AddItem(a);
+                    methodList.AddItem(a, grdOverall);
 
                 _parent?.Children.Remove(_methodPopup);
             });
@@ -409,7 +408,7 @@ namespace Cookalong.Controls.PopupWindows
         void NewIngredientDisplay_(Ingredient i)
         {
             var ingDisp = new IngredientsDisplay(i, stckIngredients, grdOverall);
-            ingDisp.clickable.MouseLeftButtonDown += IngDisp_MouseLeftButtonDown;
+            ingDisp.clickable.MouseLeftButtonDown += (o, s) => IngDisp_MouseLeftButtonDown(ingDisp);
             stckIngredients.Children.Add(ingDisp);
         }
 

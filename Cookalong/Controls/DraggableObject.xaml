@@ -4,15 +4,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Cookalong.Controls"
-             mc:Ignorable="d"  FontFamily="Segoe UI" Foreground="White"
+             mc:Ignorable="d"
+             FontFamily="{StaticResource Roboto Thin}"
+             Foreground="White"
            Height="30" Margin="0, 1" d:DesignWidth="800" Background="{StaticResource ButtonColour}" MouseLeftButtonDown="UserControl_MouseDown" MouseLeftButtonUp="UserControl_MouseUp" TouchDown="UserControl_TouchDown" TouchUp="UserControl_TouchUp">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
             <ColumnDefinition/>
+            <ColumnDefinition Width="30"/>
         </Grid.ColumnDefinitions>
         <Label Background="#99FFFFFF"/>
         <TextBlock Grid.Column="1" Name="txtData" Text="0" VerticalAlignment="Center" Margin="5" FontSize="14"/>
         <Grid Grid.ColumnSpan="20" Name="Highlight" Background="#25ffffff" Visibility="Collapsed"/>
+
+        <Border Name="cmdDelete" Grid.RowSpan="2" Grid.Column="10" Background="{StaticResource ButtonCancel}" CornerRadius="100" Height="15" Width="15" MouseLeftButtonDown="cmdDelete_MouseLeftButtonDown">
+            <Image Name="cross" Source="/Images/cross.png" Margin="2" RenderOptions.BitmapScalingMode="HighQuality"/>
+        </Border>
+
     </Grid>
 </UserControl>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cookalong.Controls.PopupWindows;
+using System;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,17 +16,20 @@ namespace Cookalong.Controls
         Timer _clickDragTimer = new Timer();
         bool _mouseDown;
         bool _timerRunning = false;
+        Popup_Confirmation? _confirmationPopup;
+        Grid _parentGrid;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="parent">The window that the control can be dragged around</param>
         /// <param name="content">The data to display on the control</param>
-        public DraggableObject(DragWindow parent, string content)
+        public DraggableObject(DragWindow parent, string content, Grid parentGrid)
         {
             InitializeComponent();
             txtData.Text = content;
             _parent = parent;
+            _parentGrid = parentGrid;
 
             // configure timer
             _clickDragTimer = new Timer();
@@ -50,7 +54,7 @@ namespace Cookalong.Controls
             _clickDragTimer.Stop();
 
             // if the mouse is still down, begin a drag
-            if (_mouseDown)
+            if (_mouseDown && _confirmationPopup.Visibility != Visibility.Visible)
                 Dispatcher.Invoke(() => _parent?.StartDrag(this));
 
             _timerRunning = false;
@@ -120,6 +124,27 @@ namespace Cookalong.Controls
         private void UserControl_TouchUp(object sender, TouchEventArgs e)
         {
             ClickEnd_();
+        }
+
+        private void cmdDelete_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _confirmationPopup = new Popup_Confirmation("Confirm delete", "Are you sure you want to delete this ingredient?", () =>
+            {
+                // cancel callback
+                _parentGrid?.Children.Remove(_confirmationPopup);
+                _confirmationPopup.Visibility = Visibility.Collapsed;
+            },
+            () =>
+            {
+                // confirm callback
+                _parentGrid?.Children.Remove(_confirmationPopup);
+                _parent.stckData.Children.Remove(this);
+                _confirmationPopup.Visibility = Visibility.Collapsed;
+            });
+
+            // show popup
+            PopupController.AboveAll(_confirmationPopup);
+            _parentGrid?.Children.Add(_confirmationPopup);
         }
     }
 }

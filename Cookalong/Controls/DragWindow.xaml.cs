@@ -44,9 +44,9 @@ namespace Cookalong.Controls
         /// Adds an item to the stack panel
         /// </summary>
         /// <param name="content">The content to add</param>
-        public void AddItem(string content)
+        public void AddItem(string content, Grid parentGrid)
         {
-            var newObject = new DraggableObject(this, content);
+            var newObject = new DraggableObject(this, content, parentGrid);
             stckData.Children.Add(newObject);
         }
 

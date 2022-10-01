@@ -21,6 +21,14 @@ namespace Andrew_2_0_Libraries.Controllers
         }
 
         /// <summary>
+        /// Reloads the data
+        /// </summary>
+        public void Refresh()
+        {
+            _recipes = _fileHandler.ReadFile<Recipe>();
+        }
+
+        /// <summary>
         /// Adds a new recipe
         /// </summary>
         /// <param name="recipeName">The name of the recipe</param>

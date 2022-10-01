@@ -2,7 +2,7 @@ using System;
 
 namespace Andrew_2_0_Libraries.Models
 {
-    public enum MeasurementUnit { Breast, Chunk, Florets, Gram, Leaves, Millilitre, Serving, Slice, Sprinkle, Squirt, Tablespoon, Teaspoon, Unit };
+    public enum MeasurementUnit { Breast, Chunk, Florets, Gram, Leaves, Millilitre, Ounce, Serving, Slice, Sprinkle, Squirt, Tablespoon, Teaspoon, Unit };
 
     public class Ingredient : BaseSaveable
     {

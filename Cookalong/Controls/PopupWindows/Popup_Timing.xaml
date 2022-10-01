@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Cookalong.Controls" FontFamily="Segoe UI"
+             xmlns:local="clr-namespace:Cookalong.Controls"
+             FontFamily="{StaticResource Roboto Thin}"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800" Background="{StaticResource PopupOverlay}" Grid.ColumnSpan="1000" Grid.RowSpan="1000">
     <Border CornerRadius="8" Margin="40" MaxWidth="600" MaxHeight="170" Background="{StaticResource WindowBackground}">

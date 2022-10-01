@@ -7,6 +7,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Controls\BackupOption.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Controls\CustomIcon.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -52,8 +55,14 @@
     <Compile Update="Controls\RecipeDisplay.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Controls\Walkthrough.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Controls\BackupOption.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Controls\CustomIcon.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -103,6 +112,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\RecipeDisplay.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Walkthrough.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="RecipeMenu.xaml">

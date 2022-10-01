@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Cookalong.Controls"
-             mc:Ignorable="d"  FontFamily="Segoe UI"
+             mc:Ignorable="d"
+             FontFamily="{StaticResource Roboto Thin}"
              d:DesignHeight="200" d:DesignWidth="400" Background="{DynamicResource RecipeHoverLeave}" Margin="10" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave">
     <UserControl.Effect>
         <DropShadowEffect Direction="225" ShadowDepth="5" Opacity="0.15"/>

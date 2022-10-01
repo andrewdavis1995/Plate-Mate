@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Cookalong.Controls" FontFamily="Segoe UI"
+             xmlns:local="clr-namespace:Cookalong.Controls"
+             FontFamily="{StaticResource Roboto Thin}"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="200">
     <Border Name="bigBorder" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" BorderThickness="0" CornerRadius="8" BorderBrush="{x:Null}" Background="{StaticResource ButtonColour}">

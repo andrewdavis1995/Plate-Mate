@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Cookalong.Controls"
-             mc:Ignorable="d" FontFamily="Segoe UI"
+             mc:Ignorable="d"
+             FontFamily="{StaticResource Roboto Thin}"
              d:DesignHeight="600" d:DesignWidth="1000" Background="{StaticResource PopupOverlay}">
     <Grid Name="grdOverall" Background="{StaticResource GradientBackgroundSimple}" Opacity="0.985">
         <Grid.ColumnDefinitions>
@@ -14,14 +15,20 @@
         </Grid.ColumnDefinitions>
         <Image Name="imgBackground" Grid.RowSpan="1000" Grid.ColumnSpan="1000" RenderOptions.BitmapScalingMode="HighQuality" Source="/Controls/PopupWindows/277452207_676165290496427_61168329148826133_n.jpg" Stretch="UniformToFill" Opacity="0.07"/>
 
-        <StackPanel Grid.Column="1" >
-            <TextBlock Name="txtRecipeName" Text="Recipe Name" Margin="10" Foreground="{StaticResource TextColour}" FontSize="40" FontWeight="Bold" />
-            <TextBlock Name="txtMethodHeader" Text="Method:" Margin="10, 10, 10, 2" Foreground="{StaticResource TextColour}" FontSize="16" FontWeight="Light" />
-            <Label Margin="10, 0, 10, 5" Background="#77FFFFFF" Height="2"/>
-            <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10, 0">
+        <Grid Grid.Column="1" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Name="txtRecipeName" Text="Recipe Name" Grid.Row="0" Margin="10, 10, 10, 5" Foreground="{StaticResource TextColour}" FontSize="40" FontWeight="Bold" />
+            <TextBlock Name="txtMethodHeader" Text="Method:" Grid.Row="1" Margin="10, 2" Foreground="{StaticResource TextColour}" FontSize="16" FontWeight="Light" />
+            <Label Margin="10, 0, 10, 5" Background="#77FFFFFF" Grid.Row="2" Height="2"/>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10, 0" Grid.Row="3">
                 <StackPanel Name="stckMethod"/>
             </ScrollViewer>
-        </StackPanel>
+        </Grid>
 
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
@@ -87,6 +94,7 @@
                     </Border>
                 </Grid>
                 <local:Input_Button x:Name="cmdEdit" Width="120" Height="40" MouseLeftButtonDown="cmdEdit_MouseLeftButtonDown" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5"/>
+                <local:Input_Button x:Name="cmdWalkthrough" Width="120" Height="40" MouseLeftButtonDown="cmdWalkthrough_MouseLeftButtonDown" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5"/>
             </StackPanel>
 
 

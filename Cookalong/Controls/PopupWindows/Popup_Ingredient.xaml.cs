@@ -39,7 +39,7 @@ namespace Cookalong.Controls.PopupWindows
             // configure numeric inputs
             inpCalories.Initialise(false, 1000, 4);
             inpValue.Initialise(false, 2000, 4);
-            chkCalories.UpdateDisplay(false);
+            chkCalories.UpdateDisplay(true);
             inpCalories.IsEnabled = true;
 
             LoadTypes_();
@@ -67,6 +67,7 @@ namespace Cookalong.Controls.PopupWindows
                 inpCalories.SetInputValue(existing.GetCalories());
             chkCalories.UpdateDisplay(existing.GetCalories() != -1);
             inpCalories.IsEnabled = existing.GetCalories() != -1;
+            inpCalories.Visibility = existing.GetCalories() != -1 ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
 
             // quantity
             inpValue.SetInputValue(existing.GetValue());
