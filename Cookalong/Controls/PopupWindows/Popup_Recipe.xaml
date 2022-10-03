@@ -9,8 +9,8 @@
              d:DesignHeight="600" d:DesignWidth="1000" Background="{StaticResource PopupOverlay}">
     <Grid Name="grdOverall" Background="{StaticResource GradientBackgroundSimple}" Opacity="0.985">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
         <Image Name="imgBackground" Grid.RowSpan="1000" Grid.ColumnSpan="1000" RenderOptions.BitmapScalingMode="HighQuality" Source="/Controls/PopupWindows/277452207_676165290496427_61168329148826133_n.jpg" Stretch="UniformToFill" Opacity="0.07"/>
@@ -22,7 +22,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <TextBlock Name="txtRecipeName" Text="Recipe Name" Grid.Row="0" Margin="10, 10, 10, 5" Foreground="{StaticResource TextColour}" FontSize="40" FontWeight="Bold" />
+            <TextBlock Name="txtRecipeName" Text="Recipe Name" Grid.Row="0" Margin="10, 10, 10, 5" Foreground="{StaticResource TextColour}" FontSize="40" FontWeight="Black" />
             <TextBlock Name="txtMethodHeader" Text="Method:" Grid.Row="1" Margin="10, 2" Foreground="{StaticResource TextColour}" FontSize="16" FontWeight="Light" />
             <Label Margin="10, 0, 10, 5" Background="#77FFFFFF" Grid.Row="2" Height="2"/>
             <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="10, 0" Grid.Row="3">
@@ -50,28 +50,28 @@
             </Grid.RowDefinitions>
 
             <StackPanel>
-                <Image Name="imgRecipe" Source="/Images/recipeImage.png" RenderOptions.BitmapScalingMode="HighQuality" Height="200" Width="200" Stretch="UniformToFill" />
-                <Grid Margin="5">
+                <Image Name="imgRecipe" Source="/Images/recipeImage.png" RenderOptions.BitmapScalingMode="HighQuality" Stretch="UniformToFill" Margin="10" />
+                <Grid Margin="5, 5, 5, 2">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     
-                    <local:CustomIcon x:Name="iconServings" Grid.Column="0" Grid.Row="0"/>
-                    <local:CustomIcon x:Name="iconTiming" Grid.Column="0" Grid.Row="1"/>
-                    <local:CustomIcon x:Name="iconCalories" Grid.Column="0" Grid.Row="2"/>
+                    <local:CustomIcon x:Name="iconServings" Grid.Column="0" Grid.Row="0" Margin="2"/>
+                    <local:CustomIcon x:Name="iconTiming" Grid.Column="0" Grid.Row="1" Margin="2"/>
+                    <local:CustomIcon x:Name="iconCalories" Grid.Column="0" Grid.Row="2" Margin="2"/>
 
                     <TextBlock Name="txtServings" Grid.Column="1" Grid.Row="0" Margin="2" Text="000" VerticalAlignment="Center" Foreground="White" FontSize="14"/>
                     <TextBlock Name="txtTiming" Grid.Column="1" Grid.Row="1" Margin="2" Text="000" VerticalAlignment="Center" Foreground="White" FontSize="14"/>
                     <TextBlock Name="txtCalories" Grid.Column="1" Grid.Row="2" Margin="2" Text="000" VerticalAlignment="Center" Foreground="White" FontSize="14"/>
                 </Grid>
 
-                <Grid Grid.Row="2" Height="40" Margin="5">
+                <Grid Grid.Row="2" Height="Auto" Margin="5, 0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0"/>
                         <ColumnDefinition Width="Auto"/>
@@ -80,25 +80,25 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Border Name="imgVegetarian" Grid.Column="1" Width="30" Background="{StaticResource SearchColour}" CornerRadius="200" Margin="5">
+                    <Border Name="imgVegetarian" Grid.Column="1" Width="20" Background="{StaticResource SearchColour}" CornerRadius="200" Margin="5">
                         <Image Source="/Images/Vegetarian.png" />
                     </Border>
-                    <Border Name="imgVegan" Width="30" Background="{StaticResource SearchColour}" CornerRadius="200" Margin="5" Grid.Column="2">
+                    <Border Name="imgVegan" Width="20" Background="{StaticResource SearchColour}" CornerRadius="200" Margin="5" Grid.Column="2">
                         <Image Source="/Images/Vegan.png" />
                     </Border>
-                    <Border Name="imgGluten" Width="30" Background="{StaticResource SearchColour}" CornerRadius="200" Margin="5" Grid.Column="3">
+                    <Border Name="imgGluten" Width="20" Background="{StaticResource SearchColour}" CornerRadius="200" Margin="5" Grid.Column="3">
                         <Image Source="/Images/Gluten.png" />
                     </Border>
-                    <Border Name="imgDairy" Width="30" Background="{StaticResource SearchColour}" CornerRadius="200" Margin="5" Grid.Column="4">
+                    <Border Name="imgDairy" Width="20" Background="{StaticResource SearchColour}" CornerRadius="200" Margin="5" Grid.Column="4">
                         <Image Source="/Images/Dairy.png" />
                     </Border>
                 </Grid>
-                <local:Input_Button x:Name="cmdEdit" Width="120" Height="40" MouseLeftButtonDown="cmdEdit_MouseLeftButtonDown" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5"/>
-                <local:Input_Button x:Name="cmdWalkthrough" Width="120" Height="40" MouseLeftButtonDown="cmdWalkthrough_MouseLeftButtonDown" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5"/>
+                <local:Input_Button x:Name="cmdEdit" Height="40" MouseLeftButtonDown="cmdEdit_MouseLeftButtonDown" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="5, 10, 5, 5"/>
+                <local:Input_Button x:Name="cmdWalkthrough" Height="40" MouseLeftButtonDown="cmdWalkthrough_MouseLeftButtonDown" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="5"/>
             </StackPanel>
 
 
-            <local:Input_Button x:Name="cmdClose" Width="125" Height="40" MouseLeftButtonDown="cmdClose_MouseLeftButtonDown" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5" Grid.Row="1"/>
+            <local:Input_Button x:Name="cmdClose" Height="40" MouseLeftButtonDown="cmdClose_MouseLeftButtonDown" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5" Grid.Row="1"/>
 
         </Grid>
 

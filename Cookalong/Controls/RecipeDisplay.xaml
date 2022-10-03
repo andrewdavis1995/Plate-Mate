@@ -6,64 +6,76 @@
              xmlns:local="clr-namespace:Cookalong.Controls"
              mc:Ignorable="d"
              FontFamily="{StaticResource Roboto Thin}"
-             d:DesignHeight="200" d:DesignWidth="400" Background="{DynamicResource RecipeHoverLeave}" Margin="10" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave">
+             Margin="0"
+             Height="{StaticResource RecipeHeightD}" Width="{StaticResource RecipeWidthD}" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave">
     <UserControl.Effect>
         <DropShadowEffect Direction="225" ShadowDepth="5" Opacity="0.15"/>
     </UserControl.Effect>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-
-        <Image x:Name="imgRecipePic" Source="/Images/recipeImage.png" Stretch="UniformToFill" StretchDirection="Both" RenderOptions.BitmapScalingMode="HighQuality"/>
-
-        <Grid Grid.Column="1">
+    <Border Name="background" CornerRadius="8" Background="{DynamicResource SearchColour}">
+        <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="{StaticResource RecipeHeightD2}"/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
-            <TextBlock Name="txtName" Visibility="Visible" Text="recipe name" FontSize="18" Grid.Row="0" VerticalAlignment="Center" TextAlignment="Center" HorizontalAlignment="Center" Padding="0" Margin="5" Foreground="White" TextWrapping="Wrap"/>
 
-            <Grid Grid.Row="1" Margin="5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="35"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="35"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
-                <Image Source="/Images/Servings.png" Margin="5, 2, 2, 2" RenderOptions.BitmapScalingMode="HighQuality" VerticalAlignment="Center"/>
-                <TextBlock Name="txtServings" Visibility="Visible" Text="88" FontSize="16" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Padding="0" Margin="5, 2, 15, 2" Foreground="White"/>
-                <Image Name="imgTime" Source="/Images/Timing.png" Margin="5, 2, 2, 2" RenderOptions.BitmapScalingMode="HighQuality" Grid.Column="2" VerticalAlignment="Center"/>
-                <TextBlock Name="txtTime" Visibility="Visible" Text="88" FontSize="16" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" Padding="0" Margin="2" Foreground="White"/>
-                <TextBlock Name="txtMinutes" Visibility="Visible" Text="minutes" FontSize="14" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Left" Padding="0" Margin="2, 2, 5, 2" Foreground="White"/>
+            <Border CornerRadius="8, 8, 0, 0" x:Name="imgRecipePic">
+                <Border.Background>
+                    <ImageBrush ImageSource="/Images/recipeImage.png" Stretch="UniformToFill"/>
+                </Border.Background>
+            </Border>
+
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="2"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="2"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Name="txtName" Visibility="Visible" Text="recipe name goes here yeah" FontSize="16" Grid.Row="0" VerticalAlignment="Center" TextAlignment="Center" HorizontalAlignment="Stretch" Padding="0" Margin="10, 5" Foreground="White" TextWrapping="Wrap"/>
+
+                <Label Background="#33FFFFFF" Grid.Row="1" Margin="5, 0"/>
+                <Label Background="#33FFFFFF" Grid.Row="3" Margin="5, 0"/>
+
+                <Grid Grid.Row="2" Margin="5, 2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="/Images/Servings.png" Margin="5, 2, 2, 2" RenderOptions.BitmapScalingMode="HighQuality" VerticalAlignment="Center"/>
+                    <TextBlock Name="txtServings" Visibility="Visible" Text="88" FontSize="12" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Padding="0" Margin="5, 2, 15, 2" Foreground="White"/>
+                    <Image Name="imgTime" Source="/Images/Timing.png" Margin="5, 2, 2, 2" RenderOptions.BitmapScalingMode="HighQuality" Grid.Column="2" VerticalAlignment="Center"/>
+                    <TextBlock Name="txtTime" Visibility="Visible" Text="88 minutes" FontSize="12" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" Padding="0" Margin="2" Foreground="White"/>
+                </Grid>
+                <Grid Grid.Row="4" Height="30">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Name="imgVegetarian" Width="20" CornerRadius="200" Margin="5" Grid.Column="1">
+                        <Image Source="/Images/Vegetarian.png" RenderOptions.BitmapScalingMode="HighQuality" />
+                    </Border>
+                    <Border Name="imgVegan" Width="20" CornerRadius="200" Margin="5" Grid.Column="2">
+                        <Image Source="/Images/Vegan.png" RenderOptions.BitmapScalingMode="HighQuality" />
+                    </Border>
+                    <Border Name="imgGluten" Width="20" CornerRadius="200" Margin="5" Grid.Column="3">
+                        <Image Source="/Images/Gluten.png" RenderOptions.BitmapScalingMode="HighQuality" />
+                    </Border>
+                    <Border Name="imgDairy" Width="20" CornerRadius="200" Margin="5" Grid.Column="4">
+                        <Image Source="/Images/Dairy.png" RenderOptions.BitmapScalingMode="HighQuality" />
+                    </Border>
+                </Grid>
+
             </Grid>
-            <Grid Grid.Row="2" Height="40">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Border Name="imgVegetarian" Width="30" Background="{StaticResource DietaryIconColour}" CornerRadius="200" Margin="5">
-                    <Image Source="/Images/Vegetarian.png" />
-                </Border>
-                <Border Name="imgVegan" Width="30" Background="{StaticResource DietaryIconColour}" CornerRadius="200" Margin="5" Grid.Column="1">
-                    <Image Source="/Images/Vegan.png" />
-                </Border>
-                <Border Name="imgGluten" Width="30" Background="{StaticResource DietaryIconColour}" CornerRadius="200" Margin="5" Grid.Column="2">
-                    <Image Source="/Images/Gluten.png" />
-                </Border>
-                <Border Name="imgDairy" Width="30" Background="{StaticResource DietaryIconColour}" CornerRadius="200" Margin="5" Grid.Column="3">
-
-                    <Image Source="/Images/Dairy.png" />
-                </Border>
-            </Grid>
-
         </Grid>
-    </Grid>
+
+    </Border>
 </UserControl>

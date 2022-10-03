@@ -16,13 +16,13 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Grid Background="{StaticResource GradientBackground}" Grid.RowSpan="10">
+        <Grid Grid.RowSpan="10" Background="{StaticResource GradientBackground}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="70"/>
                 <RowDefinition/>
                 <RowDefinition Height="50" />
             </Grid.RowDefinitions>
-            <Image Source="/Images/Logo.png" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="15" Width="200" RenderOptions.BitmapScalingMode="HighQuality" />
+            <Image Source="/Images/Logo.png" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Width="110" RenderOptions.BitmapScalingMode="HighQuality" />
 
             <Grid Height="35" Grid.Row="100" MouseLeftButtonDown="cmdExit_MouseLeftButtonDown">
                 <Grid.ColumnDefinitions>
@@ -93,12 +93,12 @@
                 <Grid Name="grdRecipes">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="20"/>
-                        <ColumnDefinition Width="400"/>
+                        <ColumnDefinition Width="{StaticResource RecipeWidth}"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="20"/>
-                        <RowDefinition Height="200" MaxHeight="200"/>
+                        <RowDefinition Height="{StaticResource RecipeHeight}" MaxHeight="350"/>
                         <RowDefinition Height="20"/>
                     </Grid.RowDefinitions>
                 </Grid>

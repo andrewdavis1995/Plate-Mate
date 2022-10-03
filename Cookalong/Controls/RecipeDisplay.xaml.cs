@@ -36,7 +36,7 @@ namespace Cookalong.Controls
             // show image if it exists
             if(File.Exists(recipe.GetImagePath()))
             {
-                imgRecipePic.Source = new BitmapImage(new Uri(recipe.GetImagePath(), UriKind.Absolute));
+                imgRecipePic.Background = new ImageBrush(new BitmapImage(new Uri(recipe.GetImagePath(), UriKind.Absolute)));
             }
 
             // show dietary info if necessary
@@ -48,13 +48,12 @@ namespace Cookalong.Controls
             // show time
             if(recipe.GetSetTime() > 0)
             {
-                txtTime.Text = recipe.GetSetTime().ToString();
+                txtTime.Text = recipe.GetSetTime() + " minutes";
             }
             else
             {
                 txtTime.Visibility = Visibility.Collapsed;
                 imgTime.Visibility = Visibility.Collapsed;
-                txtMinutes.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -64,7 +63,7 @@ namespace Cookalong.Controls
         private void UserControl_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             string resourceName = "RecipeHoverEnter";
-            Background = Application.Current.Resources[resourceName] as SolidColorBrush;
+            background.Background = Application.Current.Resources[resourceName] as SolidColorBrush;
         }
 
         /// <summary>
@@ -73,7 +72,7 @@ namespace Cookalong.Controls
         private void UserControl_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
             string resourceName = "RecipeHoverLeave";
-            Background = Application.Current.Resources[resourceName] as SolidColorBrush;
+            background.Background = Application.Current.Resources[resourceName] as SolidColorBrush;
         }
     }
 }

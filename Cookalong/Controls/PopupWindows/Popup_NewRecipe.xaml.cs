@@ -4,11 +4,13 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Xml.Linq;
 
 namespace Cookalong.Controls.PopupWindows
 {
@@ -434,5 +436,27 @@ namespace Cookalong.Controls.PopupWindows
             PopupController.AboveAll(_timingPopup);
             _parent?.Children.Add(_timingPopup);
         }
+
+        private void txtName_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Space)
+            {
+                // don't allow space if nothing else
+                if (txtRecipeName.Text.Length == 0)
+                    e.Handled = true;
+                // don't allow double space
+                else if (txtRecipeName.Text.Last() == ' ')
+                    e.Handled = true;
+            }
+        }
+
+        private void txtName_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            // don't allow these characters
+            char[] forbidden = { '@', '~', '\"', '#' };
+            if (forbidden.Any(c => e.Text.Contains(c)))
+                e.Handled = true;
+        }
+
     }
 }
