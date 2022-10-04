@@ -89,7 +89,7 @@
             </Grid>
 
             <Label Name="lblNoRecipes" Grid.Column="1" Grid.Row="1" Content="No recipes to display" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" Visibility="Collapsed" Foreground="{StaticResource GradientBackground}"/>
-            <ScrollViewer Grid.Column="1" Grid.Row="1" VerticalScrollBarVisibility="Auto" VerticalAlignment="Stretch">
+            <ScrollViewer Grid.Column="1" Grid.Row="1" VerticalScrollBarVisibility="Auto" VerticalAlignment="Stretch" IsTabStop="False" FocusVisualStyle="{x:Null}">
                 <Grid Name="grdRecipes">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="20"/>

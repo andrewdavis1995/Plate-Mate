@@ -54,7 +54,7 @@ namespace Cookalong.Controls
             _clickDragTimer.Stop();
 
             // if the mouse is still down, begin a drag
-            if (_mouseDown && _confirmationPopup.Visibility != Visibility.Visible)
+            if (_mouseDown && _confirmationPopup?.Visibility != Visibility.Visible)
                 Dispatcher.Invoke(() => _parent?.StartDrag(this));
 
             _timerRunning = false;

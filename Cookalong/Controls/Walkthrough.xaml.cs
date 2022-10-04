@@ -36,7 +36,7 @@ namespace Cookalong.Controls
         const float MOVE_SPEED = 7.75f;
         const float GROW_SPEED = 0.01f;
         const float OPACITY_SPEED = 0.02f;
-        const int RHS_HEIGHT = 30;
+        const int RHS_HEIGHT = 65;
 
         /// <summary>
         /// Constructor
@@ -117,8 +117,7 @@ namespace Cookalong.Controls
                     _tmrMsgRemove.Stop();
 
                     // add label to previous column
-                    var lbl = new Label() { Content = lblMsg.Text, Height = RHS_HEIGHT };
-                    lbl.Foreground = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+                    var lbl = new PreviousStepDisplay(lblMsg.Text);
                     stckPrevious.Children.Insert(0, lbl);
 
                     // update RHS display
@@ -135,7 +134,7 @@ namespace Cookalong.Controls
                     newInstructionScale.ScaleY -= GROW_SPEED;
 
                     // move off
-                    grdMessage.Margin = new Thickness(grdMessage.Margin.Left + 1, grdMessage.Margin.Top - MOVE_SPEED * 2, 0, 0);
+                    grdMessage.Margin = new Thickness(grdMessage.Margin.Left + 5, grdMessage.Margin.Top - MOVE_SPEED * 2, 0, 0);
 
                     // fade out
                     grdMessage.Opacity -= OPACITY_SPEED;
@@ -196,25 +195,18 @@ namespace Cookalong.Controls
                     // if the time is the start time of the structions, display
                     if (_time == i.Start)
                     {
-                        var lbl = new Label();
-                        lbl.Content = i.Message + " [Starts]";
-                        stckUpdates.Children.Add(lbl);
+                        // TODO
                         ShowStep_(i.Message);
                     }
                     // if the time is the end time of the structions, display
                     else if (_time == i.Start + i.Duration)
                     {
-                        var lbl = new Label();
-                        lbl.Content = i.Message + " [Ends]";
-                        stckUpdates.Children.Add(lbl);
+                        // TODO
                     }
                     // if the time is the warning time of the structions, display
                     else if (_time == i.Start - WARNING_GAP)
                     {
-                        var lbl = new Label();
-                        lbl.Content = i.Message + " [Warning]";
-                        stckUpdates.Children.Add(lbl);
-
+                        // TODO
                         CheckItemsRequired_(i);
                     }
                 }
@@ -264,7 +256,6 @@ namespace Cookalong.Controls
                 if (ins.Message.ToLower().Contains(searchStrings[i].ToLower()))
                 {
                     // TODO: add control with image
-                    stckUpdates.Children.Add(new Label() { Content = " you will need " + objectsReqd[i], Margin = new Thickness(5, 0, 5, 0) });
                 }
             }
 
@@ -334,7 +325,7 @@ namespace Cookalong.Controls
                 _instructionIndex--;
 
                 // show the previous one
-                ShowStep_((stckPrevious.Children[0] as Label).Content.ToString());
+                ShowStep_((stckPrevious.Children[0] as PreviousStepDisplay).txtContent.Text);
 
                 // remove from RHS
                 stckPrevious.Children.RemoveAt(0);
@@ -379,7 +370,7 @@ namespace Cookalong.Controls
             double opacity = 1;
 
             // loop through each item, updating the opacity
-            foreach (Label lbl in stckPrevious.Children)
+            foreach (PreviousStepDisplay lbl in stckPrevious.Children)
             {
                 lbl.Opacity = opacity;
                 opacity -= (RHS_HEIGHT / ActualHeight);

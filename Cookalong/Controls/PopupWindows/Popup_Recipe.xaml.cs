@@ -156,9 +156,17 @@ namespace Cookalong.Controls.PopupWindows
                 steps.Add(new MethodStep(v, 0, 0));
             }
 
-            // show the walkthrough dialog
-            var wt = new Walkthrough(_recipe.GetRecipeName(), steps, PlaybackMode.ClickThrough);
-            wt.ShowDialog();
+            // check all ingredients are ok
+            var ic = new IngredientChecklist(_recipe.GetIngredients());
+            bool? state = ic.ShowDialog();
+
+            // check the pre-check completed successfully
+            if (state == true)
+            {
+                // show the walkthrough dialog
+                var wt = new Walkthrough(_recipe.GetRecipeName(), steps, PlaybackMode.ClickThrough);
+                wt.ShowDialog();
+            }
         }
     }
 }

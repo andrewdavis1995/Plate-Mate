@@ -18,10 +18,10 @@
             <TextBox Name="txtContent" VerticalAlignment="Center" BorderThickness="0" Margin="5" Background="{x:Null}" Text="1" MaxLength="4" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="16" CommandManager.PreviewExecuted="txtContent_PreviewExecuted" PreviewTextInput="txtContent_PreviewTextInput" AllowDrop="False" LostFocus="txtContent_LostFocus" Foreground="White" KeyboardNavigation.TabNavigation="None"/>
         </Border>
 
-        <Border Name="lblDecrease" Grid.Column="0" Margin="5, 8" Height="20" Width="20" Background="Red" MouseLeftButtonDown="lblDecrease_MouseLeftButtonDown" CornerRadius="10">
+        <Border Name="lblDecrease" Grid.Column="0" Margin="5, 8" Height="20" Width="20" Background="{StaticResource CancelledColour}" MouseLeftButtonDown="lblDecrease_MouseLeftButtonDown" CornerRadius="10">
             <Label Content="-" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="0" FontSize="10" Foreground="White" FontWeight="Bold"/>
         </Border>
-        <Border Name="lblIncrease" Grid.Column="2" Margin="5, 8" Height="20" Width="20" Background="Green" MouseLeftButtonDown="lblIncrease_MouseLeftButtonDown" CornerRadius="10">
+        <Border Name="lblIncrease" Grid.Column="2" Margin="5, 8" Height="20" Width="20" Background="{StaticResource ConfirmedColour}" MouseLeftButtonDown="lblIncrease_MouseLeftButtonDown" CornerRadius="10">
             <Label Content="+" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="0" FontSize="10" Foreground="White" FontWeight="Bold"/>
         </Border>
     </Grid>

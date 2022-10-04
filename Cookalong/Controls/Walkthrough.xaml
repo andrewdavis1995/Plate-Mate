@@ -44,7 +44,7 @@
         </Grid>
         <Label Name="lblTime" Content="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Collapsed"/>
         <StackPanel Name="stckUpdates" Width="100" HorizontalAlignment="Left"/>
-        <Grid Width="200" HorizontalAlignment="Right" Background="#11000000">
+        <Grid Width="250" HorizontalAlignment="Right" Background="#11000000">
             <StackPanel Name="stckPrevious" VerticalAlignment="Top" Margin="0, -100, 0, 0"/>
         </Grid>
 

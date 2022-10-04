@@ -27,7 +27,7 @@
         <TextBlock Name="txtContent" Grid.Column="1" FontSize="14" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Bottom" Foreground ="White" Text="Text goes here" IsHitTestVisible="false"/>
         <TextBlock Name="txtQuantity" Grid.Row="1" Grid.Column="1" FontSize="12" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground ="#adadad" FontStyle="Italic" Text="Text goes here" IsHitTestVisible="false"/>
 
-        <Border Name="cmdDelete" Grid.RowSpan="2" Grid.Column="10" Background="{StaticResource ButtonCancel}" CornerRadius="100" Height="20" Width="20" MouseLeftButtonDown="cmdDelete_MouseLeftButtonDown">
+        <Border Name="cmdDelete" Grid.RowSpan="2" Grid.Column="10" Background="{StaticResource CancelledColour}" CornerRadius="100" Height="20" Width="20" MouseLeftButtonDown="cmdDelete_MouseLeftButtonDown">
             <Image Name="cross" Source="/Images/cross.png" Margin="2" RenderOptions.BitmapScalingMode="HighQuality"/>
         </Border>
     </Grid>

@@ -22,6 +22,9 @@
     <Compile Update="Controls\ErrorMessage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Controls\IngredientDisplaySimple.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Controls\IngredientsDisplay.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -52,10 +55,16 @@
     <Compile Update="Controls\PopupWindows\Popup_Timing.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Controls\PreviousStepDisplay.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Controls\RecipeDisplay.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Controls\Walkthrough.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="IngredientChecklist.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -67,6 +76,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\ErrorMessage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\IngredientDisplaySimple.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\IngredientsDisplay.xaml">
@@ -111,10 +123,16 @@
     <Page Update="Controls\PopupWindows\Popup_Timing.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Controls\PreviousStepDisplay.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Controls\RecipeDisplay.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\Walkthrough.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="IngredientChecklist.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="RecipeMenu.xaml">
