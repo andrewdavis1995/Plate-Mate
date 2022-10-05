@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cookalong
+namespace Cookalong.Helpers
 {
     internal static class BackupHandler
     {
@@ -120,7 +120,7 @@ namespace Cookalong
                 var date = File.GetLastWriteTime(file);
 
                 // if older than valid time (or too many already), delete
-                if (((DateTime.Now - date).TotalDays >= RETAIN_DAYS) || valid.Count >= MAX_FILES)
+                if ((DateTime.Now - date).TotalDays >= RETAIN_DAYS || valid.Count >= MAX_FILES)
                 {
                     File.Delete(file);
                 }

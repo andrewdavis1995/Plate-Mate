@@ -61,10 +61,10 @@
     <Compile Update="Controls\RecipeDisplay.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Controls\Walkthrough.xaml.cs">
+    <Compile Update="Windows\Walkthrough.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="IngredientChecklist.xaml.cs">
+    <Compile Update="Windows\IngredientChecklist.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -129,13 +129,13 @@
     <Page Update="Controls\RecipeDisplay.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Controls\Walkthrough.xaml">
+    <Page Update="Windows\Walkthrough.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="IngredientChecklist.xaml">
+    <Page Update="Windows\IngredientChecklist.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="RecipeMenu.xaml">
+    <Page Update="Windows\RecipeMenu.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

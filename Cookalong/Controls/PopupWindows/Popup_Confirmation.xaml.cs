@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Interop;
 using System.Windows.Media;
+using Cookalong.Helpers;
 
 namespace Cookalong.Controls.PopupWindows
 {

@@ -1,4 +1,6 @@
 ﻿using Andrew_2_0_Libraries.Models;
+using Cookalong.Helpers;
+using Cookalong.Structures;
 using System;
 using System.Collections.Generic;
 using System.IO;

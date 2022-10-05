@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
 
-namespace Cookalong
+namespace Cookalong.Helpers
 {
     internal class PopupController
     {

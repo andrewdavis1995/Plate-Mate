@@ -1,4 +1,4 @@
-﻿namespace Cookalong
+﻿namespace Cookalong.Structures
 {
     public class MethodStep
     {

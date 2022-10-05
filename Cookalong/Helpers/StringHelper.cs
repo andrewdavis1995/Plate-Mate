@@ -1,4 +1,4 @@
-﻿namespace Cookalong
+﻿namespace Cookalong.Helpers
 {
     /// <summary>
     /// Functions to format output strings
@@ -23,7 +23,7 @@
             {
                 // break into time components
                 var hours = v / 60;
-                var minutes = v - (hours * 60);
+                var minutes = v - hours * 60;
 
                 // construct string
                 if (hours > 0) output += hours + " hours";

@@ -59,5 +59,8 @@
                 </Grid.RowDefinitions>
             </Grid>
         </ScrollViewer>
+        
+        <TextBlock Name="lblContinue" Grid.Row="100" Foreground="White" Text="Press SPACE when the ingredient is ready" VerticalAlignment="Bottom" HorizontalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" FontSize="14" Margin="5, 20" />
+
     </Grid>
 </Window>
