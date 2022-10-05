@@ -90,7 +90,7 @@ namespace Cookalong
 
             // calculate what is needed
             var colWidth = grdRecipes.ColumnDefinitions[1].Width.Value;
-            var colHeight = grdRecipes.RowDefinitions[1].Height.Value + 20;
+            var colHeight = grdRecipes.RowDefinitions[1].Height.Value;
             _columnCount = (int)(grdRecipes.ActualWidth / colWidth);
             var numRows = (int)(recipeCount / _columnCount);
             numRows += (recipeCount % _columnCount > 0 ? 1 : 0);

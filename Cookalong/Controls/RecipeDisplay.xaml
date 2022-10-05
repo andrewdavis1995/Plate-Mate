@@ -6,15 +6,15 @@
              xmlns:local="clr-namespace:Cookalong.Controls"
              mc:Ignorable="d"
              FontFamily="{StaticResource Roboto Thin}"
-             Margin="0"
-             Height="{StaticResource RecipeHeightD}" Width="{StaticResource RecipeWidthD}" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave">
+             Margin="5"
+             d:DesignHeight="{StaticResource RecipeHeightD}" d:DesignWidth="{StaticResource RecipeWidthD}" MouseEnter="UserControl_MouseEnter" MouseLeave="UserControl_MouseLeave">
     <UserControl.Effect>
         <DropShadowEffect Direction="225" ShadowDepth="5" Opacity="0.15"/>
     </UserControl.Effect>
     <Border Name="background" CornerRadius="8" Background="{DynamicResource SearchColour}">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="{StaticResource RecipeHeightD2}"/>
+                <RowDefinition Height="{StaticResource RecipeWidth}"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 

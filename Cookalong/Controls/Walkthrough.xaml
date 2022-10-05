@@ -75,7 +75,7 @@
         
         <TextBlock Name="txtTitle" FontSize="20" Foreground="White" Grid.Row="1" Text="HELLO!" VerticalAlignment="Top" HorizontalAlignment="Left" TextWrapping="Wrap" TextAlignment="Center" Margin="15"/>
 
-        <Image Source="/Images/Logo.png" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top" Width="60" RenderOptions.BitmapScalingMode="HighQuality"/>
+        <Image Source="/Images/Logo.png" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150" RenderOptions.BitmapScalingMode="HighQuality"/>
         
     </Grid>
 </Window>
