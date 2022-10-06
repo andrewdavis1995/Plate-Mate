@@ -9,7 +9,7 @@ namespace Andrew_2_0_Libraries.Controllers
     public class JokeController
     {
         List<Joke> _jokes;
-        List<ItemComment> _comments;
+        //List<ItemComment> _comments;
 
         JokeFileHandler _fileHandler = new JokeFileHandler();
         //JokeCommentFileHandler _commentFileHandler = new JokeCommentFileHandler();
@@ -26,13 +26,13 @@ namespace Andrew_2_0_Libraries.Controllers
             //_comments = _commentFileHandler.ReadFile<ItemComment>();
 
             // add comments to matching jokes
-            foreach (var c in _comments)
-            {
-                // look for match
-                var match = _jokes.Where(j => j.GetJokeId() == c.GetOwnerId()).FirstOrDefault();
-                if (match != null)
-                    match.AddComment(c);
-            }
+            //foreach (var c in _comments)
+            //{
+            //    // look for match
+            //    var match = _jokes.Where(j => j.GetJokeId() == c.GetOwnerId()).FirstOrDefault();
+            //    if (match != null)
+            //        match.AddComment(c);
+            //}
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Andrew_2_0_Libraries.Controllers
         public void UpdateJoke(Guid jokeId, string jokeText)
         {
             // find recipe with correct ID
-            var matching = _jokes.Where(r => r.GetJokeId() == jokeId).FirstOrDefault();
+            var matching = _jokes.FirstOrDefault(r => r.GetJokeId() == jokeId);
             if (matching != null)
             {
                 matching.UpdateJoke(jokeText);
@@ -122,13 +122,13 @@ namespace Andrew_2_0_Libraries.Controllers
         /// <param name="date">The date of the comment</param>
         public void AddComment(Guid jokeId, string comment, DateTime date)
         {
-            var joke = _jokes.Where(r => r.GetJokeId() == jokeId).FirstOrDefault();
+            var joke = _jokes.FirstOrDefault(r => r.GetJokeId() == jokeId);
             if (joke != null)
             {
                 // add a comment
                 var newComment = new ItemComment(jokeId, date, comment);
                 joke.AddComment(newComment);
-                _comments.Add(newComment);
+                //_comments.Add(newComment);
                 Save_();
             }
         }
@@ -141,7 +141,7 @@ namespace Andrew_2_0_Libraries.Controllers
         public void RemoveComment(Guid jokeId, Guid commentId)
         {
             // get matching joke and remove comment
-            var joke = _jokes.Where(r => r.GetJokeId() == jokeId).FirstOrDefault();
+            var joke = _jokes.FirstOrDefault(r => r.GetJokeId() == jokeId);
             if (joke != null)
                 joke.RemoveComment(commentId);
 

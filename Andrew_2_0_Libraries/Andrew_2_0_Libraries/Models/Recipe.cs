@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Andrew_2_0_Libraries.Models
 {
@@ -124,43 +125,54 @@ namespace Andrew_2_0_Libraries.Models
             return str;
         }
 
+        /// <summary>
+        /// Get the string for the ingredient list
+        /// </summary>
+        /// <returns>The formatted string</returns>
         private string GetIngredientString_()
         {
-            var str = "";
+            StringBuilder str = new StringBuilder();
+
             bool first = true;
             foreach (var ing in _ingredients)
             {
+                // build the string
                 if (first)
                 {
                     first = false;
                 }
                 else
                 {
-                    str += "#";
+                    str.Append("#");
                 }
-                str += ing.GetTextOutput();
+                str.Append(ing.GetTextOutput());
             }
-            return str;
+            return str.ToString();
         }
 
+        /// <summary>
+        /// Get the string for the method list
+        /// </summary>
+        /// <returns>The formatted string</returns>
         private string GetMethodString_()
         {
-            var str = "";
+            StringBuilder str = new StringBuilder();
             bool first = true;
             foreach (var step in _methodSteps)
             {
+                // build the string
                 if (first)
                 {
                     first = false;
                 }
                 else
                 {
-                    str += "#";
+                    str.Append("#");
                 }
 
-                str += step;
+                str.Append(step);
             }
-            return str;
+            return str.ToString();
         }
 
         /// <summary>
@@ -203,9 +215,16 @@ namespace Andrew_2_0_Libraries.Models
             return true;
         }
 
+        /// <summary>
+        /// Parses the list of ingredients from the string
+        /// </summary>
+        /// <param name="ingredientString">The string to parse</param>
+        /// <returns>Whether the parsing was successful</returns>
         private bool ParseIngredients_(string ingredientString)
         {
             var split = ingredientString.Split(new string[] { "#" }, StringSplitOptions.RemoveEmptyEntries);
+
+            // loop through each element
             foreach (var ing in split)
             {
                 var newIng = new Ingredient();
@@ -216,16 +235,26 @@ namespace Andrew_2_0_Libraries.Models
             return true;
         }
 
+        /// <summary>
+        /// Parses the list of methods
+        /// </summary>
+        /// <param name="methodString">The string to parse</param>
         private void ParseMethod_(string methodString)
         {
             var split = methodString.Split(new string[] { "#" }, StringSplitOptions.RemoveEmptyEntries);
             _methodSteps = new List<string>();
+
+            // add each element
             foreach (var step in split)
             {
                 _methodSteps.Add(step);
             }
         }
 
+        /// <summary>
+        /// Gets the total calories from all of the ingredients
+        /// </summary>
+        /// <returns>The total number of calories</returns>
         public int GetTotalCalories()
         {
             var total = 0;
@@ -238,6 +267,10 @@ namespace Andrew_2_0_Libraries.Models
             return total;
         }
 
+        /// <summary>
+        /// Gets the dietary value of the flag
+        /// </summary>
+        /// <returns>The value</returns>
         internal byte GetDietaryValue()
         {
             return _dietary;

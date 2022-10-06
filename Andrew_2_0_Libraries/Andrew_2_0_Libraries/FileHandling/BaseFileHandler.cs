@@ -11,7 +11,7 @@ namespace Andrew_2_0_Libraries.FileHandling
         const string BASE_FILE_PATH = "SavedData";
         internal abstract string GetFilePath();
 
-        public BaseFileHandler()
+        protected BaseFileHandler()
         {
             var fullPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), BASE_FILE_PATH);
 

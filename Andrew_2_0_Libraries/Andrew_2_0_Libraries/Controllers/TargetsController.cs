@@ -56,7 +56,7 @@ namespace Andrew_2_0_Libraries.Controllers
         public void UpdateTarget(Guid targetId, string targetName)
         {
             // find target with correct ID
-            var matching = _targets.Where(t => t.GetTargetId() == targetId).FirstOrDefault();
+            var matching = _targets.FirstOrDefault(t => t.GetTargetId() == targetId);
             if (matching != null)
             {
                 matching.UpdateValues(targetName);
@@ -93,7 +93,7 @@ namespace Andrew_2_0_Libraries.Controllers
         public void SetTargetProgress(Guid targetId, float progress)
         {
             // find target with correct ID
-            var matching = _targets.Where(t => t.GetTargetId() == targetId).FirstOrDefault();
+            var matching = _targets.FirstOrDefault(t => t.GetTargetId() == targetId);
             if (matching != null)
             {
                 matching.UpdateProgress(progress);
