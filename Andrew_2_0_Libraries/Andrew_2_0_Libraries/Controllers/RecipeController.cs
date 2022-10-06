@@ -58,7 +58,7 @@ namespace Andrew_2_0_Libraries.Controllers
         public Recipe UpdateRecipe(Guid recipeId, string recipeName, List<Ingredient> ingredients, List<string> steps, byte dietary, int servingSize, string imagePath, uint setTime)
         {
             // find recipe with correct ID
-            var matching = _recipes.Where(r => r.GetRecipeId() == recipeId).FirstOrDefault();
+            var matching = _recipes.FirstOrDefault(r => r.GetRecipeId() == recipeId);
             if (matching != null)
             {
                 matching.UpdateRecipe(recipeName, ingredients, steps, dietary, servingSize, imagePath, setTime);
@@ -137,7 +137,7 @@ namespace Andrew_2_0_Libraries.Controllers
         /// <param name="date">The date of the comment</param>
         public void AddComment(Guid recipeId, string comment, DateTime date)
         {
-            var recipe = _recipes.Where(r => r.GetRecipeId() == recipeId).FirstOrDefault();
+            var recipe = _recipes.FirstOrDefault(r => r.GetRecipeId() == recipeId);
             if (recipe != null)
                 recipe.AddComment(new ItemComment(recipeId, date, comment));
             Save_();
@@ -150,7 +150,7 @@ namespace Andrew_2_0_Libraries.Controllers
         /// <param name="commentId">The ID of the comment to remove</param>
         public void RemoveComment(Guid recipeId, Guid commentId)
         {
-            var recipe = _recipes.Where(r => r.GetRecipeId() == recipeId).FirstOrDefault();
+            var recipe = _recipes.FirstOrDefault(r => r.GetRecipeId() == recipeId);
             if (recipe != null)
                 recipe.RemoveComment(commentId);
             Save_();
