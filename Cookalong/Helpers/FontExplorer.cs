@@ -58,13 +58,10 @@ namespace Cookalong.Helpers
 
         private object ReadFont()
         {
-            if (!string.IsNullOrEmpty(Key))
-            {
-                if (_CachedFonts.ContainsKey(Key))
-                    return _CachedFonts[Key];
-            }
+            if (!string.IsNullOrEmpty(Key) && _CachedFonts.ContainsKey(Key))
+                return _CachedFonts[Key];
 
-            return new FontFamily("Comic Sans MS");
+            return new FontFamily("Arial");
         }
 
         #endregion

@@ -65,7 +65,7 @@ namespace Cookalong.Controls.PopupWindows
             // check length
             if (txtMethodContent.Text.Length < MIN_LENGTH)
             {
-                RecipeMenu.Instance.ShowError($"Message is too short. Must be at least {MIN_LENGTH} characters");
+                RecipeMenu.Instance?.ShowError($"Message is too short. Must be at least {MIN_LENGTH} characters");
             }
             else
             {

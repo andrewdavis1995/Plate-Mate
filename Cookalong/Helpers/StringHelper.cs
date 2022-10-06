@@ -7,7 +7,7 @@ namespace Cookalong.Helpers
     /// <summary>
     /// Functions to format output strings
     /// </summary>
-    internal class StringHelper
+    internal static class StringHelper
     {
         /// <summary>
         /// Displays the duration in a user-friendly manner

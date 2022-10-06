@@ -24,7 +24,7 @@ namespace Cookalong.Controls.PopupWindows
         /// <param name="existing">The existing ingredient to update</param>
         /// <param name="cancelCallback">Callback when cancel is clicked</param>
         /// <param name="confirmCallback">Callback when confirm is clicked</param>
-        public Popup_Ingredient(Ingredient ? existing, Action cancelCallback, Action<Ingredient> confirmCallback)
+        public Popup_Ingredient(Ingredient? existing, Action cancelCallback, Action<Ingredient> confirmCallback)
         {
             InitializeComponent();
 
@@ -76,16 +76,13 @@ namespace Cookalong.Controls.PopupWindows
             // unit
             foreach (var item in cmbType.Items)
             {
-                if (item != null)
+                // parse item to ComboBoxItem
+                if (item != null && item is ComboBoxItem cbi)
                 {
-                    // parse item to ComboBoxItem
-                    if (item is ComboBoxItem cbi)
-                    {
-                        // get the tag
-                        var tag = (MeasurementUnit)(cbi).Tag;
-                        if (tag == existing.GetUnit())
-                            cmbType.SelectedItem = item;
-                    }
+                    // get the tag
+                    var tag = (MeasurementUnit)(cbi).Tag;
+                    if (tag == existing.GetUnit())
+                        cmbType.SelectedItem = item;
                 }
             }
 
@@ -199,7 +196,7 @@ namespace Cookalong.Controls.PopupWindows
             // check length of the name
             if (txtName.Text.Length < MIN_LENGTH)
             {
-                RecipeMenu.Instance.ShowError($"Name is too short. Must be at least {MIN_LENGTH} characters");
+                RecipeMenu.Instance?.ShowError($"Name is too short. Must be at least {MIN_LENGTH} characters");
             }
             else
             {

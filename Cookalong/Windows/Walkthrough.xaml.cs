@@ -72,7 +72,7 @@ namespace Cookalong.Controls
         /// <param name="callback">The callback function to call on each "tick"</param>
         /// <param name="interval">How many ms between each "tick"</param>
         /// <param name="start">Whether to start the timer</param>
-        void ConfigureTimer_(ref Timer tmr, ElapsedEventHandler callback, int interval, bool start = false)
+        static void ConfigureTimer_(ref Timer tmr, ElapsedEventHandler callback, int interval, bool start = false)
         {
             // configure
             tmr = new Timer();
@@ -243,7 +243,7 @@ namespace Cookalong.Controls
         /// Checks which utensils/items are required for this step
         /// </summary>
         /// <param name="ins">The instruction to check</param>
-        private void CheckItemsRequired_(MethodStep ins)
+        static void CheckItemsRequired_(MethodStep ins)
         {
             // lists - must match up
             var searchStrings = new string[] { "Teaspoon", "Oven", "Tablespoon", "Grate" };
@@ -326,7 +326,8 @@ namespace Cookalong.Controls
                 _instructionIndex--;
 
                 // show the previous one
-                ShowStep_((stckPrevious.Children[0] as PreviousStepDisplay).txtContent.Text);
+                if (stckPrevious.Children[0] is PreviousStepDisplay child)
+                    ShowStep_((child).txtContent.Text);
 
                 // remove from RHS
                 stckPrevious.Children.RemoveAt(0);

@@ -2,7 +2,7 @@
 
 namespace Cookalong.Helpers
 {
-    internal class PopupController
+    internal static class PopupController
     {
         /// <summary>
         /// Moves the specified control to the front

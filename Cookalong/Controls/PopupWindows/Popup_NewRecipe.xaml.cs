@@ -211,7 +211,7 @@ namespace Cookalong.Controls.PopupWindows
                     catch (Exception ex)
                     {
                         Debug.WriteLine(ex.Message);
-                    };
+                    }
 
                     // check there are enough ingredients
                     var ingredientList = new List<Ingredient>();
