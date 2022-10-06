@@ -48,6 +48,7 @@ namespace Andrew_2_0_Libraries.FileHandling
                     // next line
                     line = sr.ReadLine();
                 }
+                sr.Close();
             }
 
             return list;
