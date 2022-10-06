@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -48,11 +49,15 @@ namespace Cookalong.Controls
             {
                 try
                 {
+                    // load the button colour
                     var buttonType = string.IsNullOrEmpty(colourOverride) ? title : colourOverride;
                     var res = FindResource("Button" + buttonType);
                     bigBorder.BorderBrush = res as SolidColorBrush;
                 }
-                catch (Exception) { }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.Message);
+                }
             }
         }
     }

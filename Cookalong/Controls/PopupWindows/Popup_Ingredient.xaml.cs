@@ -18,8 +18,6 @@ namespace Cookalong.Controls.PopupWindows
 
         const int MIN_LENGTH = 3;
 
-        public object StringFetcher { get; private set; }
-
         /// <summary>
         /// Constructor
         /// </summary>
@@ -80,9 +78,14 @@ namespace Cookalong.Controls.PopupWindows
             {
                 if (item != null)
                 {
-                    var tag = (MeasurementUnit)(item as ComboBoxItem).Tag;
-                    if (tag == existing.GetUnit())
-                        cmbType.SelectedItem = item;
+                    // parse item to ComboBoxItem
+                    if (item is ComboBoxItem cbi)
+                    {
+                        // get the tag
+                        var tag = (MeasurementUnit)(cbi).Tag;
+                        if (tag == existing.GetUnit())
+                            cmbType.SelectedItem = item;
+                    }
                 }
             }
 
@@ -201,12 +204,16 @@ namespace Cookalong.Controls.PopupWindows
             else
             {
                 // get measurement and calories
-                var measurement = (MeasurementUnit)Enum.Parse(typeof(MeasurementUnit), (cmbType.SelectedItem as ComboBoxItem)?.Tag.ToString());
-                int cals = chkCalories.IsChecked() ? (int)inpCalories.GetValue() : -1;
+                var tag = (cmbType.SelectedItem as ComboBoxItem)?.Tag?.ToString();
+                if (tag != null)
+                {
+                    var measurement = (MeasurementUnit)Enum.Parse(typeof(MeasurementUnit), tag);
+                    int cals = chkCalories.IsChecked() ? (int)inpCalories.GetValue() : -1;
 
-                // return the created ingredient
-                var i = new Ingredient(txtName.Text, measurement, inpValue.GetValue(), cals, GetSelectedImageIndex());
-                _confirmCallback?.Invoke(i);
+                    // return the created ingredient
+                    var i = new Ingredient(txtName.Text, measurement, inpValue.GetValue(), cals, GetSelectedImageIndex());
+                    _confirmCallback?.Invoke(i);
+                }
             }
         }
 

@@ -227,7 +227,7 @@ namespace Cookalong.Controls
         /// When a step is clicked and needs to be edited
         /// </summary>
         /// <param name="draggableObject">The control to edit</param>
-        internal void EditStep(DraggableObject draggableObject)
+        internal static void EditStep(DraggableObject draggableObject)
         {
             Popup_NewRecipe.Instance?.EditStep(draggableObject);
         }

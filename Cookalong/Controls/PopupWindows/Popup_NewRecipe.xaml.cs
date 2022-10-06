@@ -4,6 +4,7 @@ using Cookalong.Helpers;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -22,8 +23,8 @@ namespace Cookalong.Controls.PopupWindows
     {
         readonly Grid? _parent;
         readonly Guid? _saved;
-        readonly Action<Recipe> _displayRecipeCallback;
-        readonly RecipeController _controller;
+        readonly Action<Recipe?> _displayRecipeCallback;
+        readonly RecipeController ? _controller;
 
         Popup_Confirmation? _confirmationPopup;
         Popup_Method? _methodPopup;
@@ -46,7 +47,7 @@ namespace Cookalong.Controls.PopupWindows
         /// <param name="recipe">The recipe to edit (can be null)</param>
         /// <param name="controller">The recipe controller</param>
         /// <param name="displayRecipeCallback">Callback to call to display all recipes</param>
-        public Popup_NewRecipe(Grid ? parent, Recipe? recipe, RecipeController controller, Action<Recipe> displayRecipeCallback)
+        public Popup_NewRecipe(Grid ? parent, Recipe? recipe, RecipeController ? controller, Action<Recipe?> displayRecipeCallback)
         {
             Instance = this;
 
@@ -176,7 +177,7 @@ namespace Cookalong.Controls.PopupWindows
             {
                 // confirm callback
                 // delete
-                _controller.DeleteRecipe((Guid)_saved);
+                _controller?.DeleteRecipe((Guid)_saved);
 
                 // update UI
                 _displayRecipeCallback?.Invoke(null);
@@ -207,7 +208,10 @@ namespace Cookalong.Controls.PopupWindows
                     {
                         servings = (int)inputServingSize.GetValue();
                     }
-                    catch (Exception) { };
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine(ex.Message);
+                    };
 
                     // check there are enough ingredients
                     var ingredientList = new List<Ingredient>();
@@ -234,9 +238,9 @@ namespace Cookalong.Controls.PopupWindows
 
                             // add a new recipe, or save the existing one
                             if (_saved != null)
-                                newlyCreated = _controller.UpdateRecipe((Guid)_saved, txtRecipeName.Text, ingredientList, GetMethodList_(), dietary, servings, _imagePath, _duration);
+                                newlyCreated = _controller?.UpdateRecipe((Guid)_saved, txtRecipeName.Text, ingredientList, GetMethodList_(), dietary, servings, _imagePath, _duration);
                             else
-                                newlyCreated = _controller.AddRecipe(txtRecipeName.Text, ingredientList, GetMethodList_(), dietary, servings, _imagePath, _duration);
+                                newlyCreated = _controller?.AddRecipe(txtRecipeName.Text, ingredientList, GetMethodList_(), dietary, servings, _imagePath, _duration);
 
                             // remove this page
                             _parent?.Children.Remove(this);
@@ -255,7 +259,7 @@ namespace Cookalong.Controls.PopupWindows
             // if there was an error, report it
             if (!string.IsNullOrEmpty(error))
             {
-                RecipeMenu.Instance.ShowError(error);
+                RecipeMenu.Instance?.ShowError(error);
             }
         }
 
@@ -347,9 +351,11 @@ namespace Cookalong.Controls.PopupWindows
         /// When a step is clicked, and needs to be edited
         /// </summary>
         /// <param name="draggableObject">The object that was clicked</param>
-        internal void EditStep(DraggableObject draggableObject)
+        internal void EditStep(DraggableObject ? draggableObject)
         {
-            _methodPopup = new Popup_Method(draggableObject, () =>
+            var existing = draggableObject != null ? draggableObject.txtData.Text : string.Empty;
+
+            _methodPopup = new Popup_Method(existing, () =>
             {
                 // cancel callback
                 _parent?.Children.Remove(_methodPopup);
@@ -375,7 +381,7 @@ namespace Cookalong.Controls.PopupWindows
         /// Edits the clicked ingredient
         /// </summary>
         /// <param name="clicked">The ingredient to edit</param>
-        internal void EditIngredient(IngredientsDisplay clicked)
+        internal void EditIngredient(IngredientsDisplay? clicked)
         {
             _ingredientPopup = new Popup_Ingredient(clicked?.GetIngredient(), () =>
             {

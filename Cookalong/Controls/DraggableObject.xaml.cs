@@ -13,12 +13,12 @@ namespace Cookalong.Controls
     /// </summary>
     public partial class DraggableObject : UserControl
     {
-        DragWindow? _parent;
+        DragWindow? _parent = null;
         Timer _clickDragTimer = new Timer();
         bool _mouseDown;
         bool _timerRunning = false;
-        Popup_Confirmation? _confirmationPopup;
-        Grid _parentGrid;
+        Popup_Confirmation? _confirmationPopup = null;
+        Grid? _parentGrid = null;
 
         /// <summary>
         /// Constructor
@@ -92,7 +92,7 @@ namespace Cookalong.Controls
                 // stop timer, and do an edit
                 _timerRunning = false;
                 _clickDragTimer.Stop();
-                _parent?.EditStep(this);
+                DragWindow.EditStep(this);
             }
             else
             {
@@ -133,14 +133,16 @@ namespace Cookalong.Controls
             {
                 // cancel callback
                 _parentGrid?.Children.Remove(_confirmationPopup);
-                _confirmationPopup.Visibility = Visibility.Collapsed;
+                if (_confirmationPopup != null)
+                    _confirmationPopup.Visibility = Visibility.Collapsed;
             },
             () =>
             {
                 // confirm callback
                 _parentGrid?.Children.Remove(_confirmationPopup);
-                _parent.stckData.Children.Remove(this);
-                _confirmationPopup.Visibility = Visibility.Collapsed;
+                _parent?.stckData.Children.Remove(this);
+                if (_confirmationPopup != null)
+                    _confirmationPopup.Visibility = Visibility.Collapsed;
             });
 
             // show popup

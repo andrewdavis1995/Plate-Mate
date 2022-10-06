@@ -19,8 +19,10 @@ namespace Cookalong.Helpers
         /// </summary>
         public static void SaveBackup()
         {
+            var location = Path.GetDirectoryName(Assembly.GetCallingAssembly().Location);
+
             // ensure backup directory exists
-            var fullPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), BACKUP_PATH);
+            var fullPath = Path.Combine(string.IsNullOrEmpty(location) ? String.Empty : location, BACKUP_PATH);
             Directory.CreateDirectory(fullPath);
 
             if (Directory.Exists(DataPath_()))
@@ -36,7 +38,8 @@ namespace Cookalong.Helpers
         /// <returns>Path to data</returns>
         static string DataPath_()
         {
-            return Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "SavedData");
+            var location = Path.GetDirectoryName(Assembly.GetCallingAssembly().Location);
+            return Path.Combine(string.IsNullOrEmpty(location) ? string.Empty : location, "SavedData");
         }
 
         /// <summary>
@@ -45,7 +48,8 @@ namespace Cookalong.Helpers
         /// <returns>Path to temp folder</returns>
         static string TempPath_()
         {
-            return Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "TEMP");
+            var location = Path.GetDirectoryName(Assembly.GetCallingAssembly().Location);
+            return Path.Combine(string.IsNullOrEmpty(location) ? String.Empty : location, "TEMP");
         }
 
         /// <summary>
@@ -100,7 +104,8 @@ namespace Cookalong.Helpers
             var list = new List<string>();
 
             // ensure backup directory exists
-            var fullPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), BACKUP_PATH);
+            var location = Path.GetDirectoryName(Assembly.GetCallingAssembly().Location);
+            var fullPath = Path.Combine(string.IsNullOrEmpty(location) ? String.Empty : location, BACKUP_PATH);
             if (Directory.Exists(fullPath))
             {
                 // get all files, and delete ones outwith the valid range
@@ -118,7 +123,7 @@ namespace Cookalong.Helpers
         /// <returns>List of files that remain after check</returns>
         private static List<string> DeleteOldData_(string[] files)
         {
-            List<string> valid = new List<string>();
+            var valid = new List<string>();
 
             // loop through all files (sorted by date)
             foreach (var file in files.OrderByDescending(f => File.GetLastWriteTime(f)))

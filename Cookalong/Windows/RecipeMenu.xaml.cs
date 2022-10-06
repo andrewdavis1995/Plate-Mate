@@ -16,7 +16,7 @@ namespace Cookalong
     /// </summary>
     public partial class RecipeMenu : Window
     {
-        public static RecipeMenu Instance;
+        public static RecipeMenu ? Instance;
         public RecipeController Controller = new RecipeController();
         Popup_Confirmation? _confirmationPopup;
 
@@ -311,14 +311,14 @@ namespace Cookalong
                         else
                         {
                             var err = new ErrorMessage();
-                            popupHolder.Children.Add(err);
+                            popupHolder?.Children.Add(err);
                             err.MoveOn("Could not restore data");
                         }
                     });
 
                     // ensure popup is always on top
                     PopupController.AboveAll(_confirmationPopup);
-                    popupHolder.Children.Add(_confirmationPopup);
+                    popupHolder?.Children.Add(_confirmationPopup);
                 };
 
                 // add to display

@@ -137,13 +137,13 @@ namespace Cookalong.Controls.PopupWindows
                     if (r != null)
                         DisplayRecipe_();
                     else
-                        _parent.Children.Remove(this);
+                        _parent?.Children.Remove(this);
                 }
             );
 
             // ensure it is top most control
             PopupController.AboveAll(editWindow);
-            _parent.Children.Add(editWindow);
+            _parent?.Children.Add(editWindow);
         }
 
         /// <summary>
@@ -151,6 +151,10 @@ namespace Cookalong.Controls.PopupWindows
         /// </summary>
         private void cmdWalkthrough_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            // ensure recipe is valid
+            if (_recipe == null)
+                return;
+
             // TODO: replace this once timings have been specified/stored
             var steps = new List<MethodStep>();
             foreach(var v in _recipe.GetMethodSteps())

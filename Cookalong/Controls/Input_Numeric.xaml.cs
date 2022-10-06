@@ -86,13 +86,10 @@ namespace Cookalong.Controls
                 }
 
                 // check decimal points
-                if (!handled)
+                if (!handled && (preSelection + postSelection).Contains('.') && e.Text.Contains('.'))
                 {
-                    if ((preSelection + postSelection).Contains(".") && e.Text.Contains("."))
-                    {
-                        // can't have multiple decimals
-                        handled = true;
-                    }
+                    // can't have multiple decimals
+                    handled = true;
                 }
             }
 

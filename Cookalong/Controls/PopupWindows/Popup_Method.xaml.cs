@@ -17,26 +17,24 @@ namespace Cookalong.Controls.PopupWindows
     {
         Action? _cancelCallback;
         Action<string> _confirmCallback;
-        DraggableObject _draggableObject;
 
         const int MIN_LENGTH = 5;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="draggableObject">The object to update</param>
+        /// <param name="existingText">The text to set on the input</param>
         /// <param name="cancelCallback">Callback for cancel button</param>
         /// <param name="confirmCallback">Callback for confirm button</param>
-        public Popup_Method(DraggableObject draggableObject, Action cancelCallback, Action<string> confirmCallback)
+        public Popup_Method(string existingText, Action cancelCallback, Action<string> confirmCallback)
         {
             InitializeComponent();
 
             // save callbacks
             _cancelCallback = cancelCallback;
             _confirmCallback = confirmCallback;
-            _draggableObject = draggableObject;
 
-            txtMethodContent.Text = draggableObject != null ? draggableObject.txtData.Text : string.Empty;
+            txtMethodContent.Text = existingText;
 
             // configure button appearance
             ConfigureButtons_();
