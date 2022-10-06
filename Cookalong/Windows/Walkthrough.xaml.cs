@@ -25,12 +25,12 @@ namespace Cookalong.Controls
         string _pendingMessage = "";
         PlaybackMode _mode = PlaybackMode.ClickThrough;
 
-        List<MethodStep> _instructions = new List<MethodStep>();
+        List<MethodStep> _instructions = new();
 
-        Timer _tmrTime = new Timer();                   // controls tmie (ticks every 1 second)
-        Timer _tmrMsgAppear = new Timer();              // controls moving items on to the screen (from left)
-        Timer _tmrMsgRemove = new Timer();              // controls moving item off the screen (to top)
-        Timer _tmrPreviousInstructions = new Timer();   // controls position of the previous instructions (slide items down)
+        readonly Timer _tmrTime = new();                   // controls time (ticks every 1 second)
+        readonly Timer _tmrMsgAppear = new();              // controls moving items on to the screen (from left)
+        readonly Timer _tmrMsgRemove = new();              // controls moving item off the screen (to top)
+        readonly Timer _tmrPreviousInstructions = new();   // controls position of the previous instructions (slide items down)
 
         // const values
         const int WARNING_GAP = 60;
@@ -51,10 +51,10 @@ namespace Cookalong.Controls
             SetData(instructions, mode);
             txtTitle.Text = recipeName;
 
-            ConfigureTimer_(ref _tmrTime, _timer_Elapsed, 1000);
-            ConfigureTimer_(ref _tmrMsgAppear, _msgAppear_Elapsed, 1);
-            ConfigureTimer_(ref _tmrMsgRemove, _msgRemove_Elapsed, 1);
-            ConfigureTimer_(ref _tmrPreviousInstructions, _tmrRHS_Elapsed, 1, true);
+            ConfigureTimer_(ref _tmrTime, Timer_Elapsed, 1000);
+            ConfigureTimer_(ref _tmrMsgAppear, MsgAppear_Elapsed, 1);
+            ConfigureTimer_(ref _tmrMsgRemove, MsgRemove_Elapsed, 1);
+            ConfigureTimer_(ref _tmrPreviousInstructions, TmrRHS_Elapsed, 1, true);
 
             stckPrevious.Margin = new Thickness(0, RHS_HEIGHT, 0, 0);
 
@@ -86,7 +86,7 @@ namespace Cookalong.Controls
         /// <summary>
         /// Event handler for controlling the display of previous steps on the RHS
         /// </summary>
-        private void _tmrRHS_Elapsed(object? sender, ElapsedEventArgs e)
+        private void TmrRHS_Elapsed(object? sender, ElapsedEventArgs e)
         {
             Dispatcher.Invoke(() =>
             {
@@ -106,7 +106,7 @@ namespace Cookalong.Controls
         /// <summary>
         /// Event handler for the timer which contrlos removing steps from the screen
         /// </summary>
-        private void _msgRemove_Elapsed(object? sender, ElapsedEventArgs e)
+        private void MsgRemove_Elapsed(object? sender, ElapsedEventArgs e)
         {
             Dispatcher.Invoke(() =>
             {
@@ -146,7 +146,7 @@ namespace Cookalong.Controls
         /// <summary>
         /// Event handler for the timer which controls the display of next step
         /// </summary>
-        private void _msgAppear_Elapsed(object? sender, ElapsedEventArgs e)
+        private void MsgAppear_Elapsed(object? sender, ElapsedEventArgs e)
         {
             Dispatcher.Invoke(() =>
             {
@@ -179,7 +179,7 @@ namespace Cookalong.Controls
         /// <summary>
         /// Event handler for the TIME timer
         /// </summary>
-        private void _timer_Elapsed(object? sender, ElapsedEventArgs e)
+        private void Timer_Elapsed(object? sender, ElapsedEventArgs e)
         {
             // increase time
             ++_time;

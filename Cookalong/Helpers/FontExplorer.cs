@@ -18,13 +18,13 @@ namespace Cookalong.Helpers
         // Public Properties
         // ##########################################################################################
 
-        public string Key { get; set; }
+        public string Key { get; set; } = string.Empty;
 
         // ##########################################################################################
         // Private Properties
         // ##########################################################################################
 
-        private static readonly Dictionary<string, FontFamily> _CachedFonts = new Dictionary<string, FontFamily>();
+        private static readonly Dictionary<string, FontFamily> _CachedFonts = new();
 
         #endregion
 
