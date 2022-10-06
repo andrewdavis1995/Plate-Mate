@@ -92,7 +92,7 @@ namespace Cookalong.Controls
                 // stop timer, and do an edit
                 _timerRunning = false;
                 _clickDragTimer.Stop();
-                DragWindow.EditStep(this);
+                _parent?.EditStep(this);
             }
             else
             {

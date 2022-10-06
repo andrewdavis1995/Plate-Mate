@@ -12,7 +12,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Xml.Linq;
 
 namespace Cookalong.Controls.PopupWindows
 {
@@ -24,6 +23,7 @@ namespace Cookalong.Controls.PopupWindows
         readonly Grid? _parent;
         readonly Guid? _saved;
         readonly Action<Recipe?> _displayRecipeCallback;
+        readonly Action<string> ? _errorCallback;
         readonly RecipeController ? _controller;
 
         Popup_Confirmation? _confirmationPopup;
@@ -34,7 +34,6 @@ namespace Cookalong.Controls.PopupWindows
         string _imagePath = "";
 
         // const values
-        public static Popup_NewRecipe? Instance;
         private uint _duration;
         const int MIN_RECIPE_NAME = 5;
         const int MIN_STEPS = 2;
@@ -47,11 +46,11 @@ namespace Cookalong.Controls.PopupWindows
         /// <param name="recipe">The recipe to edit (can be null)</param>
         /// <param name="controller">The recipe controller</param>
         /// <param name="displayRecipeCallback">Callback to call to display all recipes</param>
-        public Popup_NewRecipe(Grid ? parent, Recipe? recipe, RecipeController ? controller, Action<Recipe?> displayRecipeCallback)
+        public Popup_NewRecipe(Grid ? parent, Recipe? recipe, RecipeController ? controller, Action<Recipe?> displayRecipeCallback, Action<string> ? errorCallback)
         {
-            Instance = this;
-
             InitializeComponent();
+
+            methodList.Configure(this);
 
             // store data
             _defaultPreview = imgPreview.Source;
@@ -59,6 +58,7 @@ namespace Cookalong.Controls.PopupWindows
             _saved = recipe?.GetRecipeId();
             _displayRecipeCallback = displayRecipeCallback;
             _controller = controller;
+            _errorCallback = errorCallback;
             
             // initialise input for serving size
             inputServingSize.Initialise(false, 20, 2);
@@ -259,7 +259,7 @@ namespace Cookalong.Controls.PopupWindows
             // if there was an error, report it
             if (!string.IsNullOrEmpty(error))
             {
-                RecipeMenu.Instance?.ShowError(error);
+                _errorCallback?.Invoke(error);
             }
         }
 
@@ -370,7 +370,7 @@ namespace Cookalong.Controls.PopupWindows
                     methodList.AddItem(a, grdOverall);
 
                 _parent?.Children.Remove(_methodPopup);
-            });
+            }, _errorCallback);
 
             // ensure popup appears above others
             PopupController.AboveAll(_methodPopup);
@@ -403,7 +403,7 @@ namespace Cookalong.Controls.PopupWindows
                 }
 
                 _parent?.Children.Remove(_ingredientPopup);
-            });
+            }, _errorCallback);
 
             // ensure the control is above others
             PopupController.AboveAll(_ingredientPopup);

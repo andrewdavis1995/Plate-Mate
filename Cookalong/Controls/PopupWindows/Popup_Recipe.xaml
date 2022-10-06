@@ -46,7 +46,7 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <StackPanel>
@@ -93,12 +93,12 @@
                         <Image Source="/Images/Dairy.png" RenderOptions.BitmapScalingMode="HighQuality" />
                     </Border>
                 </Grid>
-                <local:Input_Button x:Name="cmdEdit" Height="40" MouseLeftButtonDown="cmdEdit_MouseLeftButtonDown" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="5, 10, 5, 5"/>
-                <local:Input_Button x:Name="cmdWalkthrough" Height="40" MouseLeftButtonDown="cmdWalkthrough_MouseLeftButtonDown" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="5"/>
+                <local:Input_Button x:Name="cmdEdit" Height="40" MouseLeftButtonDown="cmdEdit_MouseLeftButtonDown" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10, 10, 10, 5"/>
+                <local:Input_Button x:Name="cmdWalkthrough" Height="40" MouseLeftButtonDown="cmdWalkthrough_MouseLeftButtonDown" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10, 5, 10, 10"/>
             </StackPanel>
 
 
-            <local:Input_Button x:Name="cmdClose" Height="40" MouseLeftButtonDown="cmdClose_MouseLeftButtonDown" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5" Grid.Row="1"/>
+            <local:Input_Button x:Name="cmdClose" Height="40" MouseLeftButtonDown="cmdClose_MouseLeftButtonDown" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10" Grid.Row="1"/>
 
         </Grid>
 

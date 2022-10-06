@@ -16,7 +16,6 @@ namespace Cookalong
     /// </summary>
     public partial class RecipeMenu : Window
     {
-        public static RecipeMenu ? Instance;
         public RecipeController Controller = new RecipeController();
         Popup_Confirmation? _confirmationPopup;
 
@@ -29,7 +28,6 @@ namespace Cookalong
         public RecipeMenu()
         {
             InitializeComponent();
-            Instance = this;
             SetupButtons_();
             LoadBackups_();
         }
@@ -207,7 +205,7 @@ namespace Cookalong
         /// </summary>
         void NewRecipe_()
         {
-            var popup = new Popup_NewRecipe(popupHolder, null, Controller, (r) => DisplayRecipes_(txtFilter.Text));
+            var popup = new Popup_NewRecipe(popupHolder, null, Controller, (r) => DisplayRecipes_(txtFilter.Text), ShowError);
             PopupController.AboveAll(popup);
             popupHolder.Children.Insert(0, popup);
         }
@@ -218,7 +216,7 @@ namespace Cookalong
         /// <param name="recipe">The recipe to show</param>
         private void ShowRecipe_(Recipe recipe)
         {
-            var popup = new Popup_Recipe(popupHolder, recipe);
+            var popup = new Popup_Recipe(popupHolder, recipe, ShowError, Controller, UpdateDisplay);
             PopupController.AboveAll(popup);
             popupHolder.Children.Insert(0, popup);
         }

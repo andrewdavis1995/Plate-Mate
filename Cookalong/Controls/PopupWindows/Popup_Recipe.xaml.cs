@@ -1,4 +1,5 @@
-﻿using Andrew_2_0_Libraries.Models;
+﻿using Andrew_2_0_Libraries.Controllers;
+using Andrew_2_0_Libraries.Models;
 using Cookalong.Helpers;
 using Cookalong.Structures;
 using System;
@@ -18,6 +19,9 @@ namespace Cookalong.Controls.PopupWindows
     {
         Grid? _parent;
         Recipe? _recipe;
+        readonly Action<string>? _errorCallback = null;
+        RecipeController ? _controller = null;
+        readonly Action? _updateDisplay;
 
         /// <summary>
         /// Constructor
@@ -32,11 +36,14 @@ namespace Cookalong.Controls.PopupWindows
         /// </summary>
         /// <param name="parent">Grid which displays this control</param>
         /// <param name="recipe">Recipe to display</param>
-        public Popup_Recipe(Grid parent, Recipe recipe)
+        public Popup_Recipe(Grid parent, Recipe recipe, Action<string>? errorCallback, RecipeController controller, Action? action)
         {
             InitializeComponent();
             _parent = parent;
             _recipe = recipe;
+            _errorCallback = errorCallback;
+            _controller = controller;
+            _updateDisplay = action;
 
             // configure buttons
             cmdClose.Configure("Back", true, "Cancel");
@@ -127,18 +134,18 @@ namespace Cookalong.Controls.PopupWindows
         private void cmdEdit_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             // show popup
-            var editWindow = new Popup_NewRecipe(_parent, _recipe, RecipeMenu.Instance?.Controller,
+            var editWindow = new Popup_NewRecipe(_parent, _recipe, _controller,
                 (r) =>
                 {
                     // display recipe callback
-                    RecipeMenu.Instance?.UpdateDisplay();
+                    _updateDisplay?.Invoke();
                     _recipe = r;
 
                     if (r != null)
                         DisplayRecipe_();
                     else
                         _parent?.Children.Remove(this);
-                }
+                }, _errorCallback
             );
 
             // ensure it is top most control

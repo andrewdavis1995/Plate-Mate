@@ -15,6 +15,7 @@ namespace Cookalong.Controls.PopupWindows
     {
         Action? _cancelCallback;
         Action<Ingredient> _confirmCallback;
+        Action<string>? _errorCallback;
 
         const int MIN_LENGTH = 3;
 
@@ -24,7 +25,7 @@ namespace Cookalong.Controls.PopupWindows
         /// <param name="existing">The existing ingredient to update</param>
         /// <param name="cancelCallback">Callback when cancel is clicked</param>
         /// <param name="confirmCallback">Callback when confirm is clicked</param>
-        public Popup_Ingredient(Ingredient? existing, Action cancelCallback, Action<Ingredient> confirmCallback)
+        public Popup_Ingredient(Ingredient? existing, Action cancelCallback, Action<Ingredient> confirmCallback, Action<string>? errorCallback)
         {
             InitializeComponent();
 
@@ -55,6 +56,7 @@ namespace Cookalong.Controls.PopupWindows
             // configure checkbox
             chkCalories.AddTitle("Count calories?", true);
             chkCalories.AddCallbacks(UpdateCalorieInput_, UpdateCalorieInput_);
+            _errorCallback = errorCallback;
         }
 
         /// <summary>
@@ -196,7 +198,7 @@ namespace Cookalong.Controls.PopupWindows
             // check length of the name
             if (txtName.Text.Length < MIN_LENGTH)
             {
-                RecipeMenu.Instance?.ShowError($"Name is too short. Must be at least {MIN_LENGTH} characters");
+                _errorCallback?.Invoke($"Name is too short. Must be at least {MIN_LENGTH} characters");
             }
             else
             {

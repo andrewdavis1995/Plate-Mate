@@ -17,6 +17,7 @@ namespace Cookalong.Controls.PopupWindows
     {
         Action? _cancelCallback;
         Action<string> _confirmCallback;
+        Action<string>? _errorCallback;
 
         const int MIN_LENGTH = 5;
 
@@ -26,13 +27,14 @@ namespace Cookalong.Controls.PopupWindows
         /// <param name="existingText">The text to set on the input</param>
         /// <param name="cancelCallback">Callback for cancel button</param>
         /// <param name="confirmCallback">Callback for confirm button</param>
-        public Popup_Method(string existingText, Action cancelCallback, Action<string> confirmCallback)
+        public Popup_Method(string existingText, Action cancelCallback, Action<string> confirmCallback, Action<string>? errorCallback)
         {
             InitializeComponent();
 
             // save callbacks
             _cancelCallback = cancelCallback;
             _confirmCallback = confirmCallback;
+            _errorCallback = errorCallback;
 
             txtMethodContent.Text = existingText;
 
@@ -65,7 +67,7 @@ namespace Cookalong.Controls.PopupWindows
             // check length
             if (txtMethodContent.Text.Length < MIN_LENGTH)
             {
-                RecipeMenu.Instance?.ShowError($"Message is too short. Must be at least {MIN_LENGTH} characters");
+                _errorCallback?.Invoke($"Message is too short. Must be at least {MIN_LENGTH} characters");
             }
             else
             {

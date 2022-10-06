@@ -13,13 +13,14 @@ namespace Cookalong.Controls
     /// </summary>
     public partial class DragWindow : UserControl
     {
-        Timer _timer;   // control moving/dragging
+        readonly Timer _timer;   // control moving/dragging
 
         int _originalIndex = 0; // where it came from
         int _newIndex = -1; // where it is going
 
         DraggableObject? _dragging = null;  // currently being moved
-        DraggableObject _spacer;    // show the slot where the dragged item will be dropped
+        Popup_NewRecipe ? _popupNewRecipe = null;
+        readonly DraggableObject _spacer;    // show the slot where the dragged item will be dropped
 
         /// <summary>
         /// Constructor
@@ -38,6 +39,15 @@ namespace Cookalong.Controls
                 Visibility = Visibility.Collapsed
             };
             stckData.Children.Add(_spacer);
+        }
+
+        /// <summary>
+        /// Stores an instance of the popup
+        /// </summary>
+        /// <param name="newRecipe">The popup</param>
+        public void Configure(Popup_NewRecipe newRecipe)
+        {
+            _popupNewRecipe = newRecipe;
         }
 
         /// <summary>
@@ -227,9 +237,9 @@ namespace Cookalong.Controls
         /// When a step is clicked and needs to be edited
         /// </summary>
         /// <param name="draggableObject">The control to edit</param>
-        internal static void EditStep(DraggableObject draggableObject)
+        internal void EditStep(DraggableObject draggableObject)
         {
-            Popup_NewRecipe.Instance?.EditStep(draggableObject);
+            _popupNewRecipe?.EditStep(draggableObject);
         }
     }
 }
