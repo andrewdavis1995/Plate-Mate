@@ -63,7 +63,7 @@ namespace Andrew_2_0_Libraries.Controllers
         public void UpdateTransaction(Guid transactionId, float value, string title, bool isIncome, TransactionFrequency frequency, string description)
         {
             // find transaction with correct ID
-            var matching = _transactions.Where(r => r.GetTransactionId() == transactionId).FirstOrDefault();
+            var matching = _transactions.FirstOrDefault(r => r.GetTransactionId() == transactionId);
             if (matching != null)
             {
                 matching.UpdateTransaction(value, title, isIncome, frequency, description);
@@ -99,7 +99,7 @@ namespace Andrew_2_0_Libraries.Controllers
         /// </summary>
         public List<FinanceTransaction> GetIncomeTransactions()
         {
-            var incomes = _transactions.Where(t => t.IsIncome() == true).ToList();
+            var incomes = _transactions.Where(t => t.IsIncome()).ToList();
             return incomes;
         }
 
@@ -108,7 +108,7 @@ namespace Andrew_2_0_Libraries.Controllers
         /// </summary>
         public List<FinanceTransaction> GetOutgoingTransactions()
         {
-            var outgoings = _transactions.Where(t => t.IsIncome() == false).ToList();
+            var outgoings = _transactions.Where(t => !t.IsIncome()).ToList();
             return outgoings;
         }
         #endregion
@@ -148,7 +148,7 @@ namespace Andrew_2_0_Libraries.Controllers
         public void UpdateDebt(Guid debtId, float value, string otherParty, bool isIncome, string description)
         {
             // find transaction with correct ID
-            var matching = _debts.Where(r => r.GetTransactionId() == debtId).FirstOrDefault();
+            var matching = _debts.FirstOrDefault(r => r.GetTransactionId() == debtId);
             if (matching != null)
             {
                 matching.UpdateTransaction(value, otherParty, isIncome, description);
@@ -169,7 +169,7 @@ namespace Andrew_2_0_Libraries.Controllers
         public void ResolveDebt(Guid debtId, DateTime date)
         {
             // find transaction with correct ID
-            var matching = _debts.Where(r => r.GetTransactionId() == debtId).FirstOrDefault();
+            var matching = _debts.FirstOrDefault(r => r.GetTransactionId() == debtId);
             if (matching != null)
             {
                 matching.Resolved(date);
