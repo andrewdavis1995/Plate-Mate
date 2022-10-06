@@ -4,8 +4,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cookalong.Helpers
 {
@@ -14,6 +12,7 @@ namespace Cookalong.Helpers
         const string BACKUP_PATH = "Backup";
         const int RETAIN_DAYS = 30;
         const int MAX_FILES = 20;
+        const long MAX_ZIP_FILE_SIZE = 200000;
 
         /// <summary>
         /// Saves the current saved data to a zip folder
@@ -49,7 +48,11 @@ namespace Cookalong.Helpers
             return Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "TEMP");
         }
 
-
+        /// <summary>
+        /// Restores the specified backup file
+        /// </summary>
+        /// <param name="path">The path to restore from</param>
+        /// <returns>Whether it was successful</returns>
         public static bool RestoreBackup_(string path)
         {
             bool success = false;
@@ -66,8 +69,12 @@ namespace Cookalong.Helpers
                 // copy existing data into temp folder
                 Directory.Move(DataPath_(), TempPath_());
 
-                // unzip specified path into data folder
-                ZipFile.ExtractToDirectory(path, DataPath_());
+                // check file exists
+                if (File.Exists(path) && new FileInfo(path).Length < MAX_ZIP_FILE_SIZE)
+                {
+                    // unzip specified path into data folder
+                    ZipFile.ExtractToDirectory(path, DataPath_());
+                }
 
                 // tidy up by deleting temp
                 Directory.Delete(TempPath_(), true);

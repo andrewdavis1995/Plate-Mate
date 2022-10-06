@@ -1,4 +1,8 @@
-﻿namespace Cookalong.Helpers
+﻿using System;
+using System.Linq;
+using System.Xml.Linq;
+
+namespace Cookalong.Helpers
 {
     /// <summary>
     /// Functions to format output strings
@@ -35,6 +39,37 @@
             }
 
             return output;
+        }
+
+        /// <summary>
+        /// Checks if the provided string contains a forbidden character
+        /// </summary>
+        /// <param name="text">The string to check</param>
+        /// <returns>Whether the string contains a forbidden character</returns>
+        internal static bool ForbiddenCharacter(string text)
+        {
+            // don't allow these characters
+            char[] forbidden = { '@', '~', '\"', '#' };
+            return forbidden.Any(c => text.Contains(c));
+        }
+
+        /// <summary>
+        /// Checks if the space key is allowed
+        /// </summary>
+        /// <param name="text">The current string before space is potentially added</param>
+        /// <returns>Whether a space is valid</returns>
+        internal static bool IsSpaceAllowed(string text)
+        {
+            var valid = true;
+
+            // don't allow space if nothing else
+            if (text.Length == 0)
+                valid = false;
+            // don't allow double space
+            else if (text.Last() == ' ')
+                valid = false;
+
+            return valid;
         }
     }
 }

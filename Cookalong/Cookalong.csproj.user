@@ -40,6 +40,9 @@
     <Compile Update="Controls\Input_Numeric.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Controls\LHS_Option.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Controls\PopupWindows\Popup_Confirmation.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -85,6 +88,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\Ingredient_Image_Option.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\LHS_Option.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\MethodStepItem.xaml">

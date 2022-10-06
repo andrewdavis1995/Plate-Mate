@@ -91,10 +91,8 @@ namespace Cookalong.Controls.PopupWindows
         /// </summary>
         private void txtMethodContent_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            // don't allow these characters
-            char[] forbidden = { '@', '~', '\"', '#' };
-            if (forbidden.Any(c => e.Text.Contains(c)))
-                e.Handled = true;
+            // don't allow forbidden characters
+            e.Handled = StringHelper.ForbiddenCharacter(e.Text);
         }
 
         /// <summary>
@@ -104,12 +102,8 @@ namespace Cookalong.Controls.PopupWindows
         {
             if (e.Key == Key.Space)
             {
-                // don't allow space if nothing else
-                if (txtMethodContent.Text.Length == 0)
-                    e.Handled = true;
-                // don't allow double space
-                else if (txtMethodContent.Text.Last() == ' ')
-                    e.Handled = true;
+                // check if a space is allowed
+                e.Handled = !StringHelper.IsSpaceAllowed(txtMethodContent.Text);
             }
         }
     }

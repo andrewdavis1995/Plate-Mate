@@ -18,11 +18,11 @@
 
         <Grid Grid.RowSpan="10" Background="{StaticResource GradientBackground}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="70"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition/>
                 <RowDefinition Height="50" />
             </Grid.RowDefinitions>
-            <Image Source="/Images/Logo.png" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Width="110" RenderOptions.BitmapScalingMode="HighQuality" />
+            <Image Source="/Images/Logo.png" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5"  RenderOptions.BitmapScalingMode="HighQuality" />
 
             <Grid Height="35" Grid.Row="100" MouseLeftButtonDown="cmdExit_MouseLeftButtonDown">
                 <Grid.ColumnDefinitions>
@@ -32,27 +32,14 @@
                 <Image Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Source="/Images/Exit.png" Margin="5" RenderOptions.BitmapScalingMode="HighQuality"/>
                 <Label Grid.Column="1" Content="Exit" Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="0"/>
             </Grid>
-        </Grid>
 
-        <StackPanel Grid.Row="1" Margin="0, 5" Height="Auto" VerticalAlignment="Top">
-            <Grid Height="40" Background="Transparent" MouseLeftButtonDown="RecipeButton_Click">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Image Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Left" Source="/Images/RecipeList.png" Margin="5" RenderOptions.BitmapScalingMode="HighQuality"/>
-                <Label Grid.Column="1" Content="My Recipes" Foreground="White" FontSize="14" VerticalAlignment="Center"/>
-            </Grid>
-            <Grid Height="40" Background="Transparent" MouseLeftButtonDown="BackupsButton_Click">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Image Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Source="/Images/Timing.png" Margin="5" RenderOptions.BitmapScalingMode="HighQuality"/>
-                <Label Grid.Column="1" Content="Data Management" Foreground="White" FontSize="14" VerticalAlignment="Center"/>
-            </Grid>
+        <StackPanel Grid.Row="1" Margin="0, 2" Height="Auto" VerticalAlignment="Top">
+            <local:LHS_Option x:Name="lhsRecipes"/>
+            <local:LHS_Option x:Name="lhsData"/>
         </StackPanel>
 
+        </Grid>
+        
         <Grid Name="popupHolder" Grid.ColumnSpan="100" Grid.RowSpan="100" Panel.ZIndex="1000"/>
 
         <Grid Name="grdContent" Grid.Column="1" Grid.RowSpan="10" Margin="5">

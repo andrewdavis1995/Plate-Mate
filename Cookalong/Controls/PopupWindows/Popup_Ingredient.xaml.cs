@@ -18,6 +18,8 @@ namespace Cookalong.Controls.PopupWindows
 
         const int MIN_LENGTH = 3;
 
+        public object StringFetcher { get; private set; }
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -223,25 +225,25 @@ namespace Cookalong.Controls.PopupWindows
             e.Handled = true;
         }
 
+        /// <summary>
+        /// Event handler for when a key is pressed on the name input
+        /// </summary>
         private void txtName_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Space)
             {
-                // don't allow space if nothing else
-                if (txtName.Text.Length == 0)
-                    e.Handled = true;
-                // don't allow double space
-                else if (txtName.Text.Last() == ' ')
-                    e.Handled = true;
+                // check if a space is allowed
+                e.Handled = !StringHelper.IsSpaceAllowed(txtName.Text);
             }
         }
 
+        /// <summary>
+        /// Event handler for when the text changes on the name input
+        /// </summary>
         private void txtName_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            // don't allow these characters
-            char[] forbidden = { '@', '~', '\"', '#' };
-            if (forbidden.Any(c => e.Text.Contains(c)))
-                e.Handled = true;
+            // don't allow forbidden characters
+            e.Handled = StringHelper.ForbiddenCharacter(e.Text);
         }
     }
 }
