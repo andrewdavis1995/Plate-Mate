@@ -6,10 +6,10 @@ namespace Andrew_2_0_Libraries.Models
 {
     public class Recipe : BaseSaveable
     {
-        public static byte FLAG_VEGGIE = 1;
-        public static byte FLAG_VEGAN  = 2;
-        public static byte FLAG_DAIRY  = 4;
-        public static byte FLAG_GLUTEN = 8;
+        public static readonly byte FLAG_VEGGIE = 1;
+        public static readonly byte FLAG_VEGAN  = 2;
+        public static readonly byte FLAG_DAIRY  = 4;
+        public static readonly byte FLAG_GLUTEN = 8;
 
         string _recipeName;
         Guid _recipeId;
