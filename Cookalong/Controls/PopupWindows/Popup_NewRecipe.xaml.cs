@@ -359,14 +359,14 @@ namespace Cookalong.Controls.PopupWindows
                 // cancel callback
                 _parent?.Children.Remove(_methodPopup);
             },
-            (a) =>
+            (step) =>
             {
                 // confirm callback
                 // update existing, where possible
                 if (draggableObject != null)
-                    draggableObject.txtData.Text = a.GetMethod();
-                else
-                    methodList.AddItem(a, grdOverall);
+                    draggableObject.txtData.Text = step?.GetMethod();
+                else if(step != null)
+                    methodList.AddItem(step, grdOverall);
 
                 _parent?.Children.Remove(_methodPopup);
             }, _errorCallback);

@@ -14,6 +14,24 @@ namespace Andrew_2_0_Libraries.Models
         int _startTime { get; set; }
         int _duration { get; set; }
 
+        #region Accessors
+        public string GetMethod()
+        {
+            return _methodText;
+        }
+        public int GetStart()
+        {
+            return _startTime;
+        }
+        public int GetDuration()
+        {
+            return _duration;
+        }
+        #endregion
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public MethodStep() { }
 
         /// <summary>
@@ -64,20 +82,6 @@ namespace Andrew_2_0_Libraries.Models
             }
 
             return true;
-        }
-
-        public string GetMethod()
-        {
-            return _methodText;
-        }
-
-        public int GetStart()
-        {
-            return _startTime;
-        }
-        public int GetDuration()
-        {
-            return _duration;
         }
 
         /// <summary>
