@@ -1,4 +1,5 @@
-﻿using Cookalong.Controls.PopupWindows;
+﻿using Andrew_2_0_Libraries.Models;
+using Cookalong.Controls.PopupWindows;
 using Cookalong.Helpers;
 using System;
 using System.Timers;
@@ -19,18 +20,20 @@ namespace Cookalong.Controls
         bool _timerRunning = false;
         Popup_Confirmation? _confirmationPopup = null;
         Grid? _parentGrid = null;
+        MethodStep? _methodStep = null;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="parent">The window that the control can be dragged around</param>
         /// <param name="content">The data to display on the control</param>
-        public DraggableObject(DragWindow parent, string content, Grid parentGrid)
+        public DraggableObject(DragWindow parent, MethodStep step, Grid parentGrid)
         {
             InitializeComponent();
-            txtData.Text = content;
+            txtData.Text = step.GetMethod();
             _parent = parent;
             _parentGrid = parentGrid;
+            _methodStep = step;
 
             // configure timer
             _clickDragTimer = new Timer();
@@ -44,6 +47,15 @@ namespace Cookalong.Controls
         public DraggableObject()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Accessor for the method step
+        /// </summary>
+        /// <returns>The method step</returns>
+        public MethodStep ? MethodStep()
+        {
+            return _methodStep;
         }
 
         /// <summary>

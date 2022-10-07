@@ -1,7 +1,6 @@
 ﻿using Andrew_2_0_Libraries.Controllers;
 using Andrew_2_0_Libraries.Models;
 using Cookalong.Helpers;
-using Cookalong.Structures;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -86,7 +85,7 @@ namespace Cookalong.Controls.PopupWindows
             // display method
             foreach(var s in _recipe.GetMethodSteps())
             {
-                stckMethod.Children.Add(new MethodStepItem(index++, s));
+                stckMethod.Children.Add(new MethodStepItem(index++, s.GetMethod()));
             }
 
             // check the image exists
@@ -162,13 +161,6 @@ namespace Cookalong.Controls.PopupWindows
             if (_recipe == null)
                 return;
 
-            // TODO: replace this once timings have been specified/stored
-            var steps = new List<MethodStep>();
-            foreach(var v in _recipe.GetMethodSteps())
-            {
-                steps.Add(new MethodStep(v, 0, 0));
-            }
-
             // check all ingredients are ok
             var ic = new IngredientChecklist(_recipe.GetIngredients());
             bool? state = ic.ShowDialog();
@@ -177,7 +169,7 @@ namespace Cookalong.Controls.PopupWindows
             if (state == true)
             {
                 // show the walkthrough dialog
-                var wt = new Walkthrough(_recipe.GetRecipeName(), steps, PlaybackMode.ClickThrough);
+                var wt = new Walkthrough(_recipe.GetRecipeName(), _recipe.GetMethodSteps(), PlaybackMode.ClickThrough);
                 wt.ShowDialog();
             }
         }

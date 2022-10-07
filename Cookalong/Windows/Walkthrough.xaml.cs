@@ -7,7 +7,7 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Cookalong.Structures;
+using Andrew_2_0_Libraries.Models;
 
 namespace Cookalong.Controls
 {
@@ -194,18 +194,18 @@ namespace Cookalong.Controls
                 foreach (var i in _instructions)
                 {
                     // if the time is the start time of the structions, display
-                    if (_time == i.Start)
+                    if (_time == i.GetStart())
                     {
                         // TODO
-                        ShowStep_(i.Message);
+                        ShowStep_(i.GetMethod());
                     }
                     // if the time is the end time of the structions, display
-                    else if (_time == i.Start + i.Duration)
+                    else if (_time == i.GetStart() + i.GetDuration())
                     {
                         // TODO
                     }
                     // if the time is the warning time of the structions, display
-                    else if (_time == i.Start - WARNING_GAP)
+                    else if (_time == i.GetStart() - WARNING_GAP)
                     {
                         // TODO
                         CheckItemsRequired_(i);
@@ -254,7 +254,7 @@ namespace Cookalong.Controls
             for (var i = 0; i < searchStrings.Length && i < objectsReqd.Length; i++)
             {
                 // if it is there, add a display
-                if (ins.Message.ToLower().Contains(searchStrings[i].ToLower()))
+                if (ins.GetMethod().ToLower().Contains(searchStrings[i].ToLower()))
                 {
                     // TODO: add control with image
                 }
@@ -272,14 +272,14 @@ namespace Cookalong.Controls
         /// <param name="mode">The mode to use for dislaying instructions</param>
         public void SetData(List<MethodStep> instructions, PlaybackMode mode)
         {
-            _instructions = instructions.OrderBy(e => e.Start).ToList();
+            _instructions = instructions.OrderBy(e => e.GetStart()).ToList();
 
             // opening message
             _instructions.Insert(0, new MethodStep("Let's begin!", -1, 1));
 
             // final message
             if (_instructions.Count > 0)
-                _instructions.Add(new MethodStep("Enjoy!", _instructions.Last().Start + _instructions.Last().Duration, 1));
+                _instructions.Add(new MethodStep("Enjoy!", _instructions.Last().GetStart() + _instructions.Last().GetDuration(), 1));
             _mode = mode;
         }
 
@@ -347,7 +347,7 @@ namespace Cookalong.Controls
             if (_instructionIndex < _instructions.Count)
             {
                 // display next step (after removing if necessary)
-                _pendingMessage = _instructions[_instructionIndex].Message;
+                _pendingMessage = _instructions[_instructionIndex].GetMethod();
 
                 if (_instructionIndex == 0)
                     ShowStep_(_pendingMessage);

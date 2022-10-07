@@ -1,12 +1,8 @@
 ﻿using Andrew_2_0_Libraries.Models;
 using Cookalong.Helpers;
 using System;
-using System.Data;
-using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Xml.Linq;
 
 namespace Cookalong.Controls.PopupWindows
 {
@@ -16,8 +12,9 @@ namespace Cookalong.Controls.PopupWindows
     public partial class Popup_Method : UserControl
     {
         Action? _cancelCallback;
-        Action<string> _confirmCallback;
+        Action<MethodStep?> _confirmCallback;
         Action<string>? _errorCallback;
+        MethodStep ?_existing;
 
         const int MIN_LENGTH = 5;
 
@@ -27,7 +24,7 @@ namespace Cookalong.Controls.PopupWindows
         /// <param name="existingText">The text to set on the input</param>
         /// <param name="cancelCallback">Callback for cancel button</param>
         /// <param name="confirmCallback">Callback for confirm button</param>
-        public Popup_Method(string existingText, Action cancelCallback, Action<string> confirmCallback, Action<string>? errorCallback)
+        public Popup_Method(MethodStep? existing, Action cancelCallback, Action<MethodStep?> confirmCallback, Action<string>? errorCallback)
         {
             InitializeComponent();
 
@@ -35,8 +32,9 @@ namespace Cookalong.Controls.PopupWindows
             _cancelCallback = cancelCallback;
             _confirmCallback = confirmCallback;
             _errorCallback = errorCallback;
+            _existing = existing;
 
-            txtMethodContent.Text = existingText;
+            txtMethodContent.Text = existing?.GetMethod();
 
             // configure button appearance
             ConfigureButtons_();
@@ -54,7 +52,7 @@ namespace Cookalong.Controls.PopupWindows
         /// <summary>
         /// Event handler for cancel button
         /// </summary>
-        private void cmdCancel_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void cmdCancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             _cancelCallback?.Invoke();
         }
@@ -71,7 +69,8 @@ namespace Cookalong.Controls.PopupWindows
             }
             else
             {
-                _confirmCallback?.Invoke(txtMethodContent.Text);
+                _existing?.UpdateText(txtMethodContent.Text);
+                _confirmCallback?.Invoke(_existing);
             }
         }
 

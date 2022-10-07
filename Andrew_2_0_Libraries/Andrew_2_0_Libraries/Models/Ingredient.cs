@@ -54,11 +54,20 @@ namespace Andrew_2_0_Libraries.Models
             return _name.ToLower().Contains(filter.ToLower());
         }
 
+        /// <summary>
+        /// Gets the string to write to file
+        /// </summary>
+        /// <returns>The string</returns>
         public override string GetTextOutput()
         {
             return GetName() + "~" + GetUnit() + "~" + GetValue() + "~" + GetCalories() + "~" + _imageIndex;
         }
 
+        /// <summary>
+        /// Parses the data read from file
+        /// </summary>
+        /// <param name="data">The data to parse</param>
+        /// <returns>Whether the parse was successful</returns>
         public override bool ParseData(string data)
         {
             var success = false;
