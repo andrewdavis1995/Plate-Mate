@@ -1,5 +1,6 @@
 using Andrew_2_0_Libraries.Models;
 using System;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace Andrew_2_0_Libraries.Controllers
@@ -115,7 +116,7 @@ namespace Andrew_2_0_Libraries.Controllers
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    Debug.WriteLine(ex.Message);
                     success = false;
                 }
             }

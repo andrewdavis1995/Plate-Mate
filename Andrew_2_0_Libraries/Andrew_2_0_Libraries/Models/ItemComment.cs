@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace Andrew_2_0_Libraries.Models
@@ -65,7 +66,7 @@ namespace Andrew_2_0_Libraries.Models
                 catch(Exception ex)
                 {
                     // exception
-                    Console.WriteLine(ex.Message);
+                    Debug.WriteLine(ex.Message);
                     success = false;
                 }
             }
