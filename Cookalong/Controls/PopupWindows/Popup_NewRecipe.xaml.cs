@@ -1,6 +1,7 @@
 ﻿using Andrew_2_0_Libraries.Controllers;
 using Andrew_2_0_Libraries.Models;
 using Cookalong.Helpers;
+using Cookalong.Windows;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -69,7 +70,8 @@ namespace Cookalong.Controls.PopupWindows
             cmdNewIngredient.Configure("+");
             cmdNewMethodStep.Configure("+");
             cmdSelectImage.Configure("Select Image");
-            cmdSetTime.Configure("Set Time");
+            cmdSetTime.Configure("Set Time (estimate)");
+            cmdConfigureTime.Configure("Configure Timing");
 
             // configure checkboxes for nutrition info
             inpVegetarian.AddTitle("Vegetarian");
@@ -462,6 +464,20 @@ namespace Cookalong.Controls.PopupWindows
         {
             // don't allow forbidden characters
             e.Handled = StringHelper.ForbiddenCharacter(e.Text);
+        }
+
+        /// <summary>
+        /// Event handler for the configure time button
+        /// </summary>
+        private void cmdConfigureTime_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var tc = new TimeConfiguration();
+            var result = tc.ShowDialog();
+
+            if(result == true)
+            {
+
+            }
         }
     }
 }
