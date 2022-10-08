@@ -47,14 +47,6 @@ namespace Cookalong
         }
 
         /// <summary>
-        /// Event handler for when the delete button is pressed
-        /// </summary>
-        private void cmdDelete_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            _parent?.DeleteMethodStep(this);
-        }
-
-        /// <summary>
         /// Event handler for when the mouse enters the left drag window
         /// </summary>
         private void LeftBorder_MouseEnter(object sender, MouseEventArgs e)

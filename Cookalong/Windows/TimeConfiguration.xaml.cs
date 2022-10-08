@@ -1,5 +1,7 @@
 ﻿using Andrew_2_0_Libraries.Models;
 using Cookalong.Controls;
+using Cookalong.Controls.PopupWindows;
+using Cookalong.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,12 +34,14 @@ namespace Cookalong.Windows
 
         const int CURSOR_OFFSET = 25;
         const double SEGMENT_STEP_MINS = 0.5d;
-        const int MAX_MINS = 90;
+        const int MAX_MINS = 60;
 
         DraggableObjectGantt? _dragging = null;  // currently being moved
 
         List<MethodStep> _steps = new List<MethodStep>();
         List<MethodStep> _completeInstructions = new List<MethodStep>();
+
+        Popup_Confirmation _confirmationPopup = null;
 
         /// <summary>
         /// Constructor
@@ -45,22 +49,15 @@ namespace Cookalong.Windows
         public TimeConfiguration(List<MethodStep> steps)
         {
             InitializeComponent();
-            cmdSave.Configure("Save");
+            cmdSave.Configure("Save and Exit");
+            cmdReset.Configure("Reset");
+            cmdCancel.Configure("Cancel");
 
             _steps = steps;
 
             // initialise timer
             _timer = new Timer(0.01f);
             _timer.Elapsed += _timer_Elapsed;
-        }
-
-        /// <summary>
-        /// Deletes the specified object from the list
-        /// </summary>
-        /// <param name="draggableObject">Object to delete</param>
-        internal void DeleteMethodStep(DraggableObjectGantt draggableObject)
-        {
-            stckData.Children.Remove(draggableObject);
         }
 
         /// <summary>
@@ -94,8 +91,16 @@ namespace Cookalong.Windows
             Point relativePoint = draggableObject.TransformToAncestor(stckData)
                           .Transform(new Point(0, 0));
 
+            // show the time popup
             timePopup.Margin = new Thickness(draggableObject.Margin.Left, relativePoint.Y - draggableObject.ActualHeight, 0, 0);
-            timePopup.Visibility = Visibility.Visible;
+            timePopup.Visibility = !(leftBound || rightBound) ? Visibility.Visible : Visibility.Collapsed;
+
+            // highlight the title
+            var title = stckTitles.Children[index] as GanttTitle;
+            if(title != null)
+            {
+                title.SetColour();
+            }
         }
 
         /// <summary>
@@ -109,7 +114,7 @@ namespace Cookalong.Windows
                 // just in case
                 if (_dragging == null) return;
 
-                Point mousePos = Mouse.GetPosition(this);
+                Point mousePos = Mouse.GetPosition(stckData);
 
                 if (_leftBound)
                 {
@@ -123,8 +128,7 @@ namespace Cookalong.Windows
                     if ((_dragging.Width + widthDiff) > STEP_SIZE)
                         _dragging.Width += widthDiff;
 
-                    lblTime.Content = TimeOutput(Duration_(_dragging));
-                    lblTimeLabel.Content = "Duration";
+                    _dragging.txtData.Text = StringHelper.TimeConfigOutput(Duration_(_dragging), true);
                 }
                 else if (_rightBound)
                 {
@@ -134,8 +138,7 @@ namespace Cookalong.Windows
                     if ((_dragging.Width + widthDiff) > STEP_SIZE)
                         _dragging.Width += widthDiff;
 
-                    lblTime.Content = TimeOutput(Duration_(_dragging));
-                    lblTimeLabel.Content = "Duration";
+                    _dragging.txtData.Text = StringHelper.TimeConfigOutput(Duration_(_dragging), true);
                 }
                 else
                 {
@@ -147,7 +150,7 @@ namespace Cookalong.Windows
                         _dragging.Margin = new Thickness(RoundValue_(mousePos.X - _dragging.Width / 2), _dragging.Margin.Top, 0, 0);
                     }
 
-                    lblTime.Content = TimeOutput(StartTime_(_dragging));
+                    lblTime.Content = StringHelper.TimeConfigOutput(StartTime_(_dragging));
                     lblTimeLabel.Content = "Start Time";
                 }
                 timePopup.Margin = new Thickness(_dragging.Margin.Left + (_dragging.ActualWidth / 2) - (timePopup.ActualWidth / 2), timePopup.Margin.Top, 0, 0);
@@ -162,12 +165,16 @@ namespace Cookalong.Windows
 
         bool RightBoundCheck_(Point mousePos)
         {
+            if (_dragging == null) return false;
+
             var valid = (mousePos.X - _dragging.Width / 2 + _dragging.Width) < stckData.ActualWidth;
             return valid;
         }
 
         bool LeftBoundCheck_(Point mousePos)
         {
+            if (_dragging == null) return false;
+
             var valid = (mousePos.X - _dragging.Width / 2) > _minLeft;
             return valid;
         }
@@ -204,6 +211,12 @@ namespace Cookalong.Windows
             _dragging = null;
 
             timePopup.Visibility = Visibility.Collapsed;
+
+            // reset colour of titles
+            foreach(GanttTitle gt in stckTitles.Children)
+            {
+                gt.ResetColour();
+            }
         }
 
         /// <summary>
@@ -219,24 +232,28 @@ namespace Cookalong.Windows
         /// </summary>
         private void NewStep_(MethodStep step)
         {
-            // TODO: need to pass in an Instruction object, and load existing start/durations
-
             // create a control for the specified step
             var newObject = new DraggableObjectGantt(this, step, stckData.Children.Count)
             {
-                Width = (STEP_SIZE * 30),
+                Width = (STEP_SIZE * 10),
                 HorizontalAlignment = HorizontalAlignment.Left
             };
 
             // update width if already set
-            if(step.GetDuration() > 0)
+            if (step.GetDuration() > 0)
             {
                 newObject.Width = Width_(step);
                 newObject.Margin = new Thickness(Left_(step), newObject.Margin.Top, newObject.Margin.Right, newObject.Margin.Bottom);
             }
 
+            // display text
+            newObject.txtData.Text = StringHelper.TimeConfigOutput(Duration_(newObject), true);
+
             // add control
             stckData.Children.Add(newObject);
+
+            // add a label
+            stckTitles.Children.Add(new GanttTitle(step.GetMethod()) { Height = newObject.Height });
         }
 
         /// <summary>
@@ -245,7 +262,7 @@ namespace Cookalong.Windows
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             SetStepSize_();
-            foreach(var item in _steps)
+            foreach (var item in _steps)
             {
                 NewStep_(item);
             }
@@ -266,6 +283,37 @@ namespace Cookalong.Windows
         private void SetStepSize_()
         {
             STEP_SIZE = (stckData.ActualWidth / MAX_MINS) * SEGMENT_STEP_MINS;
+
+            // update time markers
+            SetMarkerPositions_();
+            SetMarkerTimes_();
+        }
+
+        /// <summary>
+        /// Sets the displays on the time markers
+        /// </summary>
+        void SetMarkerTimes_()
+        {
+            markStart.SetContent("START");
+            markHalf.SetTime((MAX_MINS * 60) / 2);
+            markQtr.SetTime((MAX_MINS * 60) / 4);
+            mark3Qtr.SetTime((MAX_MINS * 60) / 4 * 3);
+            markEnd.SetTime(MAX_MINS * 60);
+        }
+
+        /// <summary>
+        /// Sets the positions on the time markers
+        /// </summary>
+        void SetMarkerPositions_()
+        {
+            var gridLeft = colLHS.Width.Value + grdContent.Margin.Left;
+            var offset = markStart.ActualWidth / 2;
+
+            markStart.Margin = new Thickness(gridLeft - offset, markStart.Margin.Top, 0, 0);
+            markQtr.Margin = new Thickness(gridLeft - offset + (stckData.ActualWidth / 4), markStart.Margin.Top, 0, 0);
+            markHalf.Margin = new Thickness(gridLeft - offset + (stckData.ActualWidth / 2), markStart.Margin.Top, 0, 0);
+            mark3Qtr.Margin = new Thickness(gridLeft - offset + (stckData.ActualWidth / 4 * 3), markStart.Margin.Top, 0, 0);
+            markEnd.Margin = new Thickness(gridLeft - offset + stckData.ActualWidth, markStart.Margin.Top, 0, 0);
         }
 
         /// <summary>
@@ -308,7 +356,7 @@ namespace Cookalong.Windows
         private int Duration_(DraggableObjectGantt obj)
         {
             // calculate duration
-            var duration = (int)Math.Round(((obj.ActualWidth / STEP_SIZE) * SEGMENT_STEP_MINS * 60));
+            var duration = (int)Math.Round(((obj.Width / STEP_SIZE) * SEGMENT_STEP_MINS * 60));
             return duration;
         }
 
@@ -349,27 +397,6 @@ namespace Cookalong.Windows
         }
 
         /// <summary>
-        /// Gets the output for the time in a nicer format - different to the standard one
-        /// </summary>
-        /// <param name="totalSeconds">The total number of seconds</param>
-        /// <returns>Formatted string</returns>
-        string TimeOutput(int totalSeconds)
-        {
-            // break into individual components
-            var hours = (totalSeconds / 60) / 60;
-            var minutes = (totalSeconds - (hours * 60 * 60)) / 60;
-            var seconds = totalSeconds - (hours * 60 * 60) - (minutes * 60);
-
-            // construct string
-            var str = "";
-            if (hours > 0) str += hours + "hrs ";
-            str += minutes + "mins ";
-            str += seconds + "s";
-
-            return str.Trim();
-        }
-
-        /// <summary>
         /// Event handler for save button
         /// </summary>
         private void cmdSave_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -385,6 +412,66 @@ namespace Cookalong.Windows
 
             DialogResult = true;
             Close();
+        }
+
+        private void cmdReset_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _confirmationPopup = new Popup_Confirmation("Confirm reset", "Are you sure you want to reset the timings?", () =>
+            {
+                // cancel callback
+                MainGrid.Children.Remove(_confirmationPopup);
+                if (_confirmationPopup != null)
+                    _confirmationPopup.Visibility = Visibility.Collapsed;
+            },
+            () =>
+            {
+                // confirm callback
+                MainGrid.Children.Remove(_confirmationPopup);
+
+                // remove existing controls
+                stckData.Children.Clear();
+                stckTitles.Children.Clear();
+
+                // add new controls
+                foreach(var step in _steps)
+                {
+                    var start = step.GetStart();
+                    var duration = step.GetDuration();
+
+                    // reset times first
+                    step.UpdateTimes(0, 0);
+                    NewStep_(step);
+
+                    // restore times in the background (in case time input is cancelled)
+                    step.UpdateTimes(start, duration);
+                }
+            });
+
+            // show popup
+            PopupController.AboveAll(_confirmationPopup);
+            MainGrid.Children.Add(_confirmationPopup);
+        }
+
+        private void cmdCancel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _confirmationPopup = new Popup_Confirmation("Cancel?", "Are you sure you want to cancel? All unsaved changes will be lost", () =>
+            {
+                // cancel callback
+                MainGrid.Children.Remove(_confirmationPopup);
+                if (_confirmationPopup != null)
+                    _confirmationPopup.Visibility = Visibility.Collapsed;
+            },
+            () =>
+            {
+                // confirm callback
+                MainGrid.Children.Remove(_confirmationPopup);
+                DialogResult = false;
+                Close();
+            });
+
+            // show popup
+            PopupController.AboveAll(_confirmationPopup);
+            MainGrid.Children.Add(_confirmationPopup);
         }
     }
 }

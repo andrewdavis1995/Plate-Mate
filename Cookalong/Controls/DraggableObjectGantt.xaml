@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Cookalong" Foreground="White"
              mc:Ignorable="d" FontFamily="{StaticResource ResourceKey=Roboto Thin}"
-             Height="30" d:DesignWidth="800" Background="{StaticResource RecipeHoverLeave}" MouseLeftButtonDown="UserControl_MouseDown" MouseLeftButtonUp="UserControl_MouseUp">
+             Height="35" d:DesignWidth="800" Background="{StaticResource RecipeHoverLeave}" MouseLeftButtonDown="UserControl_MouseDown" MouseLeftButtonUp="UserControl_MouseUp">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
@@ -19,7 +19,7 @@
                     <GradientStop Color="Transparent" Offset="1"/>
                 </LinearGradientBrush>
             </Grid.OpacityMask>
-            <TextBlock Name="txtData" Text="Step" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" FontSize="14" TextWrapping="NoWrap" TextAlignment="Left"/>
+            <TextBlock Name="txtData" Text="00:00" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="5" FontSize="12" TextWrapping="NoWrap" TextAlignment="Left"/>
         </Grid>
         <Grid Name="Highlight" Background="#22ffffff" Visibility="Collapsed" Grid.ColumnSpan="10"/>
 

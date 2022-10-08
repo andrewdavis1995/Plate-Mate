@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using System.Xml.Linq;
 
 namespace Cookalong.Helpers
@@ -70,6 +71,37 @@ namespace Cookalong.Helpers
                 valid = false;
 
             return valid;
+        }
+
+        /// <summary>
+        /// Gets the output for the time in a nicer format - different to the standard one
+        /// </summary>
+        /// <param name="totalSeconds">The total number of seconds</param>
+        /// <returns>Formatted string</returns>
+        public static string TimeConfigOutput(int totalSeconds, bool basic = false)
+        {
+            // break into individual components
+            var hours = (totalSeconds / 60) / 60;
+            var minutes = (totalSeconds - (hours * 60 * 60)) / 60;
+            var seconds = totalSeconds - (hours * 60 * 60) - (minutes * 60);
+
+            // construct string
+            var str = new StringBuilder();
+
+            if (basic)
+            {
+                var totalMinutes = (hours * 60) + minutes;
+                str.Append(totalMinutes.ToString("00:"));
+                str.Append(seconds.ToString("00"));
+            }
+            else
+            {
+                if (hours > 0) str.Append(hours + "hrs ");
+                str.Append(minutes + "mins ");
+                str.Append(seconds + "s");
+            }
+
+            return str.ToString().Trim();
         }
     }
 }

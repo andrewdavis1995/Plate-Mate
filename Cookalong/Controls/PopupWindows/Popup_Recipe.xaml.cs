@@ -181,7 +181,11 @@ namespace Cookalong.Controls.PopupWindows
         /// </summary>
         private void cmdConfigureTime_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (_recipe == null) return;
+            if (_recipe == null || _parent == null)
+            {
+                _errorCallback?.Invoke("Something went wrong.");
+                return;
+            }
 
             var tc = new TimeConfiguration(_recipe.GetMethodSteps());
             var result = tc.ShowDialog();

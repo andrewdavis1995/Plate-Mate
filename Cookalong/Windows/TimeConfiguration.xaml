@@ -7,17 +7,35 @@
         mc:Ignorable="d" Background="{StaticResource GradientBackgroundSimple}"
         Title="TimeConfiguration" Height="450" Width="800" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize" Loaded="Window_Loaded">
     <Grid Name="MainGrid" >
-        <Grid Margin="20, 50, 20, 20">
+        <local:TimeMarker x:Name="markStart" Grid.ColumnSpan="100" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30"/>
+        <local:TimeMarker x:Name="markQtr" Grid.ColumnSpan="100" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30"/>
+        <local:TimeMarker x:Name="markHalf" Grid.ColumnSpan="100" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30"/>
+        <local:TimeMarker x:Name="mark3Qtr" Grid.ColumnSpan="100" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30"/>
+        <local:TimeMarker x:Name="markEnd" Grid.ColumnSpan="100" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30"/>
+        <Grid Name="grdContent" Margin="20, 30, 20, 20">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition/>
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
-            <ScrollViewer Background="#12443388" VerticalScrollBarVisibility="Auto" MouseUp="stckData_MouseUp" MouseLeave="ScrollViewer_MouseLeave">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" Name="colLHS"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Height="2" Margin="0, 0, 0, 2" Background="White" Grid.Column="100" Grid.Row="0"/>
+
+            <ScrollViewer Background="#12443388" VerticalScrollBarVisibility="Auto" MouseUp="stckData_MouseUp" MouseLeave="ScrollViewer_MouseLeave" Grid.Column="1" Grid.Row="1">
                 <StackPanel Name="stckData" MouseLeftButtonUp="stckData_MouseUp"/>
             </ScrollViewer>
-            <local:Input_Button x:Name="cmdSave" Grid.Row="100" Margin="0, 10, 0, 0" MouseLeftButtonDown="cmdSave_MouseLeftButtonDown"/>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1">
+                <StackPanel Name="stckTitles"/>
+            </ScrollViewer>
+            <local:Input_Button x:Name="cmdSave" Grid.Row="100" Margin="0, 10, 5, 0" MouseLeftButtonDown="cmdSave_MouseLeftButtonDown"/>
+            <local:Input_Button x:Name="cmdCancel" Grid.Row="100" Margin="5, 10, 0, 0" MouseLeftButtonDown="cmdCancel_MouseLeftButtonDown" Grid.Column="1" Width="150" HorizontalAlignment="Left"/>
+            <local:Input_Button x:Name="cmdReset" Grid.Row="100" Margin="0, 10, 0, 0" MouseLeftButtonDown="cmdReset_MouseLeftButtonDown" Width="100" Grid.Column="100" HorizontalAlignment="Right"/>
 
-            <Grid Name="timePopup" Background="{StaticResource SelectedColour}" Opacity="0.8" Height="30" Width="100" Visibility="Collapsed" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Grid Name="timePopup" Background="{StaticResource SelectedColour}" Opacity="0.8" Height="30" Width="100" Visibility="Collapsed" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>

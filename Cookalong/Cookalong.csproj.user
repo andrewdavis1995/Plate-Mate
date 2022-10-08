@@ -22,6 +22,9 @@
     <Compile Update="Controls\ErrorMessage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Controls\GanttTitle.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Controls\IngredientDisplaySimple.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -64,7 +67,10 @@
     <Compile Update="Controls\RecipeDisplay.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="DraggableObjectGantt.xaml.cs">
+    <Compile Update="Controls\DraggableObjectGantt.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\TimeMarker.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Windows\TimeConfiguration.xaml.cs">
@@ -85,6 +91,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\ErrorMessage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\GanttTitle.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\IngredientDisplaySimple.xaml">
@@ -141,7 +150,10 @@
     <Page Update="Controls\RecipeDisplay.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="DraggableObjectGantt.xaml">
+    <Page Update="Controls\DraggableObjectGantt.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\TimeMarker.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\TimeConfiguration.xaml">
