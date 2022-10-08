@@ -3,21 +3,21 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Cookalong.Windows"
+        xmlns:local="clr-namespace:Cookalong.Controls"
         mc:Ignorable="d" Background="{StaticResource GradientBackgroundSimple}"
         Title="TimeConfiguration" Height="450" Width="800" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize" Loaded="Window_Loaded">
     <Grid Name="MainGrid" >
         <Grid Margin="20, 50, 20, 20">
             <Grid.RowDefinitions>
                 <RowDefinition/>
-                <RowDefinition Height="30"/>
+                <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
             <ScrollViewer Background="#12443388" VerticalScrollBarVisibility="Auto" MouseUp="stckData_MouseUp" MouseLeave="ScrollViewer_MouseLeave">
                 <StackPanel Name="stckData" MouseLeftButtonUp="stckData_MouseUp"/>
             </ScrollViewer>
-            <Button Grid.Row="10" BorderThickness="0" Content="Confirm" Click="Button_Click" Background="#4F41BA" Foreground="White"/>
+            <local:Input_Button x:Name="cmdSave" Grid.Row="100" Margin="0, 10, 0, 0" MouseLeftButtonDown="cmdSave_MouseLeftButtonDown"/>
 
-            <Grid Name="timePopup" Background="#FF4F41BA" Height="30" Width="100" Visibility="Collapsed" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Grid Name="timePopup" Background="{StaticResource SelectedColour}" Opacity="0.8" Height="30" Width="100" Visibility="Collapsed" VerticalAlignment="Top" HorizontalAlignment="Left">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>

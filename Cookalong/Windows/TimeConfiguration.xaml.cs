@@ -37,7 +37,6 @@ namespace Cookalong.Windows
         DraggableObjectGantt? _dragging = null;  // currently being moved
 
         List<MethodStep> _steps = new List<MethodStep>();
-
         List<MethodStep> _completeInstructions = new List<MethodStep>();
 
         /// <summary>
@@ -46,6 +45,8 @@ namespace Cookalong.Windows
         public TimeConfiguration(List<MethodStep> steps)
         {
             InitializeComponent();
+            cmdSave.Configure("Save");
+
             _steps = steps;
 
             // initialise timer
@@ -227,6 +228,13 @@ namespace Cookalong.Windows
                 HorizontalAlignment = HorizontalAlignment.Left
             };
 
+            // update width if already set
+            if(step.GetDuration() > 0)
+            {
+                newObject.Width = Width_(step);
+                newObject.Margin = new Thickness(Left_(step), newObject.Margin.Top, newObject.Margin.Right, newObject.Margin.Bottom);
+            }
+
             // add control
             stckData.Children.Add(newObject);
         }
@@ -272,24 +280,6 @@ namespace Cookalong.Windows
         }
 
         /// <summary>
-        /// Event handler for clicking the "Begin" button
-        /// </summary>
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            _completeInstructions = new List<MethodStep>();
-
-            // loop through each object, and create an instruction for each
-            foreach (DraggableObjectGantt obj in stckData.Children)
-            {
-                var i = new MethodStep(obj.txtData.Text, StartTime_(obj), Duration_(obj));
-                _completeInstructions.Add(i);
-            }
-
-            DialogResult = true;
-            Close();
-        }
-
-        /// <summary>
         /// Returns the configured instructions
         /// </summary>
         /// <returns>Configured list</returns>
@@ -323,6 +313,42 @@ namespace Cookalong.Windows
         }
 
         /// <summary>
+        /// Calculate the margin based on the start time
+        /// </summary>
+        /// <param name="step">The step to display</param>
+        /// <returns>The margin to set</returns>
+        private double Left_(MethodStep step)
+        {
+            // calculate start time
+            var start = (step.GetStart() / (60 * SEGMENT_STEP_MINS)) * STEP_SIZE;
+            return start;
+        }
+
+        /// <summary>
+        /// Calculate the width based on the duration
+        /// </summary>
+        /// <param name="step">The step to display</param>
+        /// <returns>The width to set</returns>
+        private double Width_(MethodStep step)
+        {
+            // calculate duration
+            var start = (step.GetDuration() / (60 * SEGMENT_STEP_MINS)) * STEP_SIZE;
+            return start;
+        }
+
+        /// <summary>
+        /// Calculate the duration of a step based on the width of the control
+        /// </summary>
+        /// <param name="obj">The control to get duration for</param>
+        /// <returns>The duration of this step</returns>
+        private int Margin_(DraggableObjectGantt obj)
+        {
+            // calculate duration
+            var duration = (int)Math.Round(((obj.ActualWidth / STEP_SIZE) * SEGMENT_STEP_MINS * 60));
+            return duration;
+        }
+
+        /// <summary>
         /// Gets the output for the time in a nicer format - different to the standard one
         /// </summary>
         /// <param name="totalSeconds">The total number of seconds</param>
@@ -341,6 +367,24 @@ namespace Cookalong.Windows
             str += seconds + "s";
 
             return str.Trim();
+        }
+
+        /// <summary>
+        /// Event handler for save button
+        /// </summary>
+        private void cmdSave_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            _completeInstructions = new List<MethodStep>();
+
+            // loop through each object, and create an instruction for each
+            foreach (DraggableObjectGantt obj in stckData.Children)
+            {
+                var i = new MethodStep(obj.txtData.Text, StartTime_(obj), Duration_(obj));
+                _completeInstructions.Add(i);
+            }
+
+            DialogResult = true;
+            Close();
         }
     }
 }
