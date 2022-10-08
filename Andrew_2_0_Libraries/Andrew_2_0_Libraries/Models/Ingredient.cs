@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 
 namespace Andrew_2_0_Libraries.Models
 {
@@ -68,12 +69,19 @@ namespace Andrew_2_0_Libraries.Models
             // make sure there are enough entries
             if (ingSplit.Length < 5) return false;
 
-            // TODO: error handling
-            _name = ingSplit[0];
-            _unit = (MeasurementUnit)Enum.Parse(typeof(MeasurementUnit), ingSplit[1]);
-            _value = float.Parse(ingSplit[2]);
-            _calories = int.Parse(ingSplit[3]);
-            _imageIndex = int.Parse(ingSplit[4]);
+            try
+            {
+                _name = ingSplit[0];
+                _unit = (MeasurementUnit)Enum.Parse(typeof(MeasurementUnit), ingSplit[1]);
+                _value = float.Parse(ingSplit[2]);
+                _calories = int.Parse(ingSplit[3]);
+                _imageIndex = int.Parse(ingSplit[4]);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+                return false;
+            }
             return success;
         }
     }

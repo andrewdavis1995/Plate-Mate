@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -206,9 +207,9 @@ namespace Andrew_2_0_Libraries.Models
 
                 ParseMethod_(split[7]);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // TODO: log error
+                Debug.WriteLine(ex.Message);
                 return false;
             }
 

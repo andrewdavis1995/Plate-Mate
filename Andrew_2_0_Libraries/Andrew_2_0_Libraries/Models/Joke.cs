@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Andrew_2_0_Libraries.Models
@@ -106,7 +107,7 @@ namespace Andrew_2_0_Libraries.Models
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message);
+                    Debug.WriteLine(ex.Message);
                     success = false;
                 }
             }
