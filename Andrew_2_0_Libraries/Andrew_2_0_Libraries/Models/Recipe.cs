@@ -278,5 +278,14 @@ namespace Andrew_2_0_Libraries.Models
         {
             return _dietary;
         }
+
+        /// <summary>
+        /// Sets the steps to the specified list
+        /// </summary>
+        /// <param name="steps">Steps to sit</param>
+        public void SetSteps(List<MethodStep> steps)
+        {
+            _methodSteps=steps;
+        }
     }
 }

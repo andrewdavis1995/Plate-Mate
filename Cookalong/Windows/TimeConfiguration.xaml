@@ -5,8 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Cookalong.Windows"
         mc:Ignorable="d" Background="{StaticResource GradientBackgroundSimple}"
-        Title="TimeConfiguration" Height="450" Width="800" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize">
-    <Grid>
-        
+        Title="TimeConfiguration" Height="450" Width="800" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize" Loaded="Window_Loaded">
+    <Grid Name="MainGrid" >
+        <Grid Margin="20, 50, 20, 20">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="30"/>
+            </Grid.RowDefinitions>
+            <ScrollViewer Background="#12443388" VerticalScrollBarVisibility="Auto" MouseUp="stckData_MouseUp" MouseLeave="ScrollViewer_MouseLeave">
+                <StackPanel Name="stckData" MouseLeftButtonUp="stckData_MouseUp"/>
+            </ScrollViewer>
+            <Button Grid.Row="10" BorderThickness="0" Content="Confirm" Click="Button_Click" Background="#4F41BA" Foreground="White"/>
+
+            <Grid Name="timePopup" Background="#FF4F41BA" Height="30" Width="100" Visibility="Collapsed" VerticalAlignment="Top" HorizontalAlignment="Left">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Name="lblTimeLabel" Foreground="White" Content="Duration" Grid.Row="0" Margin="0" Padding="0" FontSize="10" HorizontalAlignment="Center" />
+                <Label Name="lblTime" Foreground="White" Content="00:00" Grid.Row="1" Margin="0" Padding="0" HorizontalAlignment="Center"/>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>

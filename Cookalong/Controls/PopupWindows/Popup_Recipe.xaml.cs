@@ -1,6 +1,7 @@
 ﻿using Andrew_2_0_Libraries.Controllers;
 using Andrew_2_0_Libraries.Models;
 using Cookalong.Helpers;
+using Cookalong.Windows;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -48,6 +49,7 @@ namespace Cookalong.Controls.PopupWindows
             cmdClose.Configure("Back", true, "Cancel");
             cmdEdit.Configure("Edit");
             cmdWalkthrough.Configure("Begin");
+            cmdConfigureTime.Configure("Configure Timing");
 
             DisplayRecipe_();
         }
@@ -171,6 +173,24 @@ namespace Cookalong.Controls.PopupWindows
                 // show the walkthrough dialog
                 var wt = new Walkthrough(_recipe.GetRecipeName(), _recipe.GetMethodSteps(), PlaybackMode.ClickThrough);
                 wt.ShowDialog();
+            }
+        }
+
+        /// <summary>
+        /// Event handler for the configure time button
+        /// </summary>
+        private void cmdConfigureTime_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (_recipe == null) return;
+
+            var tc = new TimeConfiguration(_recipe.GetMethodSteps());
+            var result = tc.ShowDialog();
+
+            // if confirmed, update the steps
+            if (result == true)
+            {
+                var steps = tc.GetInstructions();
+                _controller?.UpdateSteps(_recipe.GetRecipeId(), steps);
             }
         }
     }

@@ -157,6 +157,19 @@ namespace Andrew_2_0_Libraries.Controllers
         }
 
         /// <summary>
+        /// Removes the specified comment from the specified recipe
+        /// </summary>
+        /// <param name="recipeId">The ID of the recipe to remove from</param>
+        /// <param name="steps">The steps to set</param>
+        public void UpdateSteps(Guid recipeId, List<MethodStep> steps)
+        {
+            var recipe = _recipes.FirstOrDefault(r => r.GetRecipeId() == recipeId);
+            if (recipe != null)
+                recipe.SetSteps(steps);
+            Save_();
+        }
+
+        /// <summary>
         /// Saves the list of recipes
         /// </summary>
         private void Save_()

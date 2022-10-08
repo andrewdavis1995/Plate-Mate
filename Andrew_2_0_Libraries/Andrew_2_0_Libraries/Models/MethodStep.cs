@@ -92,5 +92,16 @@ namespace Andrew_2_0_Libraries.Models
         {
             _methodText = msg;
         }
+
+        /// <summary>
+        /// Updates the time values stored by this control
+        /// </summary>
+        /// <param name="start">The start time</param>
+        /// <param name="duration">The duration of this step</param>
+        public void UpdateTimes(int start, int duration)
+        {
+            _startTime = start;
+            _duration = duration;
+        }
     }
 }
