@@ -49,6 +49,9 @@
     <Compile Update="Controls\PopupWindows\Popup_Confirmation.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Controls\PopupWindows\Popup_Message.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Controls\PopupWindows\Popup_Method.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -130,6 +133,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\PopupWindows\Popup_Ingredient.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\PopupWindows\Popup_Message.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\PopupWindows\Popup_Method.xaml">

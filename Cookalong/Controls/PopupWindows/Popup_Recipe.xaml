@@ -93,9 +93,17 @@
                         <Image Source="/Images/Dairy.png" RenderOptions.BitmapScalingMode="HighQuality" />
                     </Border>
                 </Grid>
-                <local:Input_Button x:Name="cmdEdit" Height="40" MouseLeftButtonDown="cmdEdit_MouseLeftButtonDown" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10, 10, 10, 5"/>
-                <local:Input_Button x:Name="cmdConfigureTime" Height="40" MouseLeftButtonDown="cmdConfigureTime_MouseLeftButtonDown" Margin="10, 10, 10, 5" Grid.Column="1"/>
-                <local:Input_Button x:Name="cmdWalkthrough" Height="40" MouseLeftButtonDown="cmdWalkthrough_MouseLeftButtonDown" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10, 10, 10, 5"/>
+                <local:Input_Button x:Name="cmdEdit" Height="40" MouseLeftButtonDown="cmdEdit_MouseLeftButtonDown" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10, 10, 10, 2"/>
+                <local:Input_Button x:Name="cmdConfigureTime" Height="40" MouseLeftButtonDown="cmdConfigureTime_MouseLeftButtonDown" Margin="10, 2" Grid.Column="1"/>
+                <Grid Name="grdConfigured" Width="90" Height="24" Background="{StaticResource SelectedColour}" HorizontalAlignment="Right" Margin="10, 0, 10, 2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="/Images/Timing.png" RenderOptions.BitmapScalingMode="HighQuality" />
+                    <TextBlock Text="Configured" Grid.Column="1" Foreground="White" VerticalAlignment="Center" Margin="5" FontSize="12"/>
+                </Grid>
+                <local:Input_Button x:Name="cmdWalkthrough" Height="40" MouseLeftButtonDown="cmdWalkthrough_MouseLeftButtonDown" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10, 2, 10, 5"/>
             </StackPanel>
 
 

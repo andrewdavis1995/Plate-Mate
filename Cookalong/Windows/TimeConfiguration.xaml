@@ -19,7 +19,7 @@
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200" Name="colLHS"/>
+                <ColumnDefinition Width="250" Name="colLHS"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
@@ -32,9 +32,20 @@
                 <StackPanel Name="stckTitles"/>
             </ScrollViewer>
             <local:Input_Button x:Name="cmdSave" Grid.Row="100" Margin="0, 10, 5, 0" MouseLeftButtonDown="cmdSave_MouseLeftButtonDown"/>
-            <local:Input_Button x:Name="cmdCancel" Grid.Row="100" Margin="5, 10, 0, 0" MouseLeftButtonDown="cmdCancel_MouseLeftButtonDown" Grid.Column="1" Width="150" HorizontalAlignment="Left"/>
             <local:Input_Button x:Name="cmdReset" Grid.Row="100" Margin="0, 10, 0, 0" MouseLeftButtonDown="cmdReset_MouseLeftButtonDown" Width="100" Grid.Column="100" HorizontalAlignment="Right"/>
 
+            <Grid Grid.Column="1" Grid.Row="100" Margin="5, 10, 0, 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <local:Input_Button x:Name="cmdCancel" MouseLeftButtonDown="cmdCancel_MouseLeftButtonDown" Grid.Column="0" Width="150" HorizontalAlignment="Left" Margin="0, 0, 10, 0"/>
+                <Image Source="/Images/help.png" MaxHeight="25" RenderOptions.BitmapScalingMode="HighQuality" Grid.Column="1" HorizontalAlignment="Left" MouseDown="Help_MouseDown"/>
+
+
+            </Grid>
+            
             <Grid Name="timePopup" Background="{StaticResource SelectedColour}" Opacity="0.8" Height="30" Width="100" Visibility="Collapsed" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>

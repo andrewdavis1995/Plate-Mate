@@ -473,5 +473,16 @@ namespace Cookalong.Windows
             PopupController.AboveAll(_confirmationPopup);
             MainGrid.Children.Add(_confirmationPopup);
         }
+
+        /// <summary>
+        /// Event handler for the mouse button
+        /// </summary>
+        private void Help_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var popup = new Popup_Message("Help", "Drag the centre of each step to change the start time of the step. " +
+                "Drag the left and right edges of the control to change the duration of the step.", MainGrid);
+            PopupController.AboveAll(popup);
+            MainGrid.Children.Add(popup);
+        }
     }
 }

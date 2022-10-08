@@ -57,6 +57,7 @@
     <None Remove="Images\FoodIcons\8.png" />
     <None Remove="Images\FoodIcons\9.png" />
     <None Remove="Images\Gluten.png" />
+    <None Remove="Images\help.png" />
     <None Remove="Images\Logo.png" />
     <None Remove="Images\recipeImage.png" />
     <None Remove="Images\RecipeList.png" />
@@ -249,6 +250,9 @@
     </Resource>
     <Resource Include="Images\Gluten.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\help.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\Logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

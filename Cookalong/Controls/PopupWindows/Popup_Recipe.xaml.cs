@@ -5,6 +5,7 @@ using Cookalong.Windows;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -119,6 +120,10 @@ namespace Cookalong.Controls.PopupWindows
 
             // show time/duration
             txtTiming.Text = StringHelper.GetTimeString(_recipe.GetSetTime());
+
+            // show configuration message
+            grdConfigured.Visibility = _recipe.GetMethodSteps().Any(s => s.GetDuration() > 0)
+                ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>
@@ -195,6 +200,7 @@ namespace Cookalong.Controls.PopupWindows
             {
                 var steps = tc.GetInstructions();
                 _controller?.UpdateSteps(_recipe.GetRecipeId(), steps);
+                grdConfigured.Visibility = Visibility.Visible;
             }
         }
     }
