@@ -87,5 +87,13 @@ namespace Cookalong
         {
             _step.UpdateTimes(start, duration);
         }
+
+        /// <summary>
+        /// Returns the text associated with this step
+        /// </summary>
+        public string GetText()
+        {
+            return _step.GetMethod();
+        }
     }
 }

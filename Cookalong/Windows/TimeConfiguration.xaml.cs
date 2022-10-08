@@ -41,7 +41,7 @@ namespace Cookalong.Windows
         List<MethodStep> _steps = new List<MethodStep>();
         List<MethodStep> _completeInstructions = new List<MethodStep>();
 
-        Popup_Confirmation _confirmationPopup = null;
+        Popup_Confirmation ? _confirmationPopup = null;
 
         /// <summary>
         /// Constructor
@@ -406,7 +406,7 @@ namespace Cookalong.Windows
             // loop through each object, and create an instruction for each
             foreach (DraggableObjectGantt obj in stckData.Children)
             {
-                var i = new MethodStep(obj.txtData.Text, StartTime_(obj), Duration_(obj));
+                var i = new MethodStep(obj.GetText(), StartTime_(obj), Duration_(obj));
                 _completeInstructions.Add(i);
             }
 
