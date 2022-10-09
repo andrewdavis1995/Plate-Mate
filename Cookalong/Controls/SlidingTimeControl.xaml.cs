@@ -2,6 +2,7 @@
 using Cookalong.Helpers;
 using System;
 using System.Timers;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
@@ -58,12 +59,11 @@ namespace Cookalong.Controls
             Dispatcher.Invoke(() =>
             {
                 // break time down into components
-                var totalSeconds = (_time / SPEED_FACTOR);
-                var minutes = (int)(totalSeconds / 60);
-                var seconds = (int)(totalSeconds - (minutes * 60));
+                var totalSeconds = (int)(_time / SPEED_FACTOR);
+                var remaining = _instruction.GetDuration() - totalSeconds;
 
                 // display time
-                lblTime.Text = minutes.ToString("00") + ":" + seconds.ToString("00") + " remaining";
+                lblTime.Text = StringHelper.TimeConfigOutput(remaining, true) + " remaining";
 
                 // set the height of the progress bar
                 var jump = ActualHeight / _instruction.GetDuration();
