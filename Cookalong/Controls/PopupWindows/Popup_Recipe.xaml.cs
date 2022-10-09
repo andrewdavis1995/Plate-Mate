@@ -1,5 +1,6 @@
 ﻿using Andrew_2_0_Libraries.Controllers;
 using Andrew_2_0_Libraries.Models;
+using Cookalong.Controls;
 using Cookalong.Helpers;
 using Cookalong.Windows;
 using System;
@@ -21,7 +22,7 @@ namespace Cookalong.Controls.PopupWindows
         Grid? _parent;
         Recipe? _recipe;
         readonly Action<string>? _errorCallback = null;
-        RecipeController ? _controller = null;
+        RecipeController? _controller = null;
         readonly Action? _updateDisplay;
 
         /// <summary>
@@ -75,10 +76,10 @@ namespace Cookalong.Controls.PopupWindows
             txtRecipeName.Text = _recipe.GetRecipeName();
 
             // display ingredients
-            foreach(var i in _recipe.GetIngredients())
+            foreach (var i in _recipe.GetIngredients())
             {
                 var output = new IngredientsDisplay(i, stckIngredients, grdOverall);
-                
+
                 // can't delete on this page
                 output.DisableDelete();
                 stckIngredients.Children.Add(output);
@@ -86,7 +87,7 @@ namespace Cookalong.Controls.PopupWindows
 
             int index = 1;
             // display method
-            foreach(var s in _recipe.GetMethodSteps())
+            foreach (var s in _recipe.GetMethodSteps())
             {
                 stckMethod.Children.Add(new MethodStepItem(index++, s.GetMethod()));
             }
@@ -175,9 +176,17 @@ namespace Cookalong.Controls.PopupWindows
             // check the pre-check completed successfully
             if (state == true)
             {
-                // show the walkthrough dialog
-                var wt = new Walkthrough(_recipe.GetRecipeName(), _recipe.GetMethodSteps(), PlaybackMode.ClickThrough);
-                wt.ShowDialog();
+                if (_recipe.GetMethodSteps().Any(s => s.GetDuration() > 0))
+                {
+                    // ask which mode to use
+                    grdMode.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    // show the walkthrough dialog
+                    var wt = new Walkthrough(_recipe.GetRecipeName(), _recipe.GetMethodSteps(), PlaybackMode.ClickThrough);
+                    wt.ShowDialog();
+                }
             }
         }
 
@@ -202,6 +211,33 @@ namespace Cookalong.Controls.PopupWindows
                 _controller?.UpdateSteps(_recipe.GetRecipeId(), steps);
                 grdConfigured.Visibility = Visibility.Visible;
             }
+        }
+
+        /// <summary>
+        /// Event handler for the click-through button
+        /// </summary>
+        private void cmdClick_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            grdMode.Visibility = Visibility.Collapsed;
+
+            if (_recipe == null) return;
+
+            // show the walkthrough dialog
+            var wt = new Walkthrough(_recipe.GetRecipeName(), _recipe.GetMethodSteps(), PlaybackMode.ClickThrough);
+            wt.ShowDialog();
+        }
+
+        /// <summary>
+        /// Event handler for the timed button
+        /// </summary>
+        private void cmdTime_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            grdMode.Visibility = Visibility.Collapsed;
+
+            if (_recipe == null) return;
+
+            var tw = new TimedWalkthrough(_recipe.GetMethodSteps(), PlaybackMode.Timing);
+            tw.ShowDialog();
         }
     }
 }

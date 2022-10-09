@@ -12,6 +12,7 @@
     <None Remove="Images\bullet.png" />
     <None Remove="Images\Calories.png" />
     <None Remove="Images\cross.png" />
+    <None Remove="Images\cursor.png" />
     <None Remove="Images\Dairy.png" />
     <None Remove="Images\Exit.png" />
     <None Remove="Images\FoodIcons\0.png" />
@@ -109,6 +110,9 @@
     </Resource>
     <Resource Include="Images\cross.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\cursor.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\FoodIcons\0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -73,10 +73,19 @@
     <Compile Update="Controls\DraggableObjectGantt.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Controls\SlidingTimeControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\StepWarning.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Controls\TimeMarker.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Windows\TimeConfiguration.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\TimedWalkthrough.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Windows\Walkthrough.xaml.cs">
@@ -159,10 +168,19 @@
     <Page Update="Controls\DraggableObjectGantt.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Controls\SlidingTimeControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\StepWarning.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Controls\TimeMarker.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\TimeConfiguration.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\TimedWalkthrough.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\Walkthrough.xaml">
