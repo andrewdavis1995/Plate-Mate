@@ -12,14 +12,14 @@ namespace Cookalong.Controls
  /// </summary>
     public partial class SlidingTimeControl : UserControl
     {
-        Timer _slideTimer;
-        MethodStep _instruction;
+        readonly Timer _slideTimer;
+        readonly MethodStep _instruction;
 
-        Action<int, bool> _durationChangedCallback;
+        readonly Action<int, bool> _durationChangedCallback;
 
         double _time = 0;
-        public static int TIME_FACTOR = 1000;
-        public static int SPEED_FACTOR = TIME_FACTOR / 50;
+        static readonly int TIME_FACTOR = 1000;
+        static readonly int SPEED_FACTOR = TIME_FACTOR / 50;
 
         /// <summary>
         /// Constructor
@@ -39,7 +39,7 @@ namespace Cookalong.Controls
 
             // configure timer
             _slideTimer = new Timer();
-            _slideTimer.Elapsed += _slideTimer_Elapsed;
+            _slideTimer.Elapsed += SlideTimer_Elapsed;
             _slideTimer.Interval = 50;
 
             //display message
@@ -47,9 +47,15 @@ namespace Cookalong.Controls
         }
 
         /// <summary>
+        /// Accessor for time factor
+        /// </summary>
+        /// <returns></returns>
+        public static int Get_TIME_FACTOR() { return TIME_FACTOR; }
+
+        /// <summary>
         /// Callback for each "tick" of the timer
         /// </summary>
-        private void _slideTimer_Elapsed(object? sender, ElapsedEventArgs e)
+        private void SlideTimer_Elapsed(object? sender, ElapsedEventArgs e)
         {
             ++_time;
 

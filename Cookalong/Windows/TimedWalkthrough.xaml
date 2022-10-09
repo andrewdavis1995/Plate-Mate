@@ -34,7 +34,7 @@
         </Grid.Triggers>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="10"/>
             <RowDefinition Height="40"/>
@@ -46,7 +46,10 @@
 
         <Image HorizontalAlignment="Center" Margin="5" Source="/Images/Logo.png" Grid.ColumnSpan="10" RenderOptions.BitmapScalingMode="HighQuality"/>
         <Grid Name="grdActiveSteps" Margin="5" Grid.Row="1"/>
-        <Label Content="Completed Steps:" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="5, 2" Grid.Column="100" Padding="0" FontSize="14"/>
+
+        <Grid Grid.Column="100" Grid.Row="1">
+            <StackPanel Name="stckPrevious" VerticalAlignment="Top" Margin="0" />
+        </Grid>
 
         <Grid Grid.Row="2" Grid.ColumnSpan="100">
             <Grid Name="progressGrid" Height="5" Margin="5, 0">

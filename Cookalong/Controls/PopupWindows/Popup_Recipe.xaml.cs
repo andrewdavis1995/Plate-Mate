@@ -184,7 +184,7 @@ namespace Cookalong.Controls.PopupWindows
                 else
                 {
                     // show the walkthrough dialog
-                    var wt = new Walkthrough(_recipe.GetRecipeName(), _recipe.GetMethodSteps(), PlaybackMode.ClickThrough);
+                    var wt = new Walkthrough(_recipe.GetRecipeName(), _recipe.GetMethodSteps());
                     wt.ShowDialog();
                 }
             }
@@ -223,7 +223,7 @@ namespace Cookalong.Controls.PopupWindows
             if (_recipe == null) return;
 
             // show the walkthrough dialog
-            var wt = new Walkthrough(_recipe.GetRecipeName(), _recipe.GetMethodSteps(), PlaybackMode.ClickThrough);
+            var wt = new Walkthrough(_recipe.GetRecipeName(), _recipe.GetMethodSteps());
             wt.ShowDialog();
         }
 
@@ -236,8 +236,28 @@ namespace Cookalong.Controls.PopupWindows
 
             if (_recipe == null) return;
 
-            var tw = new TimedWalkthrough(_recipe.GetMethodSteps(), PlaybackMode.Timing);
+            var tw = new TimedWalkthrough(_recipe.GetMethodSteps());
             tw.ShowDialog();
+        }
+
+        private void cmdClick_MouseEnter(object sender, MouseEventArgs e)
+        {
+            clickHighlight.Visibility = Visibility.Visible;
+        }
+
+        private void cmdClick_MouseLeave(object sender, MouseEventArgs e)
+        {
+            clickHighlight.Visibility = Visibility.Collapsed;
+        }
+
+        private void cmdTime_MouseEnter(object sender, MouseEventArgs e)
+        {
+            timeHighlight.Visibility = Visibility.Visible;
+        }
+
+        private void cmdTime_MouseLeave(object sender, MouseEventArgs e)
+        {
+            timeHighlight.Visibility = Visibility.Collapsed;
         }
     }
 }

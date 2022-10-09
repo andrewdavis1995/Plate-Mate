@@ -19,13 +19,16 @@ namespace Cookalong.Windows
     {
         // status variables
         int _time = -6; // start at -6 to allow a countdown
-        PlaybackMode _mode = PlaybackMode.ClickThrough;
         int _overallTime = 0;
         List<MethodStep> _MethodSteps = new();
         List<MethodStep> _activeMethodSteps = new();
 
         Timer _tmrTime = new();
+        readonly Timer _tmrPreviousInstructions = new();   // controls position of the previous instructions (slide items down)
+
         bool _running = true;
+
+        const int RHS_HEIGHT = 65;
 
         Popup_Confirmation? _pausePopup;
 
@@ -33,16 +36,66 @@ namespace Cookalong.Windows
         const int WARNING_GAP = 10;
         const double COLUMN_GROW_SPEED = 0.05d;
 
-        public TimedWalkthrough(List<MethodStep> MethodSteps, PlaybackMode mode)
+        public TimedWalkthrough(List<MethodStep> MethodSteps)
         {
             InitializeComponent();
-            SetData(MethodSteps, mode);
+            SetData(MethodSteps);
 
-            ConfigureTimer_(ref _tmrTime, Timer_Elapsed, SlidingTimeControl.TIME_FACTOR);
+            ConfigureTimer_(ref _tmrTime, Timer_Elapsed, SlidingTimeControl.Get_TIME_FACTOR());
+            ConfigureTimer_(ref _tmrPreviousInstructions, TmrRHS_Elapsed, 1, true);
 
-            // start timer if necessary
-            if (_mode == PlaybackMode.Timing)
+            // start timer
                 _tmrTime.Start();
+
+            stckPrevious.Margin = new Thickness(0, RHS_HEIGHT, 0, 0);
+        }
+
+        void AddToPrevious_(string text)
+        {
+            // add label to previous column
+            var lbl = new PreviousStepDisplay(text);
+            stckPrevious.Children.Insert(0, lbl);
+
+            // update RHS display
+            var top = stckPrevious.Margin.Top < 0 ? stckPrevious.Margin.Top - RHS_HEIGHT : -RHS_HEIGHT;
+            stckPrevious.Margin = new Thickness(0, top, 0, 0);
+            UpdateRhsOpacity_();
+        }
+
+
+        /// <summary>
+        /// Sets the opacity of the items in the RHS to fade out older ones
+        /// </summary>
+        private void UpdateRhsOpacity_()
+        {
+            double opacity = 1;
+
+            // loop through each item, updating the opacity
+            foreach (PreviousStepDisplay lbl in stckPrevious.Children)
+            {
+                lbl.Opacity = opacity;
+                opacity -= (RHS_HEIGHT / ActualHeight);
+            }
+        }
+
+        /// <summary>
+        /// Event handler for controlling the display of previous steps on the RHS
+        /// </summary>
+        private void TmrRHS_Elapsed(object? sender, ElapsedEventArgs e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                // if not in correct position, move down
+                if (stckPrevious.Margin.Top < 0 && stckPrevious.Children.Count > 0)
+                {
+                    stckPrevious.Margin = new Thickness(0, stckPrevious.Margin.Top + 0.8f, 0, 0);
+                }
+                else
+                {
+                    // stay at the top
+                    stckPrevious.Margin = new Thickness(0, 0, 0, 0);
+                }
+            });
         }
 
         /// <summary>
@@ -127,16 +180,19 @@ namespace Cookalong.Windows
         /// <summary>
         /// A step has completed and should be removed from the screen
         /// </summary>
-        /// <param name="MethodStep">The step that was completed</param>
-        private void EndStep_(MethodStep MethodStep)
+        /// <param name="step">The step that was completed</param>
+        private void EndStep_(MethodStep step)
         {
             // find the control that relates to this MethodStep
             foreach (SlidingTimeControl lbl in grdActiveSteps.Children)
             {
-                if (lbl.Tag == MethodStep)
+                if (lbl.Tag == step)
                 {
                     // work out which column holds this control
                     var cd = grdActiveSteps.ColumnDefinitions[Grid.GetColumn(lbl)];
+
+                    // add to RHS
+                    AddToPrevious_(step.GetMethod());
 
                     // start timer to shrink said column
                     Timer tmr = new();
@@ -297,8 +353,7 @@ namespace Cookalong.Windows
         /// Sets the ordered list of MethodSteps, and the mode to use
         /// </summary>
         /// <param name="MethodSteps">List of MethodSteps to display</param>
-        /// <param name="mode">The mode to use for dislaying MethodSteps</param>
-        public void SetData(List<MethodStep> MethodSteps, PlaybackMode mode)
+        public void SetData(List<MethodStep> MethodSteps)
         {
             _MethodSteps = MethodSteps.OrderBy(e => e.GetStart()).ToList();
 
@@ -311,8 +366,6 @@ namespace Cookalong.Windows
                 var last = _MethodSteps.OrderByDescending(l => l.GetStart() + l.GetDuration()).First();
                 _MethodSteps.Add(new MethodStep("Enjoy!", last.GetStart() + last.GetDuration(), 10));
             }
-
-            _mode = mode;
 
             _overallTime = MethodSteps.Max(m => m.GetStart() + m.GetDuration());
             lblTimeTotal.Content = StringHelper.TimeConfigOutput(_overallTime, true);
@@ -373,6 +426,7 @@ namespace Cookalong.Windows
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             _tmrTime.Stop();
+            _tmrPreviousInstructions.Stop();
 
             // stop all timers
             foreach (SlidingTimeControl lbl in grdActiveSteps.Children)

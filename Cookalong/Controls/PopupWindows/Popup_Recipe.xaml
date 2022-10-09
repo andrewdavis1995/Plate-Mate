@@ -115,7 +115,7 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Border Name="cmdClick" CornerRadius="8" Background="{StaticResource ButtonColour}" Margin="5" MouseLeftButtonDown="cmdClick_MouseLeftButtonDown">
+                    <Border Name="cmdClick" MouseEnter="cmdClick_MouseEnter" MouseLeave="cmdClick_MouseLeave" CornerRadius="8" Background="{StaticResource ButtonColour}" Margin="5" MouseLeftButtonDown="cmdClick_MouseLeftButtonDown">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -123,13 +123,14 @@
                                 <RowDefinition Height="60"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
+                            <Border x:Name="clickHighlight" Visibility="Collapsed" Background="{StaticResource SelectedColour}" Grid.RowSpan="100" CornerRadius="8"/>
                             <TextBlock FontSize="24" Text="Click Through" FontFamily="{StaticResource Roboto}" Margin="5, 10" Foreground="White" HorizontalAlignment="Center"/>
                             <TextBlock FontSize="12" Grid.Row="1" Text="You control the speed of the walk-though. Click to move onto the next step" FontFamily="{StaticResource Roboto Thin}" TextWrapping="Wrap" TextAlignment="Center" Margin="5, 15, 5, 20" Foreground="White" HorizontalAlignment="Center"/>
                             <Image Source="/Images/cursor.png" Grid.Row="2" RenderOptions.BitmapScalingMode="HighQuality"/>
                         </Grid>
                     </Border>
 
-                    <Border Name="cmdTime" Grid.Column="1" CornerRadius="8" Background="{StaticResource ButtonColour}" Margin="5" MouseLeftButtonDown="cmdTime_MouseLeftButtonDown">
+                    <Border Name="cmdTime" MouseEnter="cmdTime_MouseEnter" MouseLeave="cmdTime_MouseLeave" Grid.Column="1" CornerRadius="8" Background="{StaticResource ButtonColour}" Margin="5" MouseLeftButtonDown="cmdTime_MouseLeftButtonDown">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -137,6 +138,7 @@
                                 <RowDefinition Height="60"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
+                            <Border x:Name="timeHighlight" Visibility="Collapsed" Background="{StaticResource SelectedColour}" Grid.RowSpan="100" CornerRadius="8"/>
                             <TextBlock FontSize="24" Text="Time-based" FontFamily="{StaticResource Roboto}" Margin="5, 10" Foreground="White" HorizontalAlignment="Center"/>
                             <TextBlock FontSize="12" Grid.Row="1" Text="Uses the configured times to display the steps" FontFamily="{StaticResource Roboto Thin}" TextWrapping="Wrap" TextAlignment="Center" Margin="5, 15, 5, 20" Foreground="White" HorizontalAlignment="Center"/>
                             <Image Source="/Images/Timing.png" Grid.Row="2" RenderOptions.BitmapScalingMode="HighQuality"/>

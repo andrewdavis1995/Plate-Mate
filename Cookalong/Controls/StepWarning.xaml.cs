@@ -35,7 +35,7 @@ namespace Cookalong.Controls
 
             _tmrCountdown = new Timer();
             _tmrCountdown.Elapsed += _tmrCountdown_Elapsed;
-            _tmrCountdown.Interval = SlidingTimeControl.TIME_FACTOR;
+            _tmrCountdown.Interval = SlidingTimeControl.Get_TIME_FACTOR();
 
             _tmrAppear = new Timer();
             _tmrAppear.Elapsed += _tmrAppear_Elapsed;

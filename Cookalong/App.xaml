@@ -8,8 +8,8 @@
         <SolidColorBrush x:Key="WindowBackground" Color="#FFFAFBFC"/>
         <SolidColorBrush x:Key="PopupOverlay" Color="#ca000000"/>
         <SolidColorBrush x:Key="TextColour" Color="#FFFFFF"/>
-        <SolidColorBrush x:Key="SelectedColour" Color="#FFA611A7"/>
-        <SolidColorBrush x:Key="ConfirmedColour" Color="#3BC14A"/>
+        <SolidColorBrush x:Key="SelectedColour" Color="#E84C86"/>
+        <SolidColorBrush x:Key="ConfirmedColour" Color="#FF31C341"/>
         <SolidColorBrush x:Key="CancelledColour" Color="#C13B4A"/>
 
         <Color x:Key="GradientStart" R="50" G="14" B="66" A="255"/>
@@ -37,10 +37,10 @@
         <SolidColorBrush x:Key="RecipeHoverLeave" Color="{StaticResource GradientEnd}"/>
         
         <!-- Buttons -->
-        <SolidColorBrush x:Key="ButtonHighlight" Color="#22FFFFFF"/>
+        <SolidColorBrush x:Key="ButtonHighlight" Color="#33FFFFFF"/>
         <SolidColorBrush x:Key="ButtonDefault" Color="#4598EA"/>
         <SolidColorBrush x:Key="ButtonCancel" Color="#FF595E"/>
-        <SolidColorBrush x:Key="ButtonConfirm" Color="#FF32AB3F"/>
+        <SolidColorBrush x:Key="ButtonConfirm" Color="#FF31C341"/>
 
         <!--Scrollbar Thumbs-->
         <Style x:Key="ScrollThumbs" TargetType="{x:Type Thumb}">

@@ -2,17 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using System.Timers;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
 using Andrew_2_0_Libraries.Models;
 
 namespace Cookalong.Controls
 {
-    public enum PlaybackMode { ClickThrough, Timing }
-
     /// <summary>
     /// Interaction logic for Walkthrough.xaml
     /// </summary>
@@ -23,7 +18,6 @@ namespace Cookalong.Controls
         int _instructionIndex = 0;
         bool _moving = false;
         string _pendingMessage = "";
-        PlaybackMode _mode = PlaybackMode.ClickThrough;
 
         List<MethodStep> _instructions = new();
 
@@ -44,11 +38,10 @@ namespace Cookalong.Controls
         /// </summary>
         /// <param name="recipeName">The name of the recipe</param>
         /// <param name="instructions">List of instructions to display</param>
-        /// <param name="mode">The mode to use</param>
-        public Walkthrough(string recipeName, List<MethodStep> instructions, PlaybackMode mode)
+        public Walkthrough(string recipeName, List<MethodStep> instructions)
         {
             InitializeComponent();
-            SetData(instructions, mode);
+            SetData(instructions);
             txtTitle.Text = recipeName;
 
             ConfigureTimer_(ref _tmrTime, Timer_Elapsed, 1000);
@@ -58,11 +51,7 @@ namespace Cookalong.Controls
 
             stckPrevious.Margin = new Thickness(0, RHS_HEIGHT, 0, 0);
 
-            // start timer if necessary
-            if (_mode == PlaybackMode.Timing)
-                _tmrTime.Start();
-            else
-                NextStep_();
+            NextStep_();
         }
 
         /// <summary>
@@ -154,7 +143,7 @@ namespace Cookalong.Controls
                 if (grdMessage.Margin.Left >= (ActualWidth / 2) - ((grdMessage.ActualWidth * newInstructionScale.ScaleX) / 2))
                 {
                     // show instructions
-                    grdInstructions.Visibility = _mode == PlaybackMode.ClickThrough ? Visibility.Visible : Visibility.Collapsed;
+                    grdInstructions.Visibility = Visibility.Visible;
 
                     // stop movement
                     grdMessage.Margin = new Thickness((ActualWidth / 2) - ((grdMessage.ActualWidth * newInstructionScale.ScaleX) / 2), (ActualHeight / 2) - (grdMessage.ActualHeight / 2) * newInstructionScale.ScaleY, 0, 0);
@@ -270,7 +259,7 @@ namespace Cookalong.Controls
         /// </summary>
         /// <param name="instructions">List of instructions to display</param>
         /// <param name="mode">The mode to use for dislaying instructions</param>
-        public void SetData(List<MethodStep> instructions, PlaybackMode mode)
+        public void SetData(List<MethodStep> instructions)
         {
             _instructions = instructions.OrderBy(e => e.GetStart()).ToList();
 
@@ -280,7 +269,6 @@ namespace Cookalong.Controls
             // final message
             if (_instructions.Count > 0)
                 _instructions.Add(new MethodStep("Enjoy!", _instructions.Last().GetStart() + _instructions.Last().GetDuration(), 1));
-            _mode = mode;
         }
 
         /// <summary>
@@ -291,17 +279,11 @@ namespace Cookalong.Controls
             // Space - next step
             if (e.Key == System.Windows.Input.Key.Space)
             {
-                // only do this if we are doing a click through
-                if (_mode != PlaybackMode.ClickThrough) return;
-
                 NextStep_();
             }
             // Backspace - previous step
             else if (e.Key == System.Windows.Input.Key.Back)
             {
-                // only do this if we are doing a click through
-                if (_mode != PlaybackMode.ClickThrough) return;
-
                 PreviousStep_();
             }
             // Escape - quit

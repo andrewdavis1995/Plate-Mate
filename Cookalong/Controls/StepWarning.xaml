@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Cookalong.Controls"
-             mc:Ignorable="d"
-             Height="70" Width="250" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="-450, 0, 0, 20" Background="{StaticResource GradientBackground}">
+             mc:Ignorable="d" FontFamily="{StaticResource Roboto Thin}"
+             Height="65" Width="250" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="-450, 0, 0, 50" Background="{StaticResource ButtonDefault}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -15,7 +15,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Name="txtTitle" Text="Get Ready" VerticalAlignment="Center" Margin="5, 2" Foreground="White" Grid.Column="0" Grid.Row="0" FontSize="12" FontWeight="Bold"/>
+        <TextBlock Name="txtTitle" Text="Get Ready" FontFamily="{StaticResource Roboto}" VerticalAlignment="Center" Margin="5, 5, 5, 2" Foreground="White" Grid.Column="0" Grid.Row="0" FontSize="12" FontWeight="Bold"/>
         <TextBlock Name="txtMessage" Text="Next Step is coming in... 0 seconds" VerticalAlignment="Center" Margin="5, 2" Foreground="White" Grid.Column="0" Grid.Row="1" FontSize="14" TextWrapping="Wrap"/>
 
         <Label Grid.RowSpan="2" Background="#22000000"/>

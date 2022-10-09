@@ -11,8 +11,8 @@
             <ColumnDefinition Width="30"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        <Label Name="Highlight" Background="{StaticResource ButtonHighlight}" Visibility="Collapsed" Grid.ColumnSpan="2" />
         <Image Name="imgIcon" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left" Source="/Images/RecipeList.png" Margin="5" RenderOptions.BitmapScalingMode="HighQuality"/>
         <Label Name="txtText" Grid.Column="1" Content="My Recipes" Foreground="White" FontSize="14" VerticalAlignment="Center"/>
-        <Label Name="Highlight" Background="{StaticResource ButtonHighlight}" Visibility="Collapsed" Grid.ColumnSpan="2" />
     </Grid>
 </UserControl>
