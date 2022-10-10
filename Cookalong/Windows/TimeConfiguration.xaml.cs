@@ -34,7 +34,7 @@ namespace Cookalong.Windows
 
         const int CURSOR_OFFSET = 25;
         const double SEGMENT_STEP_MINS = 0.5d;
-        const int MAX_MINS = 60;
+        int MAX_MINS = 60;
 
         DraggableObjectGantt? _dragging = null;  // currently being moved
 
@@ -483,6 +483,49 @@ namespace Cookalong.Windows
                 "Drag the left and right edges of the control to change the duration of the step.", MainGrid);
             PopupController.AboveAll(popup);
             MainGrid.Children.Add(popup);
+        }
+        void ChangeMaxTime(int offset)
+        {
+            _steps.Clear();
+
+            // store times
+            foreach (DraggableObjectGantt obj in stckData.Children)
+            {
+                var start = StartTime_(obj);
+                if (start >= (MAX_MINS*60))
+                    start = 0;
+
+                var i = new MethodStep(obj.GetText(), start, Duration_(obj));
+                _steps.Add(i);
+            }
+
+            // add time
+            MAX_MINS += offset;
+
+            SetStepSize_();
+
+            stckData.Children.Clear();
+            stckTitles.Children.Clear();
+
+            // re-display with correct times
+            foreach (var ins in _steps)
+            {
+                NewStep_(ins);
+            }
+        }
+
+        private void Zoom_Out(object sender, MouseButtonEventArgs e)
+        {
+            if (MAX_MINS >= 150) return;
+
+            ChangeMaxTime(30);
+        }
+
+        private void Zoom_In(object sender, MouseButtonEventArgs e)
+        {
+            if (MAX_MINS < 60) return;
+
+            ChangeMaxTime(-30);
         }
     }
 }

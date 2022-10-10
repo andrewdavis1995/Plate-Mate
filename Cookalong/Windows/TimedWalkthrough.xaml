@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Cookalong.Controls"
         mc:Ignorable="d" FontFamily="{StaticResource Roboto Thin}"
-        Title="DisplayWindow" Height="450" Width="800" WindowStyle="None" ResizeMode="NoResize" WindowState="Maximized" KeyDown="Window_KeyDown" Closing="Window_Closing">
+        Title="DisplayWindow" Height="450" Width="800" WindowStyle="None" ResizeMode="NoResize" WindowState="Maximized" KeyDown="Window_KeyDown" Closing="Window_Closing" Loaded="Window_Loaded">
     <Window.Resources>
         <Storyboard x:Key="storyFire">
             <ColorAnimation From="#AEDA6913" To="#55DA6913" Duration="0:0:2.5" AutoReverse="True" Storyboard.TargetName="FireGrid" Storyboard.TargetProperty="Background.GradientStops[1].Color" BeginTime="0:0:0" RepeatBehavior="Forever"  />

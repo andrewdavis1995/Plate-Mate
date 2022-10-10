@@ -10,6 +10,7 @@ using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace Cookalong.Windows
 {/// <summary>
@@ -22,6 +23,8 @@ namespace Cookalong.Windows
         int _overallTime = 0;
         List<MethodStep> _MethodSteps = new();
         List<MethodStep> _activeMethodSteps = new();
+
+        List<Border> _dots = new List<Border>();
 
         Timer _tmrTime = new();
         readonly Timer _tmrPreviousInstructions = new();   // controls position of the previous instructions (slide items down)
@@ -45,7 +48,7 @@ namespace Cookalong.Windows
             ConfigureTimer_(ref _tmrPreviousInstructions, TmrRHS_Elapsed, 1, true);
 
             // start timer
-                _tmrTime.Start();
+            _tmrTime.Start();
 
             stckPrevious.Margin = new Thickness(0, RHS_HEIGHT, 0, 0);
         }
@@ -263,6 +266,8 @@ namespace Cookalong.Windows
 
             _overallTime = _MethodSteps.Max(m => m.GetStart() + m.GetDuration());
             lblTimeTotal.Content = StringHelper.TimeConfigOutput(_overallTime, true);
+
+            ShowDots_();
         }
 
         /// <summary>
@@ -371,6 +376,35 @@ namespace Cookalong.Windows
             lblTimeTotal.Content = StringHelper.TimeConfigOutput(_overallTime, true);
         }
 
+        private void ShowDots_()
+        {
+            foreach (var d in _dots)
+            {
+                progressGrid.Children.Remove(d);
+            }
+
+            foreach (var item in _MethodSteps)
+            {
+                var left = (item.GetStart() / (double)_overallTime) * progressGrid.ActualWidth - 1;
+
+                if (left > 0)
+                {
+                    var brd = new Border()
+                    {
+                        Background = new SolidColorBrush(Color.FromRgb(255, 255, 255)),
+                        Width = 2,
+                        Height = 2,
+                        Margin = new Thickness(left, 0, 0, 0),
+                        VerticalAlignment = VerticalAlignment.Center,
+                        HorizontalAlignment = HorizontalAlignment.Left,
+                        CornerRadius = new CornerRadius(10)
+                    };
+                    _dots.Add(brd);
+                    progressGrid.Children.Insert(1, brd);
+                }
+            }
+        }
+
         /// <summary>
         /// Event handler for when a key is pressed
         /// </summary>
@@ -433,6 +467,11 @@ namespace Cookalong.Windows
             {
                 lbl.SetTimerState(false);
             }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            ShowDots_();
         }
     }
 }

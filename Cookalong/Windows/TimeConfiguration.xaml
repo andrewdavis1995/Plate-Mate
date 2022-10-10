@@ -37,12 +37,21 @@
             <Grid Grid.Column="1" Grid.Row="100" Margin="5, 10, 0, 0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <local:Input_Button x:Name="cmdCancel" MouseLeftButtonDown="cmdCancel_MouseLeftButtonDown" Grid.Column="0" Width="150" HorizontalAlignment="Left" Margin="0, 0, 10, 0"/>
                 <Image Source="/Images/help.png" MaxHeight="25" RenderOptions.BitmapScalingMode="HighQuality" Grid.Column="1" HorizontalAlignment="Left" MouseDown="Help_MouseDown"/>
 
+                <Border Background="{StaticResource ButtonColour}" Grid.Column="2" Width="40" CornerRadius="12, 0, 0, 12" Margin="10, 5, 2, 5" MouseLeftButtonDown="Zoom_Out">
+                    <Label Content="-" FontSize="18" FontWeight="Bold" Foreground="White" Margin="0" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <Border Background="{StaticResource ButtonColour}" Grid.Column="3" Width="40" CornerRadius="0, 12, 12, 0" Margin="2, 5, 0, 5" MouseLeftButtonDown="Zoom_In">
+                    <Label Content="+" FontSize="18" FontWeight="Bold" Foreground="White" Margin="0" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
 
             </Grid>
             
