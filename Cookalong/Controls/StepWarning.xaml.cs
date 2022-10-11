@@ -1,19 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
+﻿using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Cookalong.Controls
 {
@@ -22,37 +9,54 @@ namespace Cookalong.Controls
     /// </summary>
     public partial class StepWarning : UserControl
     {
-        Timer _tmrCountdown;
-        Timer _tmrAppear;
-        Timer _tmrRemove;
+        Timer _tmrCountdown = new();
+        Timer _tmrAppear = new();
+        Timer _tmrRemove = new();
         int _time = 0;
+        Thickness _margin = new(0, 0, 0, 0);
 
         const int MOVE_SPEED = 10;
 
+        /// <summary>
+        /// Contructor
+        /// </summary>
         public StepWarning()
         {
             InitializeComponent();
 
-            _tmrCountdown = new Timer();
-            _tmrCountdown.Elapsed += _tmrCountdown_Elapsed;
-            _tmrCountdown.Interval = SlidingTimeControl.Get_TIME_FACTOR();
-
-            _tmrAppear = new Timer();
-            _tmrAppear.Elapsed += _tmrAppear_Elapsed;
-            _tmrAppear.Interval = 1;
-
-            _tmrRemove = new Timer();
-            _tmrRemove.Elapsed += _tmrRemove_Elapsed;
-            _tmrRemove.Interval = 1;
+            // initialise timers
+            ConfigureTimer_(ref _tmrCountdown, TmrCountdown_Elapsed, SlidingTimeControl.Get_TIME_FACTOR());
+            ConfigureTimer_(ref _tmrAppear, TmrAppear_Elapsed, 1);
+            ConfigureTimer_(ref _tmrRemove, TmrRemove_Elapsed, 1);
         }
 
-        private void _tmrRemove_Elapsed(object? sender, ElapsedEventArgs e)
+        /// <summary>
+        /// Configures the specified timerwith the correct values
+        /// </summary>
+        /// <param name="tmr">The timer to configure</param>
+        /// <param name="callback">The callback function to call on each "tick"</param>
+        /// <param name="interval">How many ms between each "tick"</param>
+        /// <param name="start">Whether to start the timer</param>
+        static void ConfigureTimer_(ref Timer tmr, ElapsedEventHandler callback, int interval, bool start = false)
         {
-            Debug.WriteLine("HERE???");
+            // configure
+            tmr = new Timer();
+            tmr.Elapsed += callback;
+            tmr.Interval = interval;
 
+            // start if necessary
+            if (start) tmr.Start();
+        }
+
+        /// <summary>
+        /// Event handler for each "tick" of the remove timer
+        /// </summary>
+        private void TmrRemove_Elapsed(object? sender, ElapsedEventArgs e)
+        {
             Dispatcher.Invoke(() =>
             {
-                Margin = new System.Windows.Thickness(Margin.Left - MOVE_SPEED, Margin.Top, Margin.Right, Margin.Bottom);
+                _margin.Left -= MOVE_SPEED;
+                Margin = _margin;
 
                 // stop once off the side
                 if (Margin.Left < -ActualWidth)
@@ -60,39 +64,58 @@ namespace Cookalong.Controls
             });
         }
 
-        private void _tmrAppear_Elapsed(object? sender, ElapsedEventArgs e)
+        /// <summary>
+        /// Event handler for each "tick" of the appear timer
+        /// </summary>
+        private void TmrAppear_Elapsed(object? sender, ElapsedEventArgs e)
         {
             Dispatcher.Invoke(() =>
             {
-                Margin = new System.Windows.Thickness(Margin.Left + MOVE_SPEED, Margin.Top, Margin.Right, Margin.Bottom);
+                _margin.Left += MOVE_SPEED;
+                Margin = _margin;
 
-                // stop once off the side
+                // stop once fully on
                 if (Margin.Left >= 0)
                 {
                     _tmrAppear.Stop();
-                    Margin = new System.Windows.Thickness(0, Margin.Top, Margin.Right, Margin.Bottom);
+                    _margin.Left = 0;
+                    Margin = _margin;
                 }
             });
         }
 
+        /// <summary>
+        /// Starts the countdown from the specified time
+        /// </summary>
+        /// <param name="time">Time to start coutdown from</param>
         public void StartCountdown(int time)
         {
             _time = time;
             txtMessage.Text = $"Next step coming in... {_time} seconds";
 
-            Margin = new System.Windows.Thickness(-ActualWidth, Margin.Top, Margin.Right, Margin.Bottom);
+            // update margin
+            _margin = Margin;
+            _margin.Left = -ActualWidth;
 
+            // make sure the control starts off screen
+            Margin = _margin;
+
+            // start countdown
             _tmrCountdown.Start();
             _tmrRemove.Stop();
             _tmrAppear.Start();
         }
 
-        private void _tmrCountdown_Elapsed(object? sender, ElapsedEventArgs e)
+        /// <summary>
+        /// Event handler for each "tick" of the countdown timer
+        /// </summary>
+        private void TmrCountdown_Elapsed(object? sender, ElapsedEventArgs e)
         {
             --_time;
 
             Dispatcher.Invoke(() =>
             {
+                // display remaining time
                 txtMessage.Text = $"Next step coming in... {_time} seconds";
 
                 if (_time <= 0)

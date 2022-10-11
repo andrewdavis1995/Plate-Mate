@@ -34,16 +34,9 @@
             </EventTrigger>
         </Grid.Triggers>
 
-        <Grid Name="FireGrid" Height="100" VerticalAlignment="Bottom" Visibility="Hidden">
-            <Grid.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#00000000"/>
-                    <GradientStop Color="#AEE57100" Offset="1"/>
-                </LinearGradientBrush>
-            </Grid.Background>
-        </Grid>
-        <Label Name="lblTime" Content="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Collapsed"/>
         <StackPanel Name="stckUpdates" Width="100" HorizontalAlignment="Left"/>
+        <Label Name="lblTime" Content="0" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Bottom" Visibility="Visible" Margin="0, 0, 255, 5" FontSize="16"/>
+
         <Grid Width="250" HorizontalAlignment="Right" Background="#11000000">
             <StackPanel Name="stckPrevious" VerticalAlignment="Top" Margin="0, -100, 0, 0"/>
         </Grid>
@@ -76,6 +69,5 @@
         <TextBlock Name="txtTitle" FontSize="20" Foreground="White" Grid.Row="1" Text="HELLO!" VerticalAlignment="Top" HorizontalAlignment="Left" TextWrapping="Wrap" TextAlignment="Center" Margin="15"/>
 
         <Image Source="/Images/Logo.png" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Top" Width="150" RenderOptions.BitmapScalingMode="HighQuality"/>
-        
     </Grid>
 </Window>

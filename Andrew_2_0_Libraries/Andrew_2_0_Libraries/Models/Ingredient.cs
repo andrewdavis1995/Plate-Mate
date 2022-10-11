@@ -20,6 +20,9 @@ namespace Andrew_2_0_Libraries.Models
         public int GetImageIndex() { return _imageIndex; }
         #endregion
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Ingredient() { }
 
         /// <summary>
@@ -39,6 +42,10 @@ namespace Andrew_2_0_Libraries.Models
             _imageIndex = imageIndex;
         }
 
+        /// <summary>
+        /// Gets the string to display for the ingredient
+        /// </summary>
+        /// <returns></returns>
         public string GetDisplayOutput()
         {
             return GetValue() + " " + GetUnit() + "(s) of " + GetName();

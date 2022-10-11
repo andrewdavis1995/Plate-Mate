@@ -71,11 +71,13 @@ namespace Andrew_2_0_Libraries.Models
             _methodText = ingSplit[0];
             try
             {
+                // set timing
                 _startTime = int.Parse(ingSplit[1]);
                 _duration = int.Parse(ingSplit[2]);
             }
             catch(Exception ex)
             {
+                // invalid data so revert time to 0
                 Debug.WriteLine(ex.Message);
                 _startTime = 0;
                 _duration = 0;

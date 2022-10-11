@@ -84,7 +84,6 @@ namespace Cookalong.Controls
                 // kill timer once reached full height
                 if (timeSlider.Height >= ActualHeight)
                     _slideTimer.Stop();
-
             });
         }
         /// <summary>

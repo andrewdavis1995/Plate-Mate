@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Media;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,37 +14,49 @@ using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Cookalong.Windows
-{/// <summary>
- /// Interaction logic for DisplayWindow.xaml
- /// </summary>
+{
+    /// <summary>
+    /// Interaction logic for DisplayWindow.xaml
+    /// </summary>
     public partial class TimedWalkthrough : Window
     {
         // status variables
         int _time = -6; // start at -6 to allow a countdown
         int _overallTime = 0;
-        List<MethodStep> _MethodSteps = new();
-        List<MethodStep> _activeMethodSteps = new();
-
-        List<Border> _dots = new List<Border>();
-
-        Timer _tmrTime = new();
-        readonly Timer _tmrPreviousInstructions = new();   // controls position of the previous instructions (slide items down)
-
         bool _running = true;
 
-        const int RHS_HEIGHT = 65;
+        List<MethodStep> _methodSteps = new();
+        List<MethodStep> _activeMethodSteps = new();
+
+        List<Border> _dots = new();
+
+        readonly Timer _tmrTime = new();
+        readonly Timer _tmrPreviousInstructions = new();   // controls position of the previous instructions (slide items down)
 
         Popup_Confirmation? _pausePopup;
+
+        readonly SoundPlayer _warningSound = new();
+        readonly SoundPlayer _newStepSound = new();
 
         // const values
         const int WARNING_GAP = 10;
         const double COLUMN_GROW_SPEED = 0.05d;
+        const int RHS_HEIGHT = 65;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="MethodSteps">The steps to show</param>
         public TimedWalkthrough(List<MethodStep> MethodSteps)
         {
             InitializeComponent();
             SetData(MethodSteps);
 
+            // configure sounds
+            _warningSound = new SoundPlayer(Properties.Resources.Warning);
+            _newStepSound = new SoundPlayer(Properties.Resources.NewStep);
+
+            // configure timers
             ConfigureTimer_(ref _tmrTime, Timer_Elapsed, SlidingTimeControl.Get_TIME_FACTOR());
             ConfigureTimer_(ref _tmrPreviousInstructions, TmrRHS_Elapsed, 1, true);
 
@@ -53,6 +66,10 @@ namespace Cookalong.Windows
             stckPrevious.Margin = new Thickness(0, RHS_HEIGHT, 0, 0);
         }
 
+        /// <summary>
+        /// Adds an item to the previous steps list
+        /// </summary>
+        /// <param name="text">The text to display</param>
         void AddToPrevious_(string text)
         {
             // add label to previous column
@@ -137,8 +154,13 @@ namespace Cookalong.Windows
                     // display time
                     lblTime.Content = StringHelper.TimeConfigOutput(_time, true);
 
+                    // calculate progress
                     var percWidth = grdProgressBG.ActualWidth * perc;
+
+                    // move the progress bar
                     grdProgress.Width = percWidth;
+
+                    // move the progress circle
                     progressCircle.Margin = new Thickness(
                         progressGrid.Margin.Left + percWidth - (progressCircle.ActualWidth / 2)
                         , 0, 0, 0);
@@ -146,6 +168,7 @@ namespace Cookalong.Windows
                 }
                 else
                 {
+                    // if not started, update display
                     progressCircle.Visibility = Visibility.Collapsed;
                     lblTime.Content = "00:00";
                 }
@@ -153,7 +176,7 @@ namespace Cookalong.Windows
                 int index = 0;
 
                 // loop through MethodSteps
-                foreach (var i in _MethodSteps)
+                foreach (var i in _methodSteps)
                 {
                     // if the time is the start time of the MethodSteps, display
                     if (_time == i.GetStart())
@@ -169,8 +192,8 @@ namespace Cookalong.Windows
                     // if the time is the warning time of the MethodSteps, display
                     else if (_time == i.GetStart() - WARNING_GAP)
                     {
-                        // TODO: warning time should be configurable
                         // TODO: use required items
+                        _warningSound.Play();
                         CheckItemsRequired_(i);
                         WarningMessage.StartCountdown(WARNING_GAP);
                     }
@@ -236,7 +259,7 @@ namespace Cookalong.Windows
         private void CheckFinished_()
         {
             // complete if all items have been added to the list, and all columns are of width 0
-            if ((_MethodSteps.Count <= grdActiveSteps.Children.Count) && grdActiveSteps.ColumnDefinitions.All(c => c.Width.Value == 0))
+            if ((_methodSteps.Count <= grdActiveSteps.Children.Count) && grdActiveSteps.ColumnDefinitions.All(c => c.Width.Value == 0))
             {
                 // close the dialog
                 Close();
@@ -252,19 +275,19 @@ namespace Cookalong.Windows
         void UpdateDuration(int index, int duration, bool done)
         {
             // update duration
-            _MethodSteps[index].UpdateTimes(_MethodSteps[index].GetStart(), duration);
+            _methodSteps[index].UpdateTimes(_methodSteps[index].GetStart(), duration);
 
             // close this column if appropriate
-            if (done) EndStep_(_MethodSteps[index]);
+            if (done) EndStep_(_methodSteps[index]);
 
             // update the timing of the "Enjoy!" message at the end - needs to line up with the end of the LAST MethodStep
-            var last = _MethodSteps.OrderByDescending(l => l.GetStart() + l.GetDuration()).ToList()[1];
-            var msg = _MethodSteps.Last().GetMethod();
-            _MethodSteps.Remove(_MethodSteps.Last());
+            var last = _methodSteps.OrderByDescending(l => l.GetStart() + l.GetDuration()).ToList()[1];
+            var msg = _methodSteps.Last().GetMethod();
+            _methodSteps.Remove(_methodSteps.Last());
             var endDuration = Math.Max(last.GetStart() + last.GetDuration(), _time + 2);
-            _MethodSteps.Add(new MethodStep(msg, endDuration, 10));
+            _methodSteps.Add(new MethodStep(msg, endDuration, 10));
 
-            _overallTime = _MethodSteps.Max(m => m.GetStart() + m.GetDuration());
+            _overallTime = _methodSteps.Max(m => m.GetStart() + m.GetDuration());
             lblTimeTotal.Content = StringHelper.TimeConfigOutput(_overallTime, true);
 
             ShowDots_();
@@ -304,6 +327,10 @@ namespace Cookalong.Windows
             lbl.SetTimerState(true);
 
             _activeMethodSteps.Add(step);
+
+            // play sound
+            if (_time >= 0)
+                _newStepSound.Play();
         }
 
         /// <summary>
@@ -360,35 +387,41 @@ namespace Cookalong.Windows
         /// <param name="MethodSteps">List of MethodSteps to display</param>
         public void SetData(List<MethodStep> MethodSteps)
         {
-            _MethodSteps = MethodSteps.OrderBy(e => e.GetStart()).ToList();
+            _methodSteps = MethodSteps.OrderBy(e => e.GetStart()).ToList();
 
             // opening message
-            _MethodSteps.Insert(0, new MethodStep("Let's begin!", -5, 5));
+            _methodSteps.Insert(0, new MethodStep("Let's begin!", -5, 5));
 
             // final message
-            if (_MethodSteps.Count > 0)
+            if (_methodSteps.Count > 0)
             {
-                var last = _MethodSteps.OrderByDescending(l => l.GetStart() + l.GetDuration()).First();
-                _MethodSteps.Add(new MethodStep("Enjoy!", last.GetStart() + last.GetDuration(), 10));
+                var last = _methodSteps.OrderByDescending(l => l.GetStart() + l.GetDuration()).First();
+                _methodSteps.Add(new MethodStep("Enjoy!", last.GetStart() + last.GetDuration(), 10));
             }
 
             _overallTime = MethodSteps.Max(m => m.GetStart() + m.GetDuration());
             lblTimeTotal.Content = StringHelper.TimeConfigOutput(_overallTime, true);
         }
 
+        /// <summary>
+        /// Show the dots on the progress bar
+        /// </summary>
         private void ShowDots_()
         {
+            // remove current dots
             foreach (var d in _dots)
             {
                 progressGrid.Children.Remove(d);
             }
 
-            foreach (var item in _MethodSteps)
+            // loop through method steps
+            foreach (var item in _methodSteps)
             {
                 var left = (item.GetStart() / (double)_overallTime) * progressGrid.ActualWidth - 1;
 
                 if (left > 0)
                 {
+                    // display a circle
                     var brd = new Border()
                     {
                         Background = new SolidColorBrush(Color.FromRgb(255, 255, 255)),
@@ -399,6 +432,8 @@ namespace Cookalong.Windows
                         HorizontalAlignment = HorizontalAlignment.Left,
                         CornerRadius = new CornerRadius(10)
                     };
+
+                    // add the circle
                     _dots.Add(brd);
                     progressGrid.Children.Insert(1, brd);
                 }
@@ -429,18 +464,20 @@ namespace Cookalong.Windows
             {
                 _tmrTime.Stop();
 
+                // create popup for confirmation
                 _pausePopup = new Popup_Confirmation("Paused", "Recipe walk-through paused.",
                 () => { Close(); },
                 () => { TogglePause_(); },
                 "Exit", "Continue"
                 );
 
-                // TODO: Add this
-                //PopupController.AboveAll(_pausePopup);
+                // add control above all
+                PopupController.AboveAll(_pausePopup);
                 GradBorder.Children.Add(_pausePopup);
             }
             else
             {
+                // start the timer
                 _tmrTime.Start();
 
                 if (_pausePopup != null)
@@ -469,6 +506,9 @@ namespace Cookalong.Windows
             }
         }
 
+        /// <summary>
+        /// Event handler for when the window loads
+        /// </summary>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             ShowDots_();

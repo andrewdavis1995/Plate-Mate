@@ -4,25 +4,23 @@ using Cookalong.Controls.PopupWindows;
 using Cookalong.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Cookalong.Windows
-{/// <summary>
- /// Interaction logic for DragWindow.xaml
- /// </summary>
+{
+    /// <summary>
+    /// Interaction logic for DragWindow.xaml
+    /// </summary>
     public partial class TimeConfiguration : Window
     {
+        const int CURSOR_OFFSET = 25;
+        const int ZOOM_CHANGE_MINUTES = 30;
+        const int MAX_ZOOM_MINUTES = 150;
+        const int MIN_ZOOM_MINUTES = 60;
+        const double SEGMENT_STEP_MINS = 0.5d;
+
         Timer _timer;   // control moving/dragging
 
         bool _leftBound = false;
@@ -31,17 +29,13 @@ namespace Cookalong.Windows
         double _minLeft = 0;
 
         double STEP_SIZE = 20d;
-
-        const int CURSOR_OFFSET = 25;
-        const double SEGMENT_STEP_MINS = 0.5d;
         int MAX_MINS = 60;
 
         DraggableObjectGantt? _dragging = null;  // currently being moved
+        Popup_Confirmation? _confirmationPopup = null;
 
         List<MethodStep> _steps = new List<MethodStep>();
         List<MethodStep> _completeInstructions = new List<MethodStep>();
-
-        Popup_Confirmation ? _confirmationPopup = null;
 
         /// <summary>
         /// Constructor
@@ -49,6 +43,8 @@ namespace Cookalong.Windows
         public TimeConfiguration(List<MethodStep> steps)
         {
             InitializeComponent();
+
+            // configure buttons
             cmdSave.Configure("Save and Exit");
             cmdReset.Configure("Reset");
             cmdCancel.Configure("Cancel");
@@ -69,18 +65,7 @@ namespace Cookalong.Windows
             _leftBound = leftBound;
             _rightBound = rightBound;
             _offset = offset;
-
-            // this logic should be re-enabled (remove false check) if decide to stop items being dragged before previous one
-            // likely behaviour will be that when timing is saved, it updates the order of the previous list
-            if (index > 0 && false)
-            {
-                var oneUp = stckData.Children[index - 1] as DraggableObjectGantt;
-                _minLeft = oneUp != null ? oneUp.Margin.Left : 0d;
-            }
-            else
-            {
-                _minLeft = 0;
-            }
+            _minLeft = 0;
 
             // update appearance of the control
             _dragging.Highlight.Visibility = Visibility.Visible;
@@ -97,7 +82,7 @@ namespace Cookalong.Windows
 
             // highlight the title
             var title = stckTitles.Children[index] as GanttTitle;
-            if(title != null)
+            if (title != null)
             {
                 title.SetColour();
             }
@@ -158,23 +143,40 @@ namespace Cookalong.Windows
             );
         }
 
+        /// <summary>
+        /// Rounds a value to the nearest step
+        /// </summary>
+        /// <param name="value">The value to round</param>
+        /// <returns>The rounded value</returns>
         double RoundValue_(double value)
         {
             return (STEP_SIZE * (Math.Round(value / STEP_SIZE)));
         }
 
+        /// <summary>
+        /// Checks the value is not beyond the right bound
+        /// </summary>
+        /// <param name="mousePos">Position of the mouse</param>
+        /// <returns>Whether the mouse is within the bounds</returns>
         bool RightBoundCheck_(Point mousePos)
         {
             if (_dragging == null) return false;
 
+            // check if in bounds
             var valid = (mousePos.X - _dragging.Width / 2 + _dragging.Width) < stckData.ActualWidth;
             return valid;
         }
 
+        /// <summary>
+        /// Checks the value is not beyond the left bound
+        /// </summary>
+        /// <param name="mousePos">Position of the mouse</param>
+        /// <returns>Whether the mouse is within the bounds</returns>
         bool LeftBoundCheck_(Point mousePos)
         {
             if (_dragging == null) return false;
 
+            // check if in bounds
             var valid = (mousePos.X - _dragging.Width / 2) > _minLeft;
             return valid;
         }
@@ -187,6 +189,9 @@ namespace Cookalong.Windows
             MouseReleased();
         }
 
+        /// <summary>
+        /// When the mouse gets released
+        /// </summary>
         public void MouseReleased()
         {
             // only do this if something is being dragged
@@ -213,7 +218,7 @@ namespace Cookalong.Windows
             timePopup.Visibility = Visibility.Collapsed;
 
             // reset colour of titles
-            foreach(GanttTitle gt in stckTitles.Children)
+            foreach (GanttTitle gt in stckTitles.Children)
             {
                 gt.ResetColour();
             }
@@ -294,11 +299,11 @@ namespace Cookalong.Windows
         /// </summary>
         void SetMarkerTimes_()
         {
-            markStart.SetContent("START");
-            markHalf.SetTime((MAX_MINS * 60) / 2);
-            markQtr.SetTime((MAX_MINS * 60) / 4);
-            mark3Qtr.SetTime((MAX_MINS * 60) / 4 * 3);
-            markEnd.SetTime(MAX_MINS * 60);
+            markStart.SetContent("START");             // start
+            markHalf.SetTime((MAX_MINS * 60) / 2);     // quarter
+            markQtr.SetTime((MAX_MINS * 60) / 4);      // half
+            mark3Qtr.SetTime((MAX_MINS * 60) / 4 * 3); // three-quarters
+            markEnd.SetTime(MAX_MINS * 60);            // end
         }
 
         /// <summary>
@@ -309,6 +314,7 @@ namespace Cookalong.Windows
             var gridLeft = colLHS.Width.Value + grdContent.Margin.Left;
             var offset = markStart.ActualWidth / 2;
 
+            // set margins of the time markers
             markStart.Margin = new Thickness(gridLeft - offset, markStart.Margin.Top, 0, 0);
             markQtr.Margin = new Thickness(gridLeft - offset + (stckData.ActualWidth / 4), markStart.Margin.Top, 0, 0);
             markHalf.Margin = new Thickness(gridLeft - offset + (stckData.ActualWidth / 2), markStart.Margin.Top, 0, 0);
@@ -319,8 +325,6 @@ namespace Cookalong.Windows
         /// <summary>
         /// Event handler for when the mouse leaves the scrollviewer
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void ScrollViewer_MouseLeave(object sender, MouseEventArgs e)
         {
             // ensure we stop dragging objects
@@ -414,6 +418,9 @@ namespace Cookalong.Windows
             Close();
         }
 
+        /// <summary>
+        /// Event handler for clicking the reset button
+        /// </summary>
         private void cmdReset_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             _confirmationPopup = new Popup_Confirmation("Confirm reset", "Are you sure you want to reset the timings?", () =>
@@ -433,7 +440,7 @@ namespace Cookalong.Windows
                 stckTitles.Children.Clear();
 
                 // add new controls
-                foreach(var step in _steps)
+                foreach (var step in _steps)
                 {
                     var start = step.GetStart();
                     var duration = step.GetDuration();
@@ -452,6 +459,9 @@ namespace Cookalong.Windows
             MainGrid.Children.Add(_confirmationPopup);
         }
 
+        /// <summary>
+        /// Event handler for clicking the cancel button
+        /// </summary>
         private void cmdCancel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             _confirmationPopup = new Popup_Confirmation("Cancel?", "Are you sure you want to cancel? All unsaved changes will be lost", () =>
@@ -484,6 +494,11 @@ namespace Cookalong.Windows
             PopupController.AboveAll(popup);
             MainGrid.Children.Add(popup);
         }
+
+        /// <summary>
+        /// Changes the maximum number of minutes
+        /// </summary>
+        /// <param name="offset">How much to change by</param>
         void ChangeMaxTime(int offset)
         {
             _steps.Clear();
@@ -492,7 +507,7 @@ namespace Cookalong.Windows
             foreach (DraggableObjectGantt obj in stckData.Children)
             {
                 var start = StartTime_(obj);
-                if (start >= (MAX_MINS*60))
+                if (start >= (MAX_MINS * 60))
                     start = 0;
 
                 var i = new MethodStep(obj.GetText(), start, Duration_(obj));
@@ -514,18 +529,26 @@ namespace Cookalong.Windows
             }
         }
 
+        /// <summary>
+        /// Event handler for the the zoom out button
+        /// </summary>
         private void Zoom_Out(object sender, MouseButtonEventArgs e)
         {
-            if (MAX_MINS >= 150) return;
+            if (MAX_MINS >= MAX_ZOOM_MINUTES) return;
 
-            ChangeMaxTime(30);
+            // add minutes
+            ChangeMaxTime(ZOOM_CHANGE_MINUTES);
         }
 
+        /// <summary>
+        /// Event handler for the the zoom in button
+        /// </summary>
         private void Zoom_In(object sender, MouseButtonEventArgs e)
         {
-            if (MAX_MINS < 60) return;
+            if (MAX_MINS < MIN_ZOOM_MINUTES) return;
 
-            ChangeMaxTime(-30);
+            // remove minutes
+            ChangeMaxTime(-ZOOM_CHANGE_MINUTES);
         }
     }
 }

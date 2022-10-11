@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -145,6 +146,7 @@ namespace Andrew_2_0_Libraries.Models
                 {
                     str.Append("#");
                 }
+                // add the ingredient
                 str.Append(ing.GetTextOutput());
             }
             return str.ToString();
@@ -170,6 +172,7 @@ namespace Andrew_2_0_Libraries.Models
                     str.Append("#");
                 }
 
+                // add the method
                 str.Append(step.GetTextOutput());
             }
             return str.ToString();
@@ -186,14 +189,16 @@ namespace Andrew_2_0_Libraries.Models
 
             var split = data.Split('@');
 
+            // not enough data
             if (split.Length < 8)
             {
-                // TODO: log error
+                Debug.WriteLine("Invalid data");
                 return false;
             }
 
             try
             {
+                // read data
                 _recipeName = split[0];
                 _recipeId = Guid.Parse(split[1]);
                 _dietary = byte.Parse(split[2]);
@@ -206,9 +211,9 @@ namespace Andrew_2_0_Libraries.Models
 
                 ParseMethod_(split[7]);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // TODO: log error
+                Debug.WriteLine(ex.Message);
                 return false;
             }
 

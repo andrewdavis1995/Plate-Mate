@@ -139,6 +139,9 @@ namespace Cookalong.Controls
             ClickEnd_();
         }
 
+        /// <summary>
+        /// Event handler for the delete button
+        /// </summary>
         private void cmdDelete_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             _confirmationPopup = new Popup_Confirmation("Confirm delete", "Are you sure you want to delete this ingredient?", () =>

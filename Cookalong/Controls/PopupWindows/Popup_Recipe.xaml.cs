@@ -1,10 +1,8 @@
 ﻿using Andrew_2_0_Libraries.Controllers;
 using Andrew_2_0_Libraries.Models;
-using Cookalong.Controls;
 using Cookalong.Helpers;
 using Cookalong.Windows;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -75,22 +73,8 @@ namespace Cookalong.Controls.PopupWindows
             // display name
             txtRecipeName.Text = _recipe.GetRecipeName();
 
-            // display ingredients
-            foreach (var i in _recipe.GetIngredients())
-            {
-                var output = new IngredientsDisplay(i, stckIngredients, grdOverall);
-
-                // can't delete on this page
-                output.DisableDelete();
-                stckIngredients.Children.Add(output);
-            }
-
-            int index = 1;
-            // display method
-            foreach (var s in _recipe.GetMethodSteps())
-            {
-                stckMethod.Children.Add(new MethodStepItem(index++, s.GetMethod()));
-            }
+            // display ingredients and method
+            DisplayMethod_();
 
             // check the image exists
             if (File.Exists(_recipe.GetImagePath()))
@@ -125,6 +109,32 @@ namespace Cookalong.Controls.PopupWindows
             // show configuration message
             grdConfigured.Visibility = _recipe.GetMethodSteps().Any(s => s.GetDuration() > 0)
                 ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        /// <summary>
+        /// Displays all ingredients and method steps
+        /// </summary>
+        private void DisplayMethod_()
+        {
+            // check recipe
+            if (_recipe == null) return;
+
+            // display ingredients
+            foreach (var i in _recipe.GetIngredients())
+            {
+                var output = new IngredientsDisplay(i, stckIngredients, grdOverall);
+
+                // can't delete on this page
+                output.DisableDelete();
+                stckIngredients.Children.Add(output);
+            }
+
+            int index = 1;
+            // display method
+            foreach (var s in _recipe.GetMethodSteps())
+            {
+                stckMethod.Children.Add(new MethodStepItem(index++, s.GetMethod()));
+            }
         }
 
         /// <summary>
@@ -195,12 +205,14 @@ namespace Cookalong.Controls.PopupWindows
         /// </summary>
         private void cmdConfigureTime_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            // check recipe and parent
             if (_recipe == null || _parent == null)
             {
                 _errorCallback?.Invoke("Something went wrong.");
                 return;
             }
 
+            // show window to configure timing
             var tc = new TimeConfiguration(_recipe.GetMethodSteps());
             var result = tc.ShowDialog();
 
@@ -234,27 +246,41 @@ namespace Cookalong.Controls.PopupWindows
         {
             grdMode.Visibility = Visibility.Collapsed;
 
+            // check recipe is not null
             if (_recipe == null) return;
 
+            // show timed walkthrough page
             var tw = new TimedWalkthrough(_recipe.GetMethodSteps());
             tw.ShowDialog();
         }
 
+        /// <summary>
+        /// Event handler for entering the click-through button
+        /// </summary>
         private void cmdClick_MouseEnter(object sender, MouseEventArgs e)
         {
             clickHighlight.Visibility = Visibility.Visible;
         }
 
+        /// <summary>
+        /// Event handler for leaving the click-through button
+        /// </summary>
         private void cmdClick_MouseLeave(object sender, MouseEventArgs e)
         {
             clickHighlight.Visibility = Visibility.Collapsed;
         }
 
+        /// <summary>
+        /// Event handler for entering the timed walkthrough button
+        /// </summary>
         private void cmdTime_MouseEnter(object sender, MouseEventArgs e)
         {
             timeHighlight.Visibility = Visibility.Visible;
         }
 
+        /// <summary>
+        /// Event handler for leaving the timed walkthrough button
+        /// </summary>
         private void cmdTime_MouseLeave(object sender, MouseEventArgs e)
         {
             timeHighlight.Visibility = Visibility.Collapsed;

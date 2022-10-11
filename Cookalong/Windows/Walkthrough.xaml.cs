@@ -5,6 +5,7 @@ using System.Linq;
 using System.Timers;
 using System.Windows;
 using Andrew_2_0_Libraries.Models;
+using Cookalong.Helpers;
 
 namespace Cookalong.Controls
 {
@@ -27,11 +28,11 @@ namespace Cookalong.Controls
         readonly Timer _tmrPreviousInstructions = new();   // controls position of the previous instructions (slide items down)
 
         // const values
-        const int WARNING_GAP = 60;
         const float MOVE_SPEED = 7.75f;
         const float GROW_SPEED = 0.01f;
         const float OPACITY_SPEED = 0.02f;
         const int RHS_HEIGHT = 65;
+        const int STEP_MARGIN = -200;
 
         /// <summary>
         /// Constructor
@@ -44,13 +45,16 @@ namespace Cookalong.Controls
             SetData(instructions);
             txtTitle.Text = recipeName;
 
+            // configure timers
             ConfigureTimer_(ref _tmrTime, Timer_Elapsed, 1000);
             ConfigureTimer_(ref _tmrMsgAppear, MsgAppear_Elapsed, 1);
             ConfigureTimer_(ref _tmrMsgRemove, MsgRemove_Elapsed, 1);
             ConfigureTimer_(ref _tmrPreviousInstructions, TmrRHS_Elapsed, 1, true);
 
+            // set margin
             stckPrevious.Margin = new Thickness(0, RHS_HEIGHT, 0, 0);
 
+            // show the first step
             NextStep_();
         }
 
@@ -176,30 +180,7 @@ namespace Cookalong.Controls
             Dispatcher.Invoke(() =>
             {
                 // display total time
-                // TODO: format as proper time
-                lblTime.Content = _time.ToString();
-
-                // loop through instructions
-                foreach (var i in _instructions)
-                {
-                    // if the time is the start time of the structions, display
-                    if (_time == i.GetStart())
-                    {
-                        // TODO
-                        ShowStep_(i.GetMethod());
-                    }
-                    // if the time is the end time of the structions, display
-                    else if (_time == i.GetStart() + i.GetDuration())
-                    {
-                        // TODO
-                    }
-                    // if the time is the warning time of the structions, display
-                    else if (_time == i.GetStart() - WARNING_GAP)
-                    {
-                        // TODO
-                        CheckItemsRequired_(i);
-                    }
-                }
+                lblTime.Content = StringHelper.TimeConfigOutput(_time, true);
             });
         }
 
@@ -213,7 +194,7 @@ namespace Cookalong.Controls
             lblMsg.Text = theMessage;
 
             // set to correct size and position
-            grdMessage.Margin = new Thickness(-200, 0, 0, 0);
+            grdMessage.Margin = new Thickness(STEP_MARGIN, 0, 0, 0);
             newInstructionScale.ScaleX = 1;
             newInstructionScale.ScaleY = 1;
 
@@ -226,32 +207,6 @@ namespace Cookalong.Controls
             // start movement
             _moving = true;
             _tmrMsgAppear.Start();
-        }
-
-        /// <summary>
-        /// Checks which utensils/items are required for this step
-        /// </summary>
-        /// <param name="ins">The instruction to check</param>
-        static void CheckItemsRequired_(MethodStep ins)
-        {
-            // lists - must match up
-            var searchStrings = new string[] { "Teaspoon", "Oven", "Tablespoon", "Grate" };
-            var objectsReqd = new string[] { "a teaspoon", "an oven", "a tablespoon", "a grater" };
-            Debug.Assert(searchStrings.Length == objectsReqd.Length, "Item check arrays are of different lengths");
-
-            // loop through each item, checking for it in the instruction string
-            for (var i = 0; i < searchStrings.Length && i < objectsReqd.Length; i++)
-            {
-                // if it is there, add a display
-                if (ins.GetMethod().ToLower().Contains(searchStrings[i].ToLower()))
-                {
-                    // TODO: add control with image
-                }
-            }
-
-            // TODO: display icon for linked ingredients
-
-            // TODO: check measurement of linked ingredient
         }
 
         /// <summary>
@@ -341,7 +296,6 @@ namespace Cookalong.Controls
             }
             else
             {
-                // TODO: remove this control from the parent
                 Close();
             }
         }
