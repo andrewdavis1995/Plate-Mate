@@ -5,6 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Images\favicon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -60,6 +61,7 @@
     <None Remove="Images\Gluten.png" />
     <None Remove="Images\help.png" />
     <None Remove="Images\Logo.png" />
+    <None Remove="Images\pause.png" />
     <None Remove="Images\recipeImage.png" />
     <None Remove="Images\RecipeList.png" />
     <None Remove="Images\Search.png" />
@@ -70,6 +72,10 @@
     <None Remove="Images\Timing.png" />
     <None Remove="Images\Vegan.png" />
     <None Remove="Images\Vegetarian.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\favicon.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -260,6 +266,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\Logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\pause.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

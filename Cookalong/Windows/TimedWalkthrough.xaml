@@ -62,6 +62,11 @@
         <Grid Grid.ColumnSpan="100" Grid.Row="100">
             <Label Name="lblTime" Content="00:00" Foreground="White" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5, 2"/>
             <Label Name="lblTimeTotal" Content="00:00" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5, 2"/>
+
+            <Border HorizontalAlignment="Center" VerticalAlignment="Stretch" Height="25" Width="25" Margin="5" BorderThickness="2" BorderBrush="White" Background="Transparent" CornerRadius="30" MouseLeftButtonDown="Pause_Clicked">
+                <Image Source="/Images/pause.png" Margin="2" RenderOptions.BitmapScalingMode="HighQuality"/>
+            </Border>
+            
         </Grid>
 
         <local:StepWarning x:Name="WarningMessage" Grid.RowSpan="100"/>

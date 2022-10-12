@@ -46,7 +46,7 @@ namespace Cookalong.Controls
             txtTitle.Text = recipeName;
 
             // configure timers
-            ConfigureTimer_(ref _tmrTime, Timer_Elapsed, 1000);
+            ConfigureTimer_(ref _tmrTime, Timer_Elapsed, 1000, true);
             ConfigureTimer_(ref _tmrMsgAppear, MsgAppear_Elapsed, 1);
             ConfigureTimer_(ref _tmrMsgRemove, MsgRemove_Elapsed, 1);
             ConfigureTimer_(ref _tmrPreviousInstructions, TmrRHS_Elapsed, 1, true);

@@ -513,5 +513,13 @@ namespace Cookalong.Windows
         {
             ShowDots_();
         }
+
+        /// <summary>
+        /// When the pause button is pressed
+        /// </summary>
+        private void Pause_Clicked(object sender, MouseButtonEventArgs e)
+        {
+            TogglePause_();
+        }
     }
 }
