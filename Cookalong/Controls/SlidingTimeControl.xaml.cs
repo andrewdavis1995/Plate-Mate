@@ -7,9 +7,10 @@ using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Cookalong.Controls
-{/// <summary>
- /// Interaction logic for SlidingTimeControl.xaml
- /// </summary>
+{
+    /// <summary>
+    /// Interaction logic for SlidingTimeControl.xaml
+    /// </summary>
     public partial class SlidingTimeControl : UserControl
     {
         readonly Timer _slideTimer;
