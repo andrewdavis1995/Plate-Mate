@@ -17,23 +17,23 @@
         <Color x:Key="GradientEnd" R="14" G="91" B="158" A="255"/>
         <Color x:Key="GradientEndAlpha" R="14" G="91" B="158" A="150"/>
 
-        <SolidColorBrush x:Key="ButtonColour" Color="{StaticResource GradientEnd}"/>
-        <SolidColorBrush x:Key="SearchColour" Color="{StaticResource GradientEnd}"/>
-        <SolidColorBrush x:Key="SearchFill" Color="{StaticResource GradientEndAlpha}"/>
+        <SolidColorBrush x:Key="ButtonColour" Color="#FF249EA3"/>
+        <SolidColorBrush x:Key="SearchColour" Color="#FF249EA3"/>
+        <SolidColorBrush x:Key="SearchFill" Color="#AA249EA3"/>
 
         <LinearGradientBrush x:Key="GradientBackground" EndPoint="0.5,1" StartPoint="0.5,0">
             <GradientStop Color="#FF0A0E3D" Offset="1"/>
             <GradientStop Color="#FF249EA3" Offset="0"/>
-            <GradientStop Color="#FF163D6F" Offset="0.505"/>
+            <GradientStop Color="#FF163D6F" Offset="0.5"/>
         </LinearGradientBrush>
         <LinearGradientBrush x:Key="GradientBackgroundSimple" EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="{StaticResource GradientStart}" Offset="1"/>
-            <GradientStop Color="{StaticResource GradientMid}" Offset="0.5"/>
+            <GradientStop Color="#FF0A0E3D" Offset="1"/>
+            <GradientStop Color="#FF163D6F" Offset="0"/>
         </LinearGradientBrush>
 
         <!-- Recipe Display Buttons -->
-        <SolidColorBrush x:Key="RecipeHoverEnter" Color="{StaticResource GradientMid}"/>
-        <SolidColorBrush x:Key="RecipeHoverLeave" Color="{StaticResource GradientEnd}"/>
+        <SolidColorBrush x:Key="RecipeHoverEnter" Color="#FF249EA3"/>
+        <SolidColorBrush x:Key="RecipeHoverLeave" Color="#FF163D6F"/>
         
         <!-- Buttons -->
         <SolidColorBrush x:Key="ButtonHighlight" Color="#33FFFFFF"/>

@@ -5,7 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Cookalong.Controls"
              mc:Ignorable="d" FontFamily="{StaticResource Roboto Thin}"
-             Height="65" Width="250" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="-450, 0, 0, 50" Background="{StaticResource ButtonDefault}">
+             Height="65" Width="250" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="-450, 0, 0, 50" Background="{StaticResource SearchColour}">
+    <UserControl.Effect>
+        <DropShadowEffect Opacity="0.3" ShadowDepth="5"/>
+    </UserControl.Effect>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

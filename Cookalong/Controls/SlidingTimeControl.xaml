@@ -8,7 +8,7 @@
              d:DesignHeight="450" d:DesignWidth="300" Background="Red">
     <Grid>
         <Label Name="timeSlider" Background="#35FFFFFF" Height="0" VerticalAlignment="Top" IsHitTestVisible="False"/>
-        <TextBlock Name="lblContent" Text="Content" VerticalAlignment="Center" Foreground="White" TextWrapping="Wrap" Margin="10" FontSize="22" TextAlignment="Center"/>
+        <TextBlock Name="lblContent" Text="Content" VerticalAlignment="Center" Foreground="White" TextWrapping="Wrap" Margin="10" FontSize="35" TextAlignment="Center"/>
         <TextBlock Name="lblTime" Text="00:00 remaining" VerticalAlignment="Bottom" Foreground="White" TextWrapping="Wrap" Margin="10" FontSize="14" TextAlignment="Center"/>
 
         <Grid Name="grdButtons" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="5, 30" Visibility="Collapsed" >

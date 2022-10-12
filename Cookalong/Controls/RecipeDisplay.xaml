@@ -11,7 +11,7 @@
     <UserControl.Effect>
         <DropShadowEffect Direction="225" ShadowDepth="5" Opacity="0.15"/>
     </UserControl.Effect>
-    <Border Name="background" CornerRadius="8" Background="{DynamicResource SearchColour}">
+    <Border Name="background" CornerRadius="8" Background="{DynamicResource RecipeHoverLeave}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="{StaticResource RecipeWidth}"/>

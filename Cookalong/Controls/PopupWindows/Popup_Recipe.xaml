@@ -80,16 +80,16 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Border Name="imgVegetarian" Grid.Column="1" Width="20" Background="{StaticResource SearchColour}" CornerRadius="200" Margin="5">
+                    <Border Name="imgVegetarian" Grid.Column="1" Width="25" Background="{x:Null}" CornerRadius="200" Margin="5">
                         <Image Source="/Images/Vegetarian.png" RenderOptions.BitmapScalingMode="HighQuality" />
                     </Border>
-                    <Border Name="imgVegan" Width="20" Background="{StaticResource SearchColour}" CornerRadius="200" Margin="5" Grid.Column="2">
+                    <Border Name="imgVegan" Width="25" Background="{x:Null}" CornerRadius="200" Margin="5" Grid.Column="2">
                         <Image Source="/Images/Vegan.png" RenderOptions.BitmapScalingMode="HighQuality" />
                     </Border>
-                    <Border Name="imgGluten" Width="20" Background="{StaticResource SearchColour}" CornerRadius="200" Margin="5" Grid.Column="3">
+                    <Border Name="imgGluten" Width="25" Background="{x:Null}" CornerRadius="200" Margin="5" Grid.Column="3">
                         <Image Source="/Images/Gluten.png" RenderOptions.BitmapScalingMode="HighQuality" />
                     </Border>
-                    <Border Name="imgDairy" Width="20" Background="{StaticResource SearchColour}" CornerRadius="200" Margin="5" Grid.Column="4">
+                    <Border Name="imgDairy" Width="25" Background="{x:Null}" CornerRadius="200" Margin="5" Grid.Column="4">
                         <Image Source="/Images/Dairy.png" RenderOptions.BitmapScalingMode="HighQuality" />
                     </Border>
                 </Grid>

@@ -65,6 +65,7 @@
     <None Remove="Images\Search.png" />
     <None Remove="Images\Servings.pdn" />
     <None Remove="Images\Servings.png" />
+    <None Remove="Images\splash.png" />
     <None Remove="Images\tick.png" />
     <None Remove="Images\Timing.png" />
     <None Remove="Images\Vegan.png" />
@@ -301,6 +302,12 @@
     <Resource Include="Images\Vegetarian.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <SplashScreen Include="Images\splash.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </SplashScreen>
   </ItemGroup>
 
   <ItemGroup>
