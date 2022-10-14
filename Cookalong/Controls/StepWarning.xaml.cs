@@ -21,7 +21,7 @@ namespace Cookalong.Controls
         const int MOVE_SPEED = 10;
 
         List<MethodStep> _methods = new();
-        Action<MethodStep> _addThirtyCallback;
+        Action<MethodStep> ? _addThirtyCallback;
 
         /// <summary>
         /// Contructor
@@ -152,7 +152,7 @@ namespace Cookalong.Controls
         {
             // perform the callback for each method
             foreach (var method in _methods)
-                _addThirtyCallback(method);
+                _addThirtyCallback?.Invoke(method);
 
             // move off screen
             _tmrCountdown.Stop();
