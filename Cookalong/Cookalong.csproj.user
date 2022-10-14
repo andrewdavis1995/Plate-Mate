@@ -22,6 +22,9 @@
     <Compile Update="Controls\ErrorMessage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Controls\GanttTitle.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Controls\IngredientDisplaySimple.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -46,6 +49,9 @@
     <Compile Update="Controls\PopupWindows\Popup_Confirmation.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Controls\PopupWindows\Popup_Message.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Controls\PopupWindows\Popup_Method.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -64,6 +70,24 @@
     <Compile Update="Controls\RecipeDisplay.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Controls\DraggableObjectGantt.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\SlidingTimeControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\StepWarning.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\TimeMarker.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\TimeConfiguration.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\TimedWalkthrough.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Windows\Walkthrough.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -79,6 +103,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\ErrorMessage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\GanttTitle.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\IngredientDisplaySimple.xaml">
@@ -117,6 +144,9 @@
     <Page Update="Controls\PopupWindows\Popup_Ingredient.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Controls\PopupWindows\Popup_Message.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Controls\PopupWindows\Popup_Method.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -133,6 +163,24 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\RecipeDisplay.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\DraggableObjectGantt.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\SlidingTimeControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\StepWarning.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\TimeMarker.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\TimeConfiguration.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\TimedWalkthrough.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\Walkthrough.xaml">

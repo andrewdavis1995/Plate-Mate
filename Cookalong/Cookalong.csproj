@@ -5,6 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Images\favicon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +13,7 @@
     <None Remove="Images\bullet.png" />
     <None Remove="Images\Calories.png" />
     <None Remove="Images\cross.png" />
+    <None Remove="Images\cursor.png" />
     <None Remove="Images\Dairy.png" />
     <None Remove="Images\Exit.png" />
     <None Remove="Images\FoodIcons\0.png" />
@@ -57,16 +59,23 @@
     <None Remove="Images\FoodIcons\8.png" />
     <None Remove="Images\FoodIcons\9.png" />
     <None Remove="Images\Gluten.png" />
+    <None Remove="Images\help.png" />
     <None Remove="Images\Logo.png" />
+    <None Remove="Images\pause.png" />
     <None Remove="Images\recipeImage.png" />
     <None Remove="Images\RecipeList.png" />
     <None Remove="Images\Search.png" />
     <None Remove="Images\Servings.pdn" />
     <None Remove="Images\Servings.png" />
+    <None Remove="Images\splash.png" />
     <None Remove="Images\tick.png" />
     <None Remove="Images\Timing.png" />
     <None Remove="Images\Vegan.png" />
     <None Remove="Images\Vegetarian.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\favicon.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -108,6 +117,9 @@
     </Resource>
     <Resource Include="Images\cross.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\cursor.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\FoodIcons\0.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -250,7 +262,13 @@
     <Resource Include="Images\Gluten.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Images\help.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\Logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\pause.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
@@ -296,12 +314,30 @@
   </ItemGroup>
 
   <ItemGroup>
+    <SplashScreen Include="Images\splash.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </SplashScreen>
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Controls\MethodStepItem.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Controls\PopupWindows\Popup_Ingredient.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

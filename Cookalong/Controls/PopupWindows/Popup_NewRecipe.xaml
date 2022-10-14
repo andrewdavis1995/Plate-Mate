@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Cookalong.Controls"
              mc:Ignorable="d" FontSize="14" Foreground="White"
              FontFamily="{StaticResource Roboto Thin}"
-             d:DesignHeight="1200" d:DesignWidth="1800" Background="{StaticResource PopupOverlay}">
+             d:DesignHeight="1200" d:DesignWidth="1800">
     <Grid Name="grdOverall" Margin="0" Background="{StaticResource GradientBackgroundSimple}">
         <Grid>
             <Grid.RowDefinitions>
@@ -21,8 +21,8 @@
             <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="2.5*"/>
+                    <ColumnDefinition Width="250"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>

@@ -1,4 +1,5 @@
-﻿using Cookalong.Controls.PopupWindows;
+﻿using Andrew_2_0_Libraries.Models;
+using Cookalong.Controls.PopupWindows;
 using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
@@ -54,9 +55,9 @@ namespace Cookalong.Controls
         /// Adds an item to the stack panel
         /// </summary>
         /// <param name="content">The content to add</param>
-        public void AddItem(string content, Grid parentGrid)
+        public void AddItem(MethodStep step, Grid parentGrid)
         {
-            var newObject = new DraggableObject(this, content, parentGrid);
+            var newObject = new DraggableObject(this, step, parentGrid);
             stckData.Children.Add(newObject);
         }
 

@@ -21,6 +21,9 @@ namespace Andrew_2_0_Libraries.Models
         public int GetImageIndex() { return _imageIndex; }
         #endregion
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Ingredient() { }
 
         /// <summary>
@@ -40,6 +43,10 @@ namespace Andrew_2_0_Libraries.Models
             _imageIndex = imageIndex;
         }
 
+        /// <summary>
+        /// Gets the string to display for the ingredient
+        /// </summary>
+        /// <returns></returns>
         public string GetDisplayOutput()
         {
             return GetValue() + " " + GetUnit() + "(s) of " + GetName();
@@ -55,11 +62,20 @@ namespace Andrew_2_0_Libraries.Models
             return _name.ToLower().Contains(filter.ToLower());
         }
 
+        /// <summary>
+        /// Gets the string to write to file
+        /// </summary>
+        /// <returns>The string</returns>
         public override string GetTextOutput()
         {
             return GetName() + "~" + GetUnit() + "~" + GetValue() + "~" + GetCalories() + "~" + _imageIndex;
         }
 
+        /// <summary>
+        /// Parses the data read from file
+        /// </summary>
+        /// <param name="data">The data to parse</param>
+        /// <returns>Whether the parse was successful</returns>
         public override bool ParseData(string data)
         {
             var success = false;

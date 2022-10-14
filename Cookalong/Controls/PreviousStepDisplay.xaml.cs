@@ -7,6 +7,10 @@ namespace Cookalong.Controls
     /// </summary>
     public partial class PreviousStepDisplay : UserControl
     {
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="message">The message to display</param>
         public PreviousStepDisplay(string message)
         {
             InitializeComponent();

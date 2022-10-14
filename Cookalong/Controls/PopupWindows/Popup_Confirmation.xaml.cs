@@ -21,7 +21,9 @@ namespace Cookalong.Controls.PopupWindows
         /// <param name="message">Message to display</param>
         /// <param name="cancelCallback">Function to call on cancel</param>
         /// <param name="confirmCallback">Function to call on confirm</param>
-        public Popup_Confirmation(string title, string message, Action? cancelCallback, Action confirmCallback)
+        /// <param name="cancelMsg">Message to display on the cancel message</param>
+        /// <param name="confirmMsg">Message to display on the confirm message</param>
+        public Popup_Confirmation(string title, string message, Action? cancelCallback, Action confirmCallback, string cancelMsg = "Cancel", string confirmMsg = "Confirm")
         {
             InitializeComponent();
 
@@ -33,16 +35,18 @@ namespace Cookalong.Controls.PopupWindows
             _confirmCallback = confirmCallback;
 
             // configure button appearance
-            ConfigureButtons_();
+            ConfigureButtons_(cancelMsg, confirmMsg);
         }
 
         /// <summary>
         /// Configures the buttons
         /// </summary>
-        private void ConfigureButtons_()
+        /// <param name="cancelMsg">Message to display on the cancel message</param>
+        /// <param name="confirmMsg">Message to display on the confirm message</param>
+        private void ConfigureButtons_(string cancelMsg, string confirmMsg)
         {
-            ControlHelper.SetButtonAppearance_(cmdCancel, "Cancel");
-            ControlHelper.SetButtonAppearance_(cmdConfirm, "Confirm");
+            ControlHelper.SetButtonAppearance_(cmdCancel, cancelMsg);
+            ControlHelper.SetButtonAppearance_(cmdConfirm, confirmMsg);
         }
 
         /// <summary>

@@ -53,7 +53,7 @@ namespace Cookalong
             // LHS buttons
             lhsRecipes.Configure("My Recipes", "RecipeList");
             lhsData.Configure("Data Management", "Timing");
-            lhsRecipes.MouseLeftButtonDown += cmdNewRecipe_MouseLeftButtonDown;
+            lhsRecipes.MouseLeftButtonDown += RecipeButton_Click;
             lhsData.MouseLeftButtonDown += BackupsButton_Click;
         }
 

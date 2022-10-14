@@ -12,8 +12,4 @@
     <OutputPath>..\SDK\</OutputPath>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
 </Project>

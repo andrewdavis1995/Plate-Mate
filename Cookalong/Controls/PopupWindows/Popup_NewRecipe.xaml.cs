@@ -1,12 +1,12 @@
 ﻿using Andrew_2_0_Libraries.Controllers;
 using Andrew_2_0_Libraries.Models;
 using Cookalong.Helpers;
+using Cookalong.Windows;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -70,7 +70,7 @@ namespace Cookalong.Controls.PopupWindows
             cmdNewIngredient.Configure("+");
             cmdNewMethodStep.Configure("+");
             cmdSelectImage.Configure("Select Image");
-            cmdSetTime.Configure("Set Time");
+            cmdSetTime.Configure("Set Time (estimate)");
 
             // configure checkboxes for nutrition info
             inpVegetarian.AddTitle("Vegetarian");
@@ -267,9 +267,9 @@ namespace Cookalong.Controls.PopupWindows
         /// Gets a list of all methods sppecified
         /// </summary>
         /// <returns>List of all methods</returns>
-        private List<string> GetMethodList_()
+        private List<MethodStep> GetMethodList_()
         {
-            var list = new List<string>();
+            var list = new List<MethodStep>();
 
             // add each item
             foreach (DraggableObject item in methodList.stckData.Children)
@@ -277,7 +277,7 @@ namespace Cookalong.Controls.PopupWindows
                 // ignore blocker (used in dragging)
                 if (item.Visibility == Visibility.Visible)
                 {
-                    list.Add(item.txtData.Text);
+                    list.Add(new MethodStep(item.txtData.Text, 0, 0));
                 }
             }
             return list;
@@ -353,21 +353,21 @@ namespace Cookalong.Controls.PopupWindows
         /// <param name="draggableObject">The object that was clicked</param>
         internal void EditStep(DraggableObject ? draggableObject)
         {
-            var existing = draggableObject != null ? draggableObject.txtData.Text : string.Empty;
+            var existing = draggableObject?.MethodStep();
 
             _methodPopup = new Popup_Method(existing, () =>
             {
                 // cancel callback
                 _parent?.Children.Remove(_methodPopup);
             },
-            (a) =>
+            (step) =>
             {
                 // confirm callback
                 // update existing, where possible
                 if (draggableObject != null)
-                    draggableObject.txtData.Text = a;
-                else
-                    methodList.AddItem(a, grdOverall);
+                    draggableObject.txtData.Text = step?.GetMethod();
+                else if(step != null)
+                    methodList.AddItem(step, grdOverall);
 
                 _parent?.Children.Remove(_methodPopup);
             }, _errorCallback);

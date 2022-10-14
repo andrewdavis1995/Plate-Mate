@@ -16,7 +16,7 @@ namespace Andrew_2_0_Libraries.Models
         string _recipeName;
         Guid _recipeId;
         List<Ingredient> _ingredients;
-        List<string> _methodSteps;
+        List<MethodStep> _methodSteps;
         List<ItemComment> _comments;
         byte _dietary;
         int _servingSize;
@@ -27,7 +27,7 @@ namespace Andrew_2_0_Libraries.Models
         public string GetRecipeName() { return _recipeName; }
         public Guid GetRecipeId() { return _recipeId; }
         public List<Ingredient> GetIngredients() { return _ingredients; }
-        public List<string> GetMethodSteps() { return _methodSteps; }
+        public List<MethodStep> GetMethodSteps() { return _methodSteps; }
         public List<ItemComment> GetComments() { return _comments; }
         public bool IsVegetarian() { return (_dietary & FLAG_VEGGIE) == FLAG_VEGGIE; }
         public bool IsVegan() { return (_dietary & FLAG_VEGAN) == FLAG_VEGAN; }
@@ -49,12 +49,12 @@ namespace Andrew_2_0_Libraries.Models
         /// <param name="dietary">Whether the recipe is vegetarian, gluten free etc</param>
         /// <param name="servingSize">Number of portions</param>
         /// <param name="imagePath">Path to the image of the recipe</param>
-        public Recipe(string recipeName, List<Ingredient> ingredients, List<string> steps, byte dietary, int servingSize, string imagePath, uint setTime)
+        public Recipe(string recipeName, List<Ingredient> ingredients, List<MethodStep> steps, byte dietary, int servingSize, string imagePath, uint setTime)
         {
             _comments = new List<ItemComment>();
             _recipeId = Guid.NewGuid();
             _ingredients = new List<Ingredient>();
-            _methodSteps = new List<string>();
+            _methodSteps = new List<MethodStep>();
             UpdateRecipe(recipeName, ingredients, steps, dietary, servingSize, imagePath, setTime);
         }
 
@@ -67,7 +67,7 @@ namespace Andrew_2_0_Libraries.Models
         /// <param name="vegetarian">Whether the recipe is vegetarian</param>
         /// <param name="servingSize">Number of portions</param>
         /// <param name="imagePath">Path to the image of the recipe</param>
-        public void UpdateRecipe(string recipeName, List<Ingredient> ingredients, List<string> steps, byte dietary, int servingSize, string imagePath, uint setTime)
+        public void UpdateRecipe(string recipeName, List<Ingredient> ingredients, List<MethodStep> steps, byte dietary, int servingSize, string imagePath, uint setTime)
         {
             _recipeName = recipeName;
             _ingredients = ingredients;
@@ -146,6 +146,7 @@ namespace Andrew_2_0_Libraries.Models
                 {
                     str.Append("#");
                 }
+                // add the ingredient
                 str.Append(ing.GetTextOutput());
             }
             return str.ToString();
@@ -171,7 +172,8 @@ namespace Andrew_2_0_Libraries.Models
                     str.Append("#");
                 }
 
-                str.Append(step);
+                // add the method
+                str.Append(step.GetTextOutput());
             }
             return str.ToString();
         }
@@ -183,18 +185,20 @@ namespace Andrew_2_0_Libraries.Models
         public override bool ParseData(string data)
         {
             _ingredients = new List<Ingredient>();
-            _methodSteps = new List<string>();
+            _methodSteps = new List<MethodStep>();
 
             var split = data.Split('@');
 
+            // not enough data
             if (split.Length < 8)
             {
-                // TODO: log error
+                Debug.WriteLine("Invalid data");
                 return false;
             }
 
             try
             {
+                // read data
                 _recipeName = split[0];
                 _recipeId = Guid.Parse(split[1]);
                 _dietary = byte.Parse(split[2]);
@@ -243,12 +247,15 @@ namespace Andrew_2_0_Libraries.Models
         private void ParseMethod_(string methodString)
         {
             var split = methodString.Split(new string[] { "#" }, StringSplitOptions.RemoveEmptyEntries);
-            _methodSteps = new List<string>();
+            _methodSteps = new List<MethodStep>();
 
             // add each element
             foreach (var step in split)
             {
-                _methodSteps.Add(step);
+                var method = new MethodStep();
+                method.ParseData(step);
+
+                _methodSteps.Add(method);
             }
         }
 
@@ -275,6 +282,15 @@ namespace Andrew_2_0_Libraries.Models
         internal byte GetDietaryValue()
         {
             return _dietary;
+        }
+
+        /// <summary>
+        /// Sets the steps to the specified list
+        /// </summary>
+        /// <param name="steps">Steps to sit</param>
+        public void SetSteps(List<MethodStep> steps)
+        {
+            _methodSteps=steps;
         }
     }
 }

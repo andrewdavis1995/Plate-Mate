@@ -1,0 +1,68 @@
+﻿<Window x:Class="Cookalong.Windows.TimeConfiguration"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Cookalong.Controls"
+        mc:Ignorable="d" Background="{StaticResource GradientBackgroundSimple}"
+        Title="TimeConfiguration" Height="450" Width="800" WindowState="Maximized" WindowStyle="None" ResizeMode="NoResize" Loaded="Window_Loaded">
+    <Grid Name="MainGrid" >
+        <local:TimeMarker x:Name="markStart" Grid.ColumnSpan="100" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30"/>
+        <local:TimeMarker x:Name="markQtr" Grid.ColumnSpan="100" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30"/>
+        <local:TimeMarker x:Name="markHalf" Grid.ColumnSpan="100" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30"/>
+        <local:TimeMarker x:Name="mark3Qtr" Grid.ColumnSpan="100" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30"/>
+        <local:TimeMarker x:Name="markEnd" Grid.ColumnSpan="100" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30"/>
+        <Grid Name="grdContent" Margin="20, 30, 20, 20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250" Name="colLHS"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Height="2" Margin="0, 0, 0, 2" Background="White" Grid.Column="100" Grid.Row="0"/>
+
+            <ScrollViewer Background="#12443388" VerticalScrollBarVisibility="Auto" MouseUp="stckData_MouseUp" MouseLeave="ScrollViewer_MouseLeave" Grid.Column="1" Grid.Row="1">
+                <StackPanel Name="stckData" MouseLeftButtonUp="stckData_MouseUp"/>
+            </ScrollViewer>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="1">
+                <StackPanel Name="stckTitles"/>
+            </ScrollViewer>
+            <local:Input_Button x:Name="cmdSave" Grid.Row="100" Margin="0, 10, 5, 0" MouseLeftButtonDown="cmdSave_MouseLeftButtonDown"/>
+            <local:Input_Button x:Name="cmdReset" Grid.Row="100" Margin="0, 10, 0, 0" MouseLeftButtonDown="cmdReset_MouseLeftButtonDown" Width="100" Grid.Column="100" HorizontalAlignment="Right"/>
+
+            <Grid Grid.Column="1" Grid.Row="100" Margin="5, 10, 0, 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <local:Input_Button x:Name="cmdCancel" MouseLeftButtonDown="cmdCancel_MouseLeftButtonDown" Grid.Column="0" Width="150" HorizontalAlignment="Left" Margin="0, 0, 10, 0"/>
+                <Image Source="/Images/help.png" MaxHeight="25" RenderOptions.BitmapScalingMode="HighQuality" Grid.Column="1" HorizontalAlignment="Left" MouseDown="Help_MouseDown"/>
+
+                <Border Background="{StaticResource ButtonColour}" Grid.Column="2" Width="40" CornerRadius="12, 0, 0, 12" Margin="10, 5, 2, 5" MouseLeftButtonDown="Zoom_Out">
+                    <Label Content="-" FontSize="18" FontWeight="Bold" Foreground="White" Margin="0" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+                <Border Background="{StaticResource ButtonColour}" Grid.Column="3" Width="40" CornerRadius="0, 12, 12, 0" Margin="2, 5, 0, 5" MouseLeftButtonDown="Zoom_In">
+                    <Label Content="+" FontSize="18" FontWeight="Bold" Foreground="White" Margin="0" Padding="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+
+            </Grid>
+            
+            <Grid Name="timePopup" Background="{StaticResource SelectedColour}" Opacity="0.8" Height="30" Width="100" Visibility="Collapsed" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Name="lblTimeLabel" Foreground="White" Content="Duration" Grid.Row="0" Margin="0" Padding="0" FontSize="10" HorizontalAlignment="Center" />
+                <Label Name="lblTime" Foreground="White" Content="00:00" Grid.Row="1" Margin="0" Padding="0" HorizontalAlignment="Center"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

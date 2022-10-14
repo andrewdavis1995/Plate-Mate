@@ -21,7 +21,7 @@
             </Border>
             
             <Border BorderThickness="3" CornerRadius="20" BorderBrush="{StaticResource SearchColour}" Background="{StaticResource SearchFill}" Margin="10, 10, 10, 0" HorizontalAlignment="Stretch" Grid.Row="1">
-                <TextBox Name="txtMethodContent" MaxLength="300" VerticalContentAlignment="Top" FontSize="14" CaretBrush="White" BorderThickness="0" Background="{x:Null}" Foreground="White" Margin="10,2,10,2" PreviewKeyDown="txtMethodContent_PreviewKeyDown" PreviewTextInput="txtMethodContent_PreviewTextInput" TextChanged="txtMethodContent_TextChanged" KeyboardNavigation.TabNavigation="None" TextWrapping="Wrap"/>
+                <TextBox Name="txtMethodContent" MaxLength="300" VerticalContentAlignment="Top" FontSize="14" CaretBrush="White" BorderThickness="0" Background="{x:Null}" Foreground="White" Margin="10,2,10,2" PreviewKeyDown="TxtMethodContent_PreviewKeyDown" PreviewTextInput="TxtMethodContent_PreviewTextInput" TextChanged="TxtMethodContent_TextChanged" KeyboardNavigation.TabNavigation="None" TextWrapping="Wrap"/>
             </Border>
 
             <Label Name="lblRemainingChars" Grid.Row="2" Content="Remaining Characters: 300" Foreground="{StaticResource GradientBackground}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10, 0"/>
@@ -31,8 +31,8 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <local:Input_Button x:Name="cmdCancel" Grid.Column="0" HorizontalAlignment="Stretch" MouseDown="cmdCancel_MouseDown" Margin="5"/>
-                <local:Input_Button x:Name="cmdConfirm" HorizontalAlignment="Stretch" Grid.Column="1" MouseDown="cmdConfirm_MouseDown" Margin="5"/>
+                <local:Input_Button x:Name="cmdCancel" Grid.Column="0" HorizontalAlignment="Stretch" MouseDown="CmdCancel_MouseDown" Margin="5"/>
+                <local:Input_Button x:Name="cmdConfirm" HorizontalAlignment="Stretch" Grid.Column="1" MouseDown="CmdConfirm_MouseDown" Margin="5"/>
             </Grid>
         </Grid>
     </Border>

@@ -37,7 +37,7 @@ namespace Andrew_2_0_Libraries.Controllers
         /// <param name="vegetarian">Whether the recipe is vegetarian</param>
         /// <param name="servingSize">Number of portions</param>
         /// <param name="imagePath">Path to the image of the recipe</param>
-        public Recipe AddRecipe(string recipeName, List<Ingredient> ingredients, List<string> steps, byte dietary, int servingSize, string imagePath, uint setTime)
+        public Recipe AddRecipe(string recipeName, List<Ingredient> ingredients, List<MethodStep> steps, byte dietary, int servingSize, string imagePath, uint setTime)
         {
             var recipe = new Recipe(recipeName, ingredients, steps, dietary, servingSize, imagePath, setTime);
             _recipes.Add(recipe);
@@ -55,7 +55,7 @@ namespace Andrew_2_0_Libraries.Controllers
         /// <param name="vegetarian">Whether the recipe is vegetarian</param>
         /// <param name="servingSize">Number of portions</param>
         /// <param name="imagePath">Path to the image of the recipe</param>
-        public Recipe UpdateRecipe(Guid recipeId, string recipeName, List<Ingredient> ingredients, List<string> steps, byte dietary, int servingSize, string imagePath, uint setTime)
+        public Recipe UpdateRecipe(Guid recipeId, string recipeName, List<Ingredient> ingredients, List<MethodStep> steps, byte dietary, int servingSize, string imagePath, uint setTime)
         {
             // find recipe with correct ID
             var matching = _recipes.FirstOrDefault(r => r.GetRecipeId() == recipeId);
@@ -153,6 +153,19 @@ namespace Andrew_2_0_Libraries.Controllers
             var recipe = _recipes.FirstOrDefault(r => r.GetRecipeId() == recipeId);
             if (recipe != null)
                 recipe.RemoveComment(commentId);
+            Save_();
+        }
+
+        /// <summary>
+        /// Removes the specified comment from the specified recipe
+        /// </summary>
+        /// <param name="recipeId">The ID of the recipe to remove from</param>
+        /// <param name="steps">The steps to set</param>
+        public void UpdateSteps(Guid recipeId, List<MethodStep> steps)
+        {
+            var recipe = _recipes.FirstOrDefault(r => r.GetRecipeId() == recipeId);
+            if (recipe != null)
+                recipe.SetSteps(steps);
             Save_();
         }
 

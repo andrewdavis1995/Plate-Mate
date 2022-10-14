@@ -9,8 +9,8 @@
              d:DesignHeight="50" d:DesignWidth="200">
     <Border Name="bigBorder" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" BorderThickness="0" CornerRadius="8" BorderBrush="{x:Null}" Background="{StaticResource ButtonColour}">
         <Grid>
-            <Label Name="lblMessage" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="12" Content="Message"/>
             <Border Name="Highlight" Background="{StaticResource ButtonHighlight}" Visibility="Collapsed" CornerRadius="8" />
+            <Label Name="lblMessage" Foreground="White" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="12" Content="Message"/>
         </Grid>
     </Border>
 </UserControl>

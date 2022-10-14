@@ -61,7 +61,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    
+
                     <local:CustomIcon x:Name="iconServings" Grid.Column="0" Grid.Row="0" Margin="2"/>
                     <local:CustomIcon x:Name="iconTiming" Grid.Column="0" Grid.Row="1" Margin="2"/>
                     <local:CustomIcon x:Name="iconCalories" Grid.Column="0" Grid.Row="2" Margin="2"/>
@@ -80,26 +80,72 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Border Name="imgVegetarian" Grid.Column="1" Width="20" Background="{StaticResource SearchColour}" CornerRadius="200" Margin="5">
+                    <Border Name="imgVegetarian" Grid.Column="1" Width="25" Background="{x:Null}" CornerRadius="200" Margin="5">
                         <Image Source="/Images/Vegetarian.png" RenderOptions.BitmapScalingMode="HighQuality" />
                     </Border>
-                    <Border Name="imgVegan" Width="20" Background="{StaticResource SearchColour}" CornerRadius="200" Margin="5" Grid.Column="2">
+                    <Border Name="imgVegan" Width="25" Background="{x:Null}" CornerRadius="200" Margin="5" Grid.Column="2">
                         <Image Source="/Images/Vegan.png" RenderOptions.BitmapScalingMode="HighQuality" />
                     </Border>
-                    <Border Name="imgGluten" Width="20" Background="{StaticResource SearchColour}" CornerRadius="200" Margin="5" Grid.Column="3">
+                    <Border Name="imgGluten" Width="25" Background="{x:Null}" CornerRadius="200" Margin="5" Grid.Column="3">
                         <Image Source="/Images/Gluten.png" RenderOptions.BitmapScalingMode="HighQuality" />
                     </Border>
-                    <Border Name="imgDairy" Width="20" Background="{StaticResource SearchColour}" CornerRadius="200" Margin="5" Grid.Column="4">
+                    <Border Name="imgDairy" Width="25" Background="{x:Null}" CornerRadius="200" Margin="5" Grid.Column="4">
                         <Image Source="/Images/Dairy.png" RenderOptions.BitmapScalingMode="HighQuality" />
                     </Border>
                 </Grid>
-                <local:Input_Button x:Name="cmdEdit" Height="40" MouseLeftButtonDown="cmdEdit_MouseLeftButtonDown" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10, 10, 10, 5"/>
-                <local:Input_Button x:Name="cmdWalkthrough" Height="40" MouseLeftButtonDown="cmdWalkthrough_MouseLeftButtonDown" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10, 5, 10, 10"/>
+                <local:Input_Button x:Name="cmdEdit" Height="40" MouseLeftButtonDown="cmdEdit_MouseLeftButtonDown" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10, 10, 10, 2"/>
+                <local:Input_Button x:Name="cmdConfigureTime" Height="40" MouseLeftButtonDown="cmdConfigureTime_MouseLeftButtonDown" Margin="10, 2" Grid.Column="1"/>
+                <Grid Name="grdConfigured" Width="90" Height="24" Background="{StaticResource SelectedColour}" HorizontalAlignment="Right" Margin="10, 2, 10, 2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="20"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Source="/Images/Timing.png" RenderOptions.BitmapScalingMode="HighQuality" />
+                    <TextBlock Text="Configured" Grid.Column="1" Foreground="White" VerticalAlignment="Center" Margin="5" FontSize="12"/>
+                </Grid>
+                <local:Input_Button x:Name="cmdWalkthrough" Height="40" MouseLeftButtonDown="cmdWalkthrough_MouseLeftButtonDown" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10, 2, 10, 2"/>
             </StackPanel>
-
-
             <local:Input_Button x:Name="cmdClose" Height="40" MouseLeftButtonDown="cmdClose_MouseLeftButtonDown" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10" Grid.Row="1"/>
+        </Grid>
 
+        <Grid Name="grdMode" Visibility="Collapsed" Grid.RowSpan="100" Grid.ColumnSpan="100" Background="{StaticResource PopupOverlay}">
+            <Border MaxWidth="500" MaxHeight="250" Background="{StaticResource WindowBackground}" CornerRadius="8">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Border Name="cmdClick" MouseEnter="cmdClick_MouseEnter" MouseLeave="cmdClick_MouseLeave" CornerRadius="8" Background="{StaticResource ButtonColour}" Margin="5" MouseLeftButtonDown="cmdClick_MouseLeftButtonDown">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="60"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border x:Name="clickHighlight" Visibility="Collapsed" Background="{StaticResource SelectedColour}" Grid.RowSpan="100" CornerRadius="8"/>
+                            <TextBlock FontSize="24" Text="Click Through" FontFamily="{StaticResource Roboto}" Margin="5, 10" Foreground="White" HorizontalAlignment="Center"/>
+                            <TextBlock FontSize="12" Grid.Row="1" Text="You control the speed of the walk-though. Click to move onto the next step" FontFamily="{StaticResource Roboto Thin}" TextWrapping="Wrap" TextAlignment="Center" Margin="5, 15, 5, 20" Foreground="White" HorizontalAlignment="Center"/>
+                            <Image Source="/Images/cursor.png" Grid.Row="2" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Grid>
+                    </Border>
+
+                    <Border Name="cmdTime" MouseEnter="cmdTime_MouseEnter" MouseLeave="cmdTime_MouseLeave" Grid.Column="1" CornerRadius="8" Background="{StaticResource ButtonColour}" Margin="5" MouseLeftButtonDown="cmdTime_MouseLeftButtonDown">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="60"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Border x:Name="timeHighlight" Visibility="Collapsed" Background="{StaticResource SelectedColour}" Grid.RowSpan="100" CornerRadius="8"/>
+                            <TextBlock FontSize="24" Text="Time-based" FontFamily="{StaticResource Roboto}" Margin="5, 10" Foreground="White" HorizontalAlignment="Center"/>
+                            <TextBlock FontSize="12" Grid.Row="1" Text="Uses the configured times to display the steps" FontFamily="{StaticResource Roboto Thin}" TextWrapping="Wrap" TextAlignment="Center" Margin="5, 15, 5, 20" Foreground="White" HorizontalAlignment="Center"/>
+                            <Image Source="/Images/Timing.png" Grid.Row="2" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
         </Grid>
 
     </Grid>

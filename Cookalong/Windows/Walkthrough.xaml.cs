@@ -2,17 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using System.Timers;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using Cookalong.Structures;
+using Andrew_2_0_Libraries.Models;
+using Cookalong.Helpers;
 
 namespace Cookalong.Controls
 {
-    public enum PlaybackMode { ClickThrough, Timing }
-
     /// <summary>
     /// Interaction logic for Walkthrough.xaml
     /// </summary>
@@ -23,7 +19,6 @@ namespace Cookalong.Controls
         int _instructionIndex = 0;
         bool _moving = false;
         string _pendingMessage = "";
-        PlaybackMode _mode = PlaybackMode.ClickThrough;
 
         List<MethodStep> _instructions = new();
 
@@ -33,36 +28,34 @@ namespace Cookalong.Controls
         readonly Timer _tmrPreviousInstructions = new();   // controls position of the previous instructions (slide items down)
 
         // const values
-        const int WARNING_GAP = 60;
         const float MOVE_SPEED = 7.75f;
         const float GROW_SPEED = 0.01f;
         const float OPACITY_SPEED = 0.02f;
         const int RHS_HEIGHT = 65;
+        const int STEP_MARGIN = -200;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="recipeName">The name of the recipe</param>
         /// <param name="instructions">List of instructions to display</param>
-        /// <param name="mode">The mode to use</param>
-        public Walkthrough(string recipeName, List<MethodStep> instructions, PlaybackMode mode)
+        public Walkthrough(string recipeName, List<MethodStep> instructions)
         {
             InitializeComponent();
-            SetData(instructions, mode);
+            SetData(instructions);
             txtTitle.Text = recipeName;
 
-            ConfigureTimer_(ref _tmrTime, Timer_Elapsed, 1000);
+            // configure timers
+            ConfigureTimer_(ref _tmrTime, Timer_Elapsed, 1000, true);
             ConfigureTimer_(ref _tmrMsgAppear, MsgAppear_Elapsed, 1);
             ConfigureTimer_(ref _tmrMsgRemove, MsgRemove_Elapsed, 1);
             ConfigureTimer_(ref _tmrPreviousInstructions, TmrRHS_Elapsed, 1, true);
 
+            // set margin
             stckPrevious.Margin = new Thickness(0, RHS_HEIGHT, 0, 0);
 
-            // start timer if necessary
-            if (_mode == PlaybackMode.Timing)
-                _tmrTime.Start();
-            else
-                NextStep_();
+            // show the first step
+            NextStep_();
         }
 
         /// <summary>
@@ -154,7 +147,7 @@ namespace Cookalong.Controls
                 if (grdMessage.Margin.Left >= (ActualWidth / 2) - ((grdMessage.ActualWidth * newInstructionScale.ScaleX) / 2))
                 {
                     // show instructions
-                    grdInstructions.Visibility = _mode == PlaybackMode.ClickThrough ? Visibility.Visible : Visibility.Collapsed;
+                    grdInstructions.Visibility = Visibility.Visible;
 
                     // stop movement
                     grdMessage.Margin = new Thickness((ActualWidth / 2) - ((grdMessage.ActualWidth * newInstructionScale.ScaleX) / 2), (ActualHeight / 2) - (grdMessage.ActualHeight / 2) * newInstructionScale.ScaleY, 0, 0);
@@ -187,30 +180,7 @@ namespace Cookalong.Controls
             Dispatcher.Invoke(() =>
             {
                 // display total time
-                // TODO: format as proper time
-                lblTime.Content = _time.ToString();
-
-                // loop through instructions
-                foreach (var i in _instructions)
-                {
-                    // if the time is the start time of the structions, display
-                    if (_time == i.Start)
-                    {
-                        // TODO
-                        ShowStep_(i.Message);
-                    }
-                    // if the time is the end time of the structions, display
-                    else if (_time == i.Start + i.Duration)
-                    {
-                        // TODO
-                    }
-                    // if the time is the warning time of the structions, display
-                    else if (_time == i.Start - WARNING_GAP)
-                    {
-                        // TODO
-                        CheckItemsRequired_(i);
-                    }
-                }
+                lblTime.Content = StringHelper.TimeConfigOutput(_time, true);
             });
         }
 
@@ -224,7 +194,7 @@ namespace Cookalong.Controls
             lblMsg.Text = theMessage;
 
             // set to correct size and position
-            grdMessage.Margin = new Thickness(-200, 0, 0, 0);
+            grdMessage.Margin = new Thickness(STEP_MARGIN, 0, 0, 0);
             newInstructionScale.ScaleX = 1;
             newInstructionScale.ScaleY = 1;
 
@@ -240,47 +210,20 @@ namespace Cookalong.Controls
         }
 
         /// <summary>
-        /// Checks which utensils/items are required for this step
-        /// </summary>
-        /// <param name="ins">The instruction to check</param>
-        static void CheckItemsRequired_(MethodStep ins)
-        {
-            // lists - must match up
-            var searchStrings = new string[] { "Teaspoon", "Oven", "Tablespoon", "Grate" };
-            var objectsReqd = new string[] { "a teaspoon", "an oven", "a tablespoon", "a grater" };
-            Debug.Assert(searchStrings.Length == objectsReqd.Length, "Item check arrays are of different lengths");
-
-            // loop through each item, checking for it in the instruction string
-            for (var i = 0; i < searchStrings.Length && i < objectsReqd.Length; i++)
-            {
-                // if it is there, add a display
-                if (ins.Message.ToLower().Contains(searchStrings[i].ToLower()))
-                {
-                    // TODO: add control with image
-                }
-            }
-
-            // TODO: display icon for linked ingredients
-
-            // TODO: check measurement of linked ingredient
-        }
-
-        /// <summary>
         /// Sets the ordered list of instructions, and the mode to use
         /// </summary>
         /// <param name="instructions">List of instructions to display</param>
         /// <param name="mode">The mode to use for dislaying instructions</param>
-        public void SetData(List<MethodStep> instructions, PlaybackMode mode)
+        public void SetData(List<MethodStep> instructions)
         {
-            _instructions = instructions.OrderBy(e => e.Start).ToList();
+            _instructions = instructions.OrderBy(e => e.GetStart()).ToList();
 
             // opening message
             _instructions.Insert(0, new MethodStep("Let's begin!", -1, 1));
 
             // final message
             if (_instructions.Count > 0)
-                _instructions.Add(new MethodStep("Enjoy!", _instructions.Last().Start + _instructions.Last().Duration, 1));
-            _mode = mode;
+                _instructions.Add(new MethodStep("Enjoy!", _instructions.Last().GetStart() + _instructions.Last().GetDuration(), 1));
         }
 
         /// <summary>
@@ -291,17 +234,11 @@ namespace Cookalong.Controls
             // Space - next step
             if (e.Key == System.Windows.Input.Key.Space)
             {
-                // only do this if we are doing a click through
-                if (_mode != PlaybackMode.ClickThrough) return;
-
                 NextStep_();
             }
             // Backspace - previous step
             else if (e.Key == System.Windows.Input.Key.Back)
             {
-                // only do this if we are doing a click through
-                if (_mode != PlaybackMode.ClickThrough) return;
-
                 PreviousStep_();
             }
             // Escape - quit
@@ -347,7 +284,7 @@ namespace Cookalong.Controls
             if (_instructionIndex < _instructions.Count)
             {
                 // display next step (after removing if necessary)
-                _pendingMessage = _instructions[_instructionIndex].Message;
+                _pendingMessage = _instructions[_instructionIndex].GetMethod();
 
                 if (_instructionIndex == 0)
                     ShowStep_(_pendingMessage);
@@ -359,7 +296,6 @@ namespace Cookalong.Controls
             }
             else
             {
-                // TODO: remove this control from the parent
                 Close();
             }
         }
