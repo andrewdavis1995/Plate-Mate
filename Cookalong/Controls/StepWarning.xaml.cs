@@ -1,4 +1,7 @@
-﻿using System.Timers;
+﻿using Andrew_2_0_Libraries.Models;
+using System;
+using System.Collections.Generic;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -16,6 +19,9 @@ namespace Cookalong.Controls
         Thickness _margin = new(0, 0, 0, 0);
 
         const int MOVE_SPEED = 10;
+
+        List<MethodStep> _methods = new();
+        Action<MethodStep> _addThirtyCallback;
 
         /// <summary>
         /// Contructor
@@ -87,10 +93,13 @@ namespace Cookalong.Controls
         /// <summary>
         /// Starts the countdown from the specified time
         /// </summary>
-        /// <param name="time">Time to start coutdown from</param>
-        public void StartCountdown(int time)
+        /// <param name="time">Time to start countdown from</param>
+        /// <param name="addThirtyCallback">Callback when the +30 button is pressed</param>
+        public void StartCountdown(int time, Action<MethodStep> addThirtyCallback)
         {
             _time = time;
+            _addThirtyCallback = addThirtyCallback;
+
             txtMessage.Text = $"Next step coming in... {_time} seconds";
 
             // update margin
@@ -120,10 +129,37 @@ namespace Cookalong.Controls
 
                 if (_time <= 0)
                 {
+                    _methods.Clear();
                     _tmrCountdown.Stop();
                     _tmrRemove.Start();
                 }
             });
+        }
+
+        /// <summary>
+        /// Links a method to this step
+        /// </summary>
+        /// <param name="step">The step to add</param>
+        public void AddMethod(MethodStep step)
+        {
+            _methods.Add(step);
+        }
+
+        /// <summary>
+        /// Event handler for the +30 button
+        /// </summary>
+        private void CmdThirty_Click(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            // perform the callback for each method
+            foreach (var method in _methods)
+                _addThirtyCallback(method);
+
+            // move off screen
+            _tmrCountdown.Stop();
+            _tmrRemove.Start();
+
+            // no more methods associated with this control
+            _methods.Clear();
         }
     }
 }

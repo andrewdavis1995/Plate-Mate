@@ -174,28 +174,36 @@ namespace Cookalong.Windows
                 }
 
                 int index = 0;
-
                 // loop through MethodSteps
-                foreach (var i in _methodSteps)
+                foreach (var step in _methodSteps)
                 {
                     // if the time is the start time of the MethodSteps, display
-                    if (_time == i.GetStart())
+                    if (_time == step.GetStart())
                     {
-                        AddStep_(i, index);
+                        AddStep_(step, index);
                     }
                     // if the time is the end time of the MethodSteps, display
-                    else if (_time == i.GetStart() + i.GetDuration())
+                    else if (_time == step.GetStart() + step.GetDuration())
                     {
                         // end step
-                        EndStep_(i);
+                        EndStep_(step);
                     }
                     // if the time is the warning time of the MethodSteps, display
-                    else if (_time == i.GetStart() - WARNING_GAP)
+                    else if (_time == step.GetStart() - WARNING_GAP)
                     {
                         // TODO: use required items
                         _warningSound.Play();
-                        CheckItemsRequired_(i);
-                        WarningMessage.StartCountdown(WARNING_GAP);
+                        CheckItemsRequired_(step);
+                        WarningMessage.AddMethod(step);
+                        WarningMessage.StartCountdown(WARNING_GAP, m =>
+                        {
+                            // add 30 seconds to all steps that come after this
+                            foreach (var j in _methodSteps)
+                                if (j.GetStart() > _time)
+                                    j.AddToStart(30);
+
+                            ShowDots_();
+                        });
                     }
 
                     ++index;
@@ -222,7 +230,7 @@ namespace Cookalong.Windows
 
                     // start timer to shrink said column
                     Timer tmr = new();
-                    tmr.Elapsed += (obj, e) => ShrinkLane_(cd, tmr);
+                    tmr.Elapsed += (obj, e) => ShrinkLane_(cd, tmr, lbl);
                     tmr.Interval = 1;
                     tmr.Start();
                 }
@@ -234,7 +242,8 @@ namespace Cookalong.Windows
         /// </summary>
         /// <param name="cd">The column to shrink</param>
         /// <param name="tmr">The timer that is controlling this (so it can be stopped once done)</param>
-        private void ShrinkLane_(ColumnDefinition cd, Timer tmr)
+        /// <param name="lbl">The control to remove at the end</param>
+        private void ShrinkLane_(ColumnDefinition cd, Timer tmr, SlidingTimeControl lbl)
         {
             Dispatcher.Invoke(() =>
             {
@@ -246,6 +255,7 @@ namespace Cookalong.Windows
                     // when done, set to exactly 0 and stop the timer
                     cd.Width = new GridLength(0, GridUnitType.Star);
                     tmr.Stop();
+                    lbl.Visibility = Visibility.Collapsed;
 
                     // check if all steps are finished
                     CheckFinished_();

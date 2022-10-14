@@ -114,5 +114,14 @@ namespace Andrew_2_0_Libraries.Models
         {
             _duration += v;
         }
+
+        /// <summary>
+        /// Adds the specified time to the start time
+        /// </summary>
+        /// <param name="v">The number of seconds to add</param>
+        public void AddToStart(int v)
+        {
+            _startTime += v;
+        }
     }
 }

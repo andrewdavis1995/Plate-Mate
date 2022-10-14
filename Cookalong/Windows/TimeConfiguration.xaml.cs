@@ -4,6 +4,7 @@ using Cookalong.Controls.PopupWindows;
 using Cookalong.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Timers;
 using System.Windows;
 using System.Windows.Input;
@@ -266,6 +267,13 @@ namespace Cookalong.Windows
         /// </summary>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            if (_steps.Any(s => s.GetDuration() > 0))
+            {
+                var max = _steps.Max(s => s.GetStart() + s.GetDuration()) / 60;
+                MAX_MINS =(int)(30 * (max / 30));
+                MAX_MINS += 30;
+            }
+
             SetStepSize_();
             foreach (var item in _steps)
             {

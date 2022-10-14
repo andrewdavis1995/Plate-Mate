@@ -11,9 +11,9 @@ namespace Cookalong.Controls.PopupWindows
     /// </summary>
     public partial class Popup_Method : UserControl
     {
-        Action? _cancelCallback;
-        Action<MethodStep?> _confirmCallback;
-        Action<string>? _errorCallback;
+        readonly Action? _cancelCallback;
+        readonly Action<MethodStep?> _confirmCallback;
+        readonly Action<string>? _errorCallback;
         MethodStep ?_existing;
 
         const int MIN_LENGTH = 5;
@@ -52,7 +52,7 @@ namespace Cookalong.Controls.PopupWindows
         /// <summary>
         /// Event handler for cancel button
         /// </summary>
-        private void cmdCancel_MouseDown(object sender, MouseButtonEventArgs e)
+        private void CmdCancel_MouseDown(object sender, MouseButtonEventArgs e)
         {
             _cancelCallback?.Invoke();
         }
@@ -60,7 +60,7 @@ namespace Cookalong.Controls.PopupWindows
         /// <summary>
         /// Event handler for confirm button
         /// </summary>
-        private void cmdConfirm_MouseDown(object sender, MouseButtonEventArgs e)
+        private void CmdConfirm_MouseDown(object sender, MouseButtonEventArgs e)
         {
             // check length
             if (txtMethodContent.Text.Length < MIN_LENGTH)
@@ -70,6 +70,7 @@ namespace Cookalong.Controls.PopupWindows
             else
             {
                 _existing?.UpdateText(txtMethodContent.Text);
+                _existing = new MethodStep(txtMethodContent.Text, 0, 0);
                 _confirmCallback?.Invoke(_existing);
             }
         }
@@ -77,7 +78,7 @@ namespace Cookalong.Controls.PopupWindows
         /// <summary>
         /// Event handler for when the text changes
         /// </summary>
-        private void txtMethodContent_TextChanged(object sender, TextChangedEventArgs e)
+        private void TxtMethodContent_TextChanged(object sender, TextChangedEventArgs e)
         {
             // update remaining characters
             var length = txtMethodContent.Text.Trim().Length;
@@ -88,7 +89,7 @@ namespace Cookalong.Controls.PopupWindows
         /// <summary>
         /// Event handler for when text is about to change
         /// </summary>
-        private void txtMethodContent_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void TxtMethodContent_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             // don't allow forbidden characters
             e.Handled = StringHelper.ForbiddenCharacter(e.Text);
@@ -97,7 +98,7 @@ namespace Cookalong.Controls.PopupWindows
         /// <summary>
         /// Event handler for when text is about to change
         /// </summary>
-        private void txtMethodContent_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void TxtMethodContent_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Space)
             {
