@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -23,8 +24,8 @@ namespace Cookalong.Controls.PopupWindows
         readonly Grid? _parent;
         readonly Guid? _saved;
         readonly Action<Recipe?> _displayRecipeCallback;
-        readonly Action<string> ? _errorCallback;
-        readonly RecipeController ? _controller;
+        readonly Action<string>? _errorCallback;
+        readonly RecipeController? _controller;
 
         Popup_Confirmation? _confirmationPopup;
         Popup_Method? _methodPopup;
@@ -46,7 +47,7 @@ namespace Cookalong.Controls.PopupWindows
         /// <param name="recipe">The recipe to edit (can be null)</param>
         /// <param name="controller">The recipe controller</param>
         /// <param name="displayRecipeCallback">Callback to call to display all recipes</param>
-        public Popup_NewRecipe(Grid ? parent, Recipe? recipe, RecipeController ? controller, Action<Recipe?> displayRecipeCallback, Action<string> ? errorCallback)
+        public Popup_NewRecipe(Grid? parent, Recipe? recipe, RecipeController? controller, Action<Recipe?> displayRecipeCallback, Action<string>? errorCallback)
         {
             InitializeComponent();
 
@@ -59,7 +60,7 @@ namespace Cookalong.Controls.PopupWindows
             _displayRecipeCallback = displayRecipeCallback;
             _controller = controller;
             _errorCallback = errorCallback;
-            
+
             // initialise input for serving size
             inputServingSize.Initialise(false, 20, 2);
 
@@ -111,7 +112,7 @@ namespace Cookalong.Controls.PopupWindows
 
             // serving size
             inputServingSize.SetInputValue(recipe.GetServingSize());
-            
+
             // image
             _imagePath = recipe.GetImagePath();
             SetPreviewImage_();
@@ -277,7 +278,14 @@ namespace Cookalong.Controls.PopupWindows
                 // ignore blocker (used in dragging)
                 if (item.Visibility == Visibility.Visible)
                 {
-                    list.Add(new MethodStep(item.txtData.Text, 0, 0));
+                    int start = 0, duration = 0;
+                    if(item.MethodStep() != null)
+                    { 
+                        start = item.MethodStep().GetStart();
+                        duration = item.MethodStep().GetDuration();
+                    }
+
+                    list.Add(new MethodStep(item.txtData.Text, start, duration));
                 }
             }
             return list;
@@ -351,7 +359,7 @@ namespace Cookalong.Controls.PopupWindows
         /// When a step is clicked, and needs to be edited
         /// </summary>
         /// <param name="draggableObject">The object that was clicked</param>
-        internal void EditStep(DraggableObject ? draggableObject)
+        internal void EditStep(DraggableObject? draggableObject)
         {
             var existing = draggableObject?.MethodStep();
 
@@ -366,7 +374,7 @@ namespace Cookalong.Controls.PopupWindows
                 // update existing, where possible
                 if (draggableObject != null)
                     draggableObject.txtData.Text = step?.GetMethod();
-                else if(step != null)
+                else if (step != null)
                     methodList.AddItem(step, grdOverall);
 
                 _parent?.Children.Remove(_methodPopup);

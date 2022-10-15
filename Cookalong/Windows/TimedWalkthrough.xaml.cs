@@ -197,18 +197,28 @@ namespace Cookalong.Windows
                         WarningMessage.AddMethod(step);
                         WarningMessage.StartCountdown(WARNING_GAP, m =>
                         {
-                            // add 30 seconds to all steps that come after this
-                            foreach (var j in _methodSteps)
-                                if (j.GetStart() > _time)
-                                    j.AddToStart(30);
-
-                            ShowDots_();
+                            // add thirty seconds to all future events
+                            DelayFutureEvents_();
                         });
                     }
 
                     ++index;
                 }
             });
+        }
+
+        /// <summary>
+        /// Adds thirty seconds to all events that are yet to start
+        /// </summary>
+        private void DelayFutureEvents_()
+        {
+            // add 30 seconds to all steps that come after this
+            foreach (var j in _methodSteps)
+                if (j.GetStart() > _time)
+                    j.AddToStart(30);
+
+            // update the dots
+            ShowDots_();
         }
 
         /// <summary>
@@ -299,8 +309,9 @@ namespace Cookalong.Windows
 
             _overallTime = _methodSteps.Max(m => m.GetStart() + m.GetDuration());
             lblTimeTotal.Content = StringHelper.TimeConfigOutput(_overallTime, true);
-
-            ShowDots_();
+ 
+            // delay all upcoming steps
+            DelayFutureEvents_();
         }
 
         /// <summary>
