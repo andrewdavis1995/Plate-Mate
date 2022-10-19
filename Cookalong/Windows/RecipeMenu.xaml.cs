@@ -48,7 +48,7 @@ namespace Cookalong
             SetupFilterCheckbox_(chkDairy, "Dairy-Free Only");
 
             // configure buttons
-            cmdNewRecipe.Configure("New Recipe", false);
+            cmdNewRecipe.Configure("New Recipe");
 
             // LHS buttons
             lhsRecipes.Configure("My Recipes", "RecipeList");

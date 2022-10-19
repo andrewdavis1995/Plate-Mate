@@ -93,8 +93,8 @@
                         <Image Source="/Images/Dairy.png" RenderOptions.BitmapScalingMode="HighQuality" />
                     </Border>
                 </Grid>
-                <local:Input_Button x:Name="cmdEdit" Height="40" MouseLeftButtonDown="cmdEdit_MouseLeftButtonDown" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10, 10, 10, 2"/>
-                <local:Input_Button x:Name="cmdConfigureTime" Height="40" MouseLeftButtonDown="cmdConfigureTime_MouseLeftButtonDown" Margin="10, 2" Grid.Column="1"/>
+                <local:Input_Button x:Name="cmdEdit" Height="40" MouseLeftButtonDown="CmdEdit_MouseLeftButtonDown" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10, 10, 10, 2"/>
+                <local:Input_Button x:Name="cmdConfigureTime" Height="40" MouseLeftButtonDown="CmdConfigureTime_MouseLeftButtonDown" Margin="10, 2" Grid.Column="1"/>
                 <Grid Name="grdConfigured" Width="90" Height="24" Background="{StaticResource SelectedColour}" HorizontalAlignment="Right" Margin="10, 2, 10, 2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="20"/>
@@ -103,9 +103,9 @@
                     <Image Source="/Images/Timing.png" RenderOptions.BitmapScalingMode="HighQuality" />
                     <TextBlock Text="Configured" Grid.Column="1" Foreground="White" VerticalAlignment="Center" Margin="5" FontSize="12"/>
                 </Grid>
-                <local:Input_Button x:Name="cmdWalkthrough" Height="40" MouseLeftButtonDown="cmdWalkthrough_MouseLeftButtonDown" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10, 2, 10, 2"/>
+                <local:Input_Button x:Name="cmdWalkthrough" Height="40" MouseLeftButtonDown="CmdWalkthrough_MouseLeftButtonDown" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="10, 2, 10, 2"/>
             </StackPanel>
-            <local:Input_Button x:Name="cmdClose" Height="40" MouseLeftButtonDown="cmdClose_MouseLeftButtonDown" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10" Grid.Row="1"/>
+            <local:Input_Button x:Name="cmdClose" Height="40" MouseLeftButtonDown="CmdClose_MouseLeftButtonDown" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="10" Grid.Row="1"/>
         </Grid>
 
         <Grid Name="grdMode" Visibility="Collapsed" Grid.RowSpan="100" Grid.ColumnSpan="100" Background="{StaticResource PopupOverlay}">
@@ -115,7 +115,7 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Border Name="cmdClick" MouseEnter="cmdClick_MouseEnter" MouseLeave="cmdClick_MouseLeave" CornerRadius="8" Background="{StaticResource ButtonColour}" Margin="5" MouseLeftButtonDown="cmdClick_MouseLeftButtonDown">
+                    <Border Name="cmdClick" MouseEnter="CmdClick_MouseEnter" MouseLeave="CmdClick_MouseLeave" CornerRadius="8" Background="{StaticResource ButtonColour}" Margin="5" MouseLeftButtonDown="CmdClick_MouseLeftButtonDown">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -130,7 +130,7 @@
                         </Grid>
                     </Border>
 
-                    <Border Name="cmdTime" MouseEnter="cmdTime_MouseEnter" MouseLeave="cmdTime_MouseLeave" Grid.Column="1" CornerRadius="8" Background="{StaticResource ButtonColour}" Margin="5" MouseLeftButtonDown="cmdTime_MouseLeftButtonDown">
+                    <Border Name="cmdTime" MouseEnter="CmdTime_MouseEnter" MouseLeave="CmdTime_MouseLeave" Grid.Column="1" CornerRadius="8" Background="{StaticResource ButtonColour}" Margin="5" MouseLeftButtonDown="CmdTime_MouseLeftButtonDown">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>

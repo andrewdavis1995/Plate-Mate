@@ -18,9 +18,9 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
-            <Border CornerRadius="8, 8, 0, 0" x:Name="imgRecipePic">
+            <Border CornerRadius="8, 8, 0, 0" x:Name="imgRecipePic" RenderOptions.BitmapScalingMode="HighQuality">
                 <Border.Background>
-                    <ImageBrush ImageSource="/Images/recipeImage.png" Stretch="UniformToFill"/>
+                    <ImageBrush ImageSource="/Images/recipeImage.png" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality"/>
                 </Border.Background>
             </Border>
 

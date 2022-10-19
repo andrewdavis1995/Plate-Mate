@@ -12,4 +12,8 @@
     <OutputPath>..\SDK\</OutputPath>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="6.0.0" />
+  </ItemGroup>
+
 </Project>

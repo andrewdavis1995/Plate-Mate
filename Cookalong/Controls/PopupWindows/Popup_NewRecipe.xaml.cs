@@ -65,9 +65,9 @@ namespace Cookalong.Controls.PopupWindows
             inputServingSize.Initialise(false, 20, 2);
 
             // configure buttons
-            cmdConfirm.Configure("Confirm", false);
-            cmdDelete.Configure("Delete", true, "Cancel");
-            cmdClose.Configure("Cancel", true, "Cancel");
+            cmdConfirm.Configure("Confirm");
+            cmdDelete.Configure("Delete");
+            cmdClose.Configure("Cancel");
             cmdNewIngredient.Configure("+");
             cmdNewMethodStep.Configure("+");
             cmdSelectImage.Configure("Select Image");

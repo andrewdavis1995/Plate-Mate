@@ -40,25 +40,9 @@ namespace Cookalong.Controls
         /// <param name="title">Text to show on the button</param>
         /// <param name="setColour">Whether to set colour</param>
         /// <param name="colourOverride">Colour to set</param>
-        public void Configure(string title, bool setColour = true, string colourOverride = "")
+        public void Configure(string title)
         {
             lblMessage.Content = title;
-
-            // set colour if necessary
-            if (setColour)
-            {
-                try
-                {
-                    // load the button colour
-                    var buttonType = string.IsNullOrEmpty(colourOverride) ? title : colourOverride;
-                    var res = FindResource("Button" + buttonType);
-                    bigBorder.BorderBrush = res as SolidColorBrush;
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex.Message);
-                }
-            }
         }
     }
 }

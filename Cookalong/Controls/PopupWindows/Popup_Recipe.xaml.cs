@@ -1,4 +1,5 @@
 ﻿using Andrew_2_0_Libraries.Controllers;
+using Andrew_2_0_Libraries.FileHandling;
 using Andrew_2_0_Libraries.Models;
 using Cookalong.Helpers;
 using Cookalong.Windows;
@@ -17,10 +18,10 @@ namespace Cookalong.Controls.PopupWindows
     /// </summary>
     public partial class Popup_Recipe : UserControl
     {
-        Grid? _parent;
+        readonly Grid? _parent;
         Recipe? _recipe;
         readonly Action<string>? _errorCallback = null;
-        RecipeController? _controller = null;
+        readonly RecipeController? _controller = null;
         readonly Action? _updateDisplay;
 
         /// <summary>
@@ -46,7 +47,7 @@ namespace Cookalong.Controls.PopupWindows
             _updateDisplay = action;
 
             // configure buttons
-            cmdClose.Configure("Back", true, "Cancel");
+            cmdClose.Configure("Back");
             cmdEdit.Configure("Edit");
             cmdWalkthrough.Configure("Begin");
             cmdConfigureTime.Configure("Configure Timing");
@@ -140,7 +141,7 @@ namespace Cookalong.Controls.PopupWindows
         /// <summary>
         /// Event handler for the close button
         /// </summary>
-        private void cmdClose_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void CmdClose_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             _parent?.Children.Remove(this);
         }
@@ -148,7 +149,7 @@ namespace Cookalong.Controls.PopupWindows
         /// <summary>
         /// Event handler for the Edit button
         /// </summary>
-        private void cmdEdit_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void CmdEdit_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             // show popup
             var editWindow = new Popup_NewRecipe(_parent, _recipe, _controller,
@@ -173,7 +174,7 @@ namespace Cookalong.Controls.PopupWindows
         /// <summary>
         /// Event handler for the walkthrough button
         /// </summary>
-        private void cmdWalkthrough_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void CmdWalkthrough_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             // ensure recipe is valid
             if (_recipe == null)
@@ -203,7 +204,7 @@ namespace Cookalong.Controls.PopupWindows
         /// <summary>
         /// Event handler for the configure time button
         /// </summary>
-        private void cmdConfigureTime_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void CmdConfigureTime_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             // check recipe and parent
             if (_recipe == null || _parent == null)
@@ -228,7 +229,7 @@ namespace Cookalong.Controls.PopupWindows
         /// <summary>
         /// Event handler for the click-through button
         /// </summary>
-        private void cmdClick_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void CmdClick_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             grdMode.Visibility = Visibility.Collapsed;
 
@@ -242,7 +243,7 @@ namespace Cookalong.Controls.PopupWindows
         /// <summary>
         /// Event handler for the timed button
         /// </summary>
-        private void cmdTime_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void CmdTime_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             grdMode.Visibility = Visibility.Collapsed;
 
@@ -257,7 +258,7 @@ namespace Cookalong.Controls.PopupWindows
         /// <summary>
         /// Event handler for entering the click-through button
         /// </summary>
-        private void cmdClick_MouseEnter(object sender, MouseEventArgs e)
+        private void CmdClick_MouseEnter(object sender, MouseEventArgs e)
         {
             clickHighlight.Visibility = Visibility.Visible;
         }
@@ -265,7 +266,7 @@ namespace Cookalong.Controls.PopupWindows
         /// <summary>
         /// Event handler for leaving the click-through button
         /// </summary>
-        private void cmdClick_MouseLeave(object sender, MouseEventArgs e)
+        private void CmdClick_MouseLeave(object sender, MouseEventArgs e)
         {
             clickHighlight.Visibility = Visibility.Collapsed;
         }
@@ -273,7 +274,7 @@ namespace Cookalong.Controls.PopupWindows
         /// <summary>
         /// Event handler for entering the timed walkthrough button
         /// </summary>
-        private void cmdTime_MouseEnter(object sender, MouseEventArgs e)
+        private void CmdTime_MouseEnter(object sender, MouseEventArgs e)
         {
             timeHighlight.Visibility = Visibility.Visible;
         }
@@ -281,7 +282,7 @@ namespace Cookalong.Controls.PopupWindows
         /// <summary>
         /// Event handler for leaving the timed walkthrough button
         /// </summary>
-        private void cmdTime_MouseLeave(object sender, MouseEventArgs e)
+        private void CmdTime_MouseLeave(object sender, MouseEventArgs e)
         {
             timeHighlight.Visibility = Visibility.Collapsed;
         }
