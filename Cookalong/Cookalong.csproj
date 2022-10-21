@@ -281,6 +281,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Andrew_2_0_Libraries\Andrew_2_0_Libraries\Andrew_2_0_Libraries.csproj" />
+    <ProjectReference Include="..\Andrew_2_0_Libraries\Andrew_2_0_Libraries\Andrew_2_0_Libraries\Andrew_2_0_Libraries.csproj" />
   </ItemGroup>
 
   <ItemGroup>
